@@ -22,7 +22,7 @@ for vr_key in view_requests.keys():
     for vp in view_patterns:
         one_url = url(r'^{}$'.format(vp), '{}.views.{}'.format(view_requests[vr_key], vp))
         pattern_list.append(one_url)
-    urlpatterns.append(patterns(vr_key, pattern_list))
+    urlpatterns.append(patterns(vr_key, *pattern_list))
     
     
 
