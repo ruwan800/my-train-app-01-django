@@ -1,0 +1,134 @@
+@dark-violet: #500073;
+@violet: #A14FD9;
+@cute-blue: #67E4FF;
+@blue: #0878A5;
+@whiten: #C2E4E9;
+
+
+
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:300);
+
+
+body{
+    color: @blue;
+    background: @whiten;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.container .main{
+    max-width: 980px;
+}
+#header{
+    min-height: 40px;
+    padding: 20px inherit;
+    line-height: 40px;
+    background: @dark-violet;
+    color: @cute-blue;
+    border-bottom: 2px solid @violet;
+}
+#header .logo{
+    font-size: 20px; 
+}
+
+#header .edit .btn-info{
+    color: @dark-violet;
+}
+/*
+#footer{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    min-height: 20px;
+    padding: 10px inherit;
+    line-height: 20px;
+    background: @violet;
+    color: @cute-blue;
+    border-top: 2px solid @dark-violet;
+}
+*/
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Homepage  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#header.home{
+    border-left: 2px solid @violet;
+    border-right: 2px solid @violet;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#home_content{
+    border: 1px solid @blue;
+    border-radius: 10px;
+    margin: 20px auto;
+    padding: 20px;
+    
+    .row{
+        margin: 20px auto;
+        font-size: 16px;
+    }
+    
+    input[type=text]{
+        border: 1px solid @blue;
+        border-radius: 4px;
+        background: @cute-blue;
+        color: @blue;
+        text-indent: 20px;
+    }
+    input[type=submit]{
+        border: 1px solid @blue;
+        border-radius: 4px;
+        background: @blue;
+        color: @cute-blue;
+    }
+    
+}
+
+#feed{
+    min-height: 500px;
+    border: 1px solid @blue;
+    border-radius: 10px;
+    margin: 20px auto;
+    padding: 20px;
+
+    .row{
+        margin: 10px auto;
+    }
+    input[type=submit]{
+        border: 1px solid @blue;
+        border-radius: 4px;
+        background: @blue;
+        color: @cute-blue;
+    }
+    textarea{
+        width: 100%;
+        border: 1px solid @blue;
+        border-radius: 4px;
+        color: @blue;
+        background: @cute-blue;
+    }
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Form  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+form{
+    margin: 20px 0px;
+    max-width: 400px;
+    
+    label{
+        margin: 10px 0px;
+        clear:both;
+        float:left;
+    }
+    input, textarea{
+        float:right;
+        margin: 10px 0px 10px 10px;
+    }
+    .actions{
+        clear:both;
+    }
+    a{
+        float:left;
+        line-height: 46px;
+        font-size: 16px;
+    }
+}

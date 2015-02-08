@@ -1,0 +1,824 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to MTA documentation! &mdash; MTA 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MTA 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">MTA 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-mta-documentation">
+<h1>Welcome to MTA documentation!<a class="headerlink" href="#welcome-to-mta-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<span class="target" id="module-change.views"></span><span class="target" id="module-change.admin"></span><span class="target" id="module-change.tests"></span><span class="target" id="module-change.models"></span><dl class="class">
+<dt id="change.models.Change">
+<em class="property">class </em><tt class="descclassname">change.models.</tt><tt class="descname">Change</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/change/models.html#Change"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#change.models.Change" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change(id, user_id, target_id, field, old, new, revieved)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="change.models.DropList">
+<em class="property">class </em><tt class="descclassname">change.models.</tt><tt class="descname">DropList</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/change/models.html#DropList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#change.models.DropList" title="Permalink to this definition">¶</a></dt>
+<dd><p>DropList(id, user_id, target_id, revieved)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="change.models.suggestForm">
+<tt class="descclassname">change.models.</tt><tt class="descname">suggestForm</tt><big>(</big><em>ref</em><big>)</big> &rarr; form<a class="reference internal" href="_modules/change/models.html#suggestForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#change.models.suggestForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>ref = object reference</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="change.models.suggestFormAccept">
+<tt class="descclassname">change.models.</tt><tt class="descname">suggestFormAccept</tt><big>(</big><em>ref</em>, <em>params</em><big>)</big> &rarr; None<a class="reference internal" href="_modules/change/models.html#suggestFormAccept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#change.models.suggestFormAccept" title="Permalink to this definition">¶</a></dt>
+<dd><p>ref = object reference
+params = request.POST</p>
+</dd></dl>
+
+<span class="target" id="module-change.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">change.models.</tt><tt class="descname">Change</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/change/models.html#Change"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Change(id, user_id, target_id, field, old, new, revieved)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">change.models.</tt><tt class="descname">DropList</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/change/models.html#DropList"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>DropList(id, user_id, target_id, revieved)</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">change.models.</tt><tt class="descname">suggestForm</tt><big>(</big><em>ref</em><big>)</big> &rarr; form<a class="reference internal" href="_modules/change/models.html#suggestForm"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>ref = object reference</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">change.models.</tt><tt class="descname">suggestFormAccept</tt><big>(</big><em>ref</em>, <em>params</em><big>)</big> &rarr; None<a class="reference internal" href="_modules/change/models.html#suggestFormAccept"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>ref = object reference
+params = request.POST</p>
+</dd></dl>
+
+<span class="target" id="module-change.tests"></span><span class="target" id="module-change.views"></span><span class="target" id="module-change.admin"></span><span class="target" id="module-comment.views"></span><span class="target" id="module-comment.forms"></span><span class="target" id="module-comment.admin"></span><span class="target" id="module-comment.tests"></span><span class="target" id="module-comment.models"></span><dl class="class">
+<dt id="comment.models.Comment">
+<em class="property">class </em><tt class="descclassname">comment.models.</tt><tt class="descname">Comment</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/comment/models.html#Comment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#comment.models.Comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Comment(id, ref, user_id, dt, text)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="comment.models.saveComment">
+<tt class="descclassname">comment.models.</tt><tt class="descname">saveComment</tt><big>(</big><em>msg</em>, <em>target</em><big>)</big> &rarr; None<a class="reference internal" href="_modules/comment/models.html#saveComment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#comment.models.saveComment" title="Permalink to this definition">¶</a></dt>
+<dd><p>save new comment.
+msg = Message text
+target = Target receiver list</p>
+</dd></dl>
+
+<span class="target" id="module-comment.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">comment.models.</tt><tt class="descname">Comment</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/comment/models.html#Comment"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Comment(id, ref, user_id, dt, text)</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">comment.models.</tt><tt class="descname">saveComment</tt><big>(</big><em>msg</em>, <em>target</em><big>)</big> &rarr; None<a class="reference internal" href="_modules/comment/models.html#saveComment"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>save new comment.
+msg = Message text
+target = Target receiver list</p>
+</dd></dl>
+
+<span class="target" id="module-comment.tests"></span><span class="target" id="module-comment.views"></span><span class="target" id="module-comment.forms"></span><span class="target" id="module-comment.admin"></span><span class="target" id="module-favourite.views"></span><span class="target" id="module-favourite.admin"></span><span class="target" id="module-favourite.tests"></span><span class="target" id="module-favourite.models"></span><dl class="class">
+<dt id="favourite.models.Favourite">
+<em class="property">class </em><tt class="descclassname">favourite.models.</tt><tt class="descname">Favourite</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/favourite/models.html#Favourite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#favourite.models.Favourite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Favourite(id, code, user_id, history_id, source_id, last_visit, frequency, favourite)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="favourite.models.addToHistory">
+<tt class="descclassname">favourite.models.</tt><tt class="descname">addToHistory</tt><big>(</big><em>request</em>, <em>source</em>, <em>ref</em><big>)</big> &rarr; None<a class="reference internal" href="_modules/favourite/models.html#addToHistory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#favourite.models.addToHistory" title="Permalink to this definition">¶</a></dt>
+<dd><p>log history.
+request = request object
+source = source model
+ref = reference object</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="favourite.models.getFavaurite">
+<tt class="descclassname">favourite.models.</tt><tt class="descname">getFavaurite</tt><big>(</big><em>request</em>, <em>model</em><big>)</big> &rarr; favourites<a class="reference internal" href="_modules/favourite/models.html#getFavaurite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#favourite.models.getFavaurite" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns history elements to given model.
+request = request object
+model = model uri
+favourites = Target receiver list</p>
+</dd></dl>
+
+<span class="target" id="module-favourite.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">favourite.models.</tt><tt class="descname">Favourite</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/favourite/models.html#Favourite"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Favourite(id, code, user_id, history_id, source_id, last_visit, frequency, favourite)</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">favourite.models.</tt><tt class="descname">addToHistory</tt><big>(</big><em>request</em>, <em>source</em>, <em>ref</em><big>)</big> &rarr; None<a class="reference internal" href="_modules/favourite/models.html#addToHistory"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>log history.
+request = request object
+source = source model
+ref = reference object</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">favourite.models.</tt><tt class="descname">getFavaurite</tt><big>(</big><em>request</em>, <em>model</em><big>)</big> &rarr; favourites<a class="reference internal" href="_modules/favourite/models.html#getFavaurite"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>returns history elements to given model.
+request = request object
+model = model uri
+favourites = Target receiver list</p>
+</dd></dl>
+
+<span class="target" id="module-favourite.tests"></span><span class="target" id="module-favourite.views"></span><span class="target" id="module-favourite.admin"></span><span class="target" id="module-friend.views"></span><span class="target" id="module-friend.admin"></span><span class="target" id="module-friend.tests"></span><span class="target" id="module-friend.models"></span><dl class="class">
+<dt id="friend.models.Friend">
+<em class="property">class </em><tt class="descclassname">friend.models.</tt><tt class="descname">Friend</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/friend/models.html#Friend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#friend.models.Friend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Friend(id, user_id, friend_id, mutual)</p>
+</dd></dl>
+
+<span class="target" id="module-friend.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">friend.models.</tt><tt class="descname">Friend</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/friend/models.html#Friend"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Friend(id, user_id, friend_id, mutual)</p>
+</dd></dl>
+
+<span class="target" id="module-friend.tests"></span><span class="target" id="module-friend.views"></span><span class="target" id="module-friend.admin"></span><span class="target" id="module-group.views"></span><span class="target" id="module-group.admin"></span><span class="target" id="module-group.tests"></span><span class="target" id="module-group.functions"></span><span class="target" id="module-group.models"></span><dl class="class">
+<dt id="group.models.Group">
+<em class="property">class </em><tt class="descclassname">group.models.</tt><tt class="descname">Group</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/group/models.html#Group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#group.models.Group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Group(id, name, func, info)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="group.models.createGroup">
+<tt class="descclassname">group.models.</tt><tt class="descname">createGroup</tt><big>(</big><em>name</em>, <em>func</em>, <em>info</em><big>)</big> &rarr; None<a class="reference internal" href="_modules/group/models.html#createGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#group.models.createGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save newly created group
+name = group name
+func = target function name for the group.
+info = more info about this group</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="group.models.getGroupList">
+<tt class="descclassname">group.models.</tt><tt class="descname">getGroupList</tt><big>(</big><em>ref</em><big>)</big><a class="reference internal" href="_modules/group/models.html#getGroupList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#group.models.getGroupList" title="Permalink to this definition">¶</a></dt>
+<dd><p>getGroups(ref) -&gt; group_list
+Returns list of groups for given reference
+ref = reference code
+group_list = list of groups related to reference.</p>
+</dd></dl>
+
+<span class="target" id="module-group.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">group.models.</tt><tt class="descname">Group</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/group/models.html#Group"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Group(id, name, func, info)</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">group.models.</tt><tt class="descname">createGroup</tt><big>(</big><em>name</em>, <em>func</em>, <em>info</em><big>)</big> &rarr; None<a class="reference internal" href="_modules/group/models.html#createGroup"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Save newly created group
+name = group name
+func = target function name for the group.
+info = more info about this group</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">group.models.</tt><tt class="descname">getGroupList</tt><big>(</big><em>ref</em><big>)</big><a class="reference internal" href="_modules/group/models.html#getGroupList"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>getGroups(ref) -&gt; group_list
+Returns list of groups for given reference
+ref = reference code
+group_list = list of groups related to reference.</p>
+</dd></dl>
+
+<span class="target" id="module-group.tests"></span><span class="target" id="module-group.views"></span><span class="target" id="module-group.admin"></span><span class="target" id="module-group.functions"></span><span class="target" id="module-home.views"></span><span class="target" id="module-home.admin"></span><span class="target" id="module-home.tests"></span><span class="target" id="module-home.models"></span><span class="target" id="module-home.models"></span><span class="target" id="module-home.tests"></span><span class="target" id="module-home.views"></span><span class="target" id="module-home.admin"></span><span class="target" id="module-message.views"></span><span class="target" id="module-message.forms"></span><span class="target" id="module-message.admin"></span><span class="target" id="module-message.tests"></span><span class="target" id="module-message.models"></span><dl class="class">
+<dt id="message.models.Message">
+<em class="property">class </em><tt class="descclassname">message.models.</tt><tt class="descname">Message</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/message/models.html#Message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#message.models.Message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message(id, code, sender_id, receiver_id, thread, dt, text, received, visited)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="message.models.getThread">
+<tt class="descclassname">message.models.</tt><tt class="descname">getThread</tt><big>(</big><em>request</em>, <em>target</em><big>)</big> &rarr; messages<a class="reference internal" href="_modules/message/models.html#getThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#message.models.getThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Views a conversation.
+request = request object
+target = Target user
+messages = List of messages sorted by date</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="message.models.saveMessage">
+<tt class="descclassname">message.models.</tt><tt class="descname">saveMessage</tt><big>(</big><em>request</em>, <em>message</em>, <em>target</em><big>)</big><a class="reference internal" href="_modules/message/models.html#saveMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#message.models.saveMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>saveComment(msg, target, request) -&gt; None
+save new comment.
+target = Target receiver
+request = request object
+message = Message text</p>
+</dd></dl>
+
+<span class="target" id="module-message.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">message.models.</tt><tt class="descname">Message</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/message/models.html#Message"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Message(id, code, sender_id, receiver_id, thread, dt, text, received, visited)</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">message.models.</tt><tt class="descname">getThread</tt><big>(</big><em>request</em>, <em>target</em><big>)</big> &rarr; messages<a class="reference internal" href="_modules/message/models.html#getThread"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Views a conversation.
+request = request object
+target = Target user
+messages = List of messages sorted by date</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">message.models.</tt><tt class="descname">saveMessage</tt><big>(</big><em>request</em>, <em>message</em>, <em>target</em><big>)</big><a class="reference internal" href="_modules/message/models.html#saveMessage"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>saveComment(msg, target, request) -&gt; None
+save new comment.
+target = Target receiver
+request = request object
+message = Message text</p>
+</dd></dl>
+
+<span class="target" id="module-message.tests"></span><span class="target" id="module-message.views"></span><span class="target" id="module-message.forms"></span><span class="target" id="module-message.admin"></span><span class="target" id="module-notification.views"></span><span class="target" id="module-notification.admin"></span><span class="target" id="module-notification.tests"></span><span class="target" id="module-notification.models"></span><dl class="class">
+<dt id="notification.models.Notification">
+<em class="property">class </em><tt class="descclassname">notification.models.</tt><tt class="descname">Notification</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/notification/models.html#Notification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notification.models.Notification" title="Permalink to this definition">¶</a></dt>
+<dd><p>Notification(id, code, ref_model_id, ref_id)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="notification.models.Target">
+<em class="property">class </em><tt class="descclassname">notification.models.</tt><tt class="descname">Target</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/notification/models.html#Target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notification.models.Target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Target(id, reference_id, group_id, target_id)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="notification.models.ViewedNotification">
+<em class="property">class </em><tt class="descclassname">notification.models.</tt><tt class="descname">ViewedNotification</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/notification/models.html#ViewedNotification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notification.models.ViewedNotification" title="Permalink to this definition">¶</a></dt>
+<dd><p>ViewedNotification(id, user_id, reference_id)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="notification.models.getModel">
+<tt class="descclassname">notification.models.</tt><tt class="descname">getModel</tt><big>(</big><em>reference</em><big>)</big> &rarr; model<a class="reference internal" href="_modules/notification/models.html#getModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notification.models.getModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the model of required object for the given reference value</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="notification.models.getNotificationReferenceList">
+<tt class="descclassname">notification.models.</tt><tt class="descname">getNotificationReferenceList</tt><big>(</big><em>ref</em><big>)</big> &rarr; ref_list<a class="reference internal" href="_modules/notification/models.html#getNotificationReferenceList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notification.models.getNotificationReferenceList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get notification references related to a given reference
+ref = reference
+ref_list = related list of reference values</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="notification.models.getObject">
+<tt class="descclassname">notification.models.</tt><tt class="descname">getObject</tt><big>(</big><em>reference</em><big>)</big> &rarr; object<a class="reference internal" href="_modules/notification/models.html#getObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notification.models.getObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a required object for the given reference value</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="notification.models.saveTarget">
+<tt class="descclassname">notification.models.</tt><tt class="descname">saveTarget</tt><big>(</big><em>model</em>, <em>reference</em>, <em>target</em><big>)</big> &rarr; None<a class="reference internal" href="_modules/notification/models.html#saveTarget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#notification.models.saveTarget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save notification and target
+model = model instance(self)
+reference = reference id
+target = list of group and target value lists [[group,target],]</p>
+</dd></dl>
+
+<span class="target" id="module-notification.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">notification.models.</tt><tt class="descname">Notification</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/notification/models.html#Notification"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Notification(id, code, ref_model_id, ref_id)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">notification.models.</tt><tt class="descname">Target</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/notification/models.html#Target"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Target(id, reference_id, group_id, target_id)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">notification.models.</tt><tt class="descname">ViewedNotification</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/notification/models.html#ViewedNotification"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>ViewedNotification(id, user_id, reference_id)</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">notification.models.</tt><tt class="descname">getModel</tt><big>(</big><em>reference</em><big>)</big> &rarr; model<a class="reference internal" href="_modules/notification/models.html#getModel"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Return the model of required object for the given reference value</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">notification.models.</tt><tt class="descname">getNotificationReferenceList</tt><big>(</big><em>ref</em><big>)</big> &rarr; ref_list<a class="reference internal" href="_modules/notification/models.html#getNotificationReferenceList"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Get notification references related to a given reference
+ref = reference
+ref_list = related list of reference values</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">notification.models.</tt><tt class="descname">getObject</tt><big>(</big><em>reference</em><big>)</big> &rarr; object<a class="reference internal" href="_modules/notification/models.html#getObject"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Return a required object for the given reference value</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">notification.models.</tt><tt class="descname">saveTarget</tt><big>(</big><em>model</em>, <em>reference</em>, <em>target</em><big>)</big> &rarr; None<a class="reference internal" href="_modules/notification/models.html#saveTarget"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Save notification and target
+model = model instance(self)
+reference = reference id
+target = list of group and target value lists [[group,target],]</p>
+</dd></dl>
+
+<span class="target" id="module-notification.tests"></span><span class="target" id="module-notification.views"></span><span class="target" id="module-notification.admin"></span><span class="target" id="module-process.views"></span><span class="target" id="module-process.executable"></span><span class="target" id="module-process.models"></span><dl class="class">
+<dt id="process.models.Process">
+<em class="property">class </em><tt class="descclassname">process.models.</tt><tt class="descname">Process</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/process/models.html#Process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.Process" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="process.models.Progress">
+<em class="property">class </em><tt class="descclassname">process.models.</tt><tt class="descname">Progress</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/process/models.html#Progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.Progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Progress(id, process_id, stage_id, progress, complete, break_stage_id, break_point)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="process.models.Stage">
+<em class="property">class </em><tt class="descclassname">process.models.</tt><tt class="descname">Stage</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/process/models.html#Stage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.Stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stage Model holds information of all stages belongs to each :class:Process.</p>
+<ul class="simple">
+<li><em>id</em></li>
+<li><em>process</em></li>
+<li><em>index</em> - Index of the stage of the process</li>
+<li><em>stage_message</em></li>
+<li><em>stage_function_name</em> - Name of the function that wii be executed in the current stage</li>
+<li><em>stage_function_module</em> - Module name of the stage function belongs</li>
+<li><em>stage_function_file</em> - File name of the stage function</li>
+</ul>
+</dd></dl>
+
+<span class="target" id="module-process.tests"></span><span class="target" id="module-process.admin"></span><span class="target" id="module-reference.views"></span><span class="target" id="module-reference.admin"></span><span class="target" id="module-reference.tests"></span><span class="target" id="module-reference.models"></span><dl class="class">
+<dt id="reference.models.Reference">
+<em class="property">class </em><tt class="descclassname">reference.models.</tt><tt class="descname">Reference</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/reference/models.html#Reference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reference.models.Reference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference(id, code, uri, ref_model_id, ref_id)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="reference.models.ReferenceModel">
+<em class="property">class </em><tt class="descclassname">reference.models.</tt><tt class="descname">ReferenceModel</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/reference/models.html#ReferenceModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reference.models.ReferenceModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>ReferenceModel(id, name, file, uri)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reference.models.getModel">
+<tt class="descclassname">reference.models.</tt><tt class="descname">getModel</tt><big>(</big><em>reference</em><big>)</big> &rarr; model<a class="reference internal" href="_modules/reference/models.html#getModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reference.models.getModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the model of required object for the given reference value</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reference.models.getObject">
+<tt class="descclassname">reference.models.</tt><tt class="descname">getObject</tt><big>(</big><em>reference</em><big>)</big> &rarr; object<a class="reference internal" href="_modules/reference/models.html#getObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reference.models.getObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a required object for the given reference value</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reference.models.getReference">
+<tt class="descclassname">reference.models.</tt><tt class="descname">getReference</tt><big>(</big><em>model</em>, <em>ref_id</em><big>)</big><a class="reference internal" href="_modules/reference/models.html#getReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reference.models.getReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference.createReference(model, ref_id) -&gt; reference</p>
+<p>Create and return a reference value if the given model,id combination already
+does not have a reference value</p>
+<p>model = model instance</p>
+<p>ref_id = id of the object</p>
+<p>ref = reference value for the given model, id combination</p>
+</dd></dl>
+
+<span class="target" id="module-reference.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">reference.models.</tt><tt class="descname">Reference</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/reference/models.html#Reference"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Reference(id, code, uri, ref_model_id, ref_id)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">reference.models.</tt><tt class="descname">ReferenceModel</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/reference/models.html#ReferenceModel"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>ReferenceModel(id, name, file, uri)</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">reference.models.</tt><tt class="descname">getModel</tt><big>(</big><em>reference</em><big>)</big> &rarr; model<a class="reference internal" href="_modules/reference/models.html#getModel"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Return the model of required object for the given reference value</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">reference.models.</tt><tt class="descname">getObject</tt><big>(</big><em>reference</em><big>)</big> &rarr; object<a class="reference internal" href="_modules/reference/models.html#getObject"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Return a required object for the given reference value</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">reference.models.</tt><tt class="descname">getReference</tt><big>(</big><em>model</em>, <em>ref_id</em><big>)</big><a class="reference internal" href="_modules/reference/models.html#getReference"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Reference.createReference(model, ref_id) -&gt; reference</p>
+<p>Create and return a reference value if the given model,id combination already
+does not have a reference value</p>
+<p>model = model instance</p>
+<p>ref_id = id of the object</p>
+<p>ref = reference value for the given model, id combination</p>
+</dd></dl>
+
+<span class="target" id="module-reference.tests"></span><span class="target" id="module-reference.views"></span><span class="target" id="module-reference.admin"></span><span class="target" id="module-schedule.views"></span><span class="target" id="module-schedule.admin"></span><span class="target" id="module-schedule.tests"></span><span class="target" id="module-schedule.models"></span><dl class="class">
+<dt id="schedule.models.PrimarySchedule">
+<em class="property">class </em><tt class="descclassname">schedule.models.</tt><tt class="descname">PrimarySchedule</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/schedule/models.html#PrimarySchedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#schedule.models.PrimarySchedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>PrimarySchedule(id, station_id, train_id, arrival, departure, arrival_days, departure_days, last_update_arrival, last_update_departure)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="schedule.models.Schedule">
+<em class="property">class </em><tt class="descclassname">schedule.models.</tt><tt class="descname">Schedule</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/schedule/models.html#Schedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#schedule.models.Schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Schedule(id, station_id, train_id, arrival, departure, arrival_days, departure_days, active)</p>
+</dd></dl>
+
+<span class="target" id="module-schedule.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">schedule.models.</tt><tt class="descname">PrimarySchedule</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/schedule/models.html#PrimarySchedule"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>PrimarySchedule(id, station_id, train_id, arrival, departure, arrival_days, departure_days, last_update_arrival, last_update_departure)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">schedule.models.</tt><tt class="descname">Schedule</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/schedule/models.html#Schedule"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Schedule(id, station_id, train_id, arrival, departure, arrival_days, departure_days, active)</p>
+</dd></dl>
+
+<span class="target" id="module-schedule.tests"></span><span class="target" id="module-schedule.views"></span><span class="target" id="module-schedule.admin"></span><span class="target" id="module-station.views"></span><span class="target" id="module-station.forms"></span><span class="target" id="module-station.admin"></span><span class="target" id="module-station.tests"></span><span class="target" id="module-station.models"></span><dl class="class">
+<dt id="station.models.Line">
+<em class="property">class </em><tt class="descclassname">station.models.</tt><tt class="descname">Line</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/station/models.html#Line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#station.models.Line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Line(id, number, begin_id, end_id, name, code)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="station.models.LinePath">
+<em class="property">class </em><tt class="descclassname">station.models.</tt><tt class="descname">LinePath</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/station/models.html#LinePath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#station.models.LinePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>LinePath(id, name, path, up, in_use, priority)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="station.models.Station">
+<em class="property">class </em><tt class="descclassname">station.models.</tt><tt class="descname">Station</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/station/models.html#Station"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#station.models.Station" title="Permalink to this definition">¶</a></dt>
+<dd><p>Station(id, line_id, pos, number, code, name, primary_name)</p>
+</dd></dl>
+
+<span class="target" id="module-station.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">station.models.</tt><tt class="descname">Line</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/station/models.html#Line"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Line(id, number, begin_id, end_id, name, code)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">station.models.</tt><tt class="descname">LinePath</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/station/models.html#LinePath"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>LinePath(id, name, path, up, in_use, priority)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">station.models.</tt><tt class="descname">Station</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/station/models.html#Station"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Station(id, line_id, pos, number, code, name, primary_name)</p>
+</dd></dl>
+
+<span class="target" id="module-station.tests"></span><span class="target" id="module-station.views"></span><span class="target" id="module-station.forms"></span><span class="target" id="module-station.admin"></span><span class="target" id="module-status.views"></span><span class="target" id="module-status.admin"></span><span class="target" id="module-status.tests"></span><span class="target" id="module-status.models"></span><dl class="class">
+<dt id="status.models.Status">
+<em class="property">class </em><tt class="descclassname">status.models.</tt><tt class="descname">Status</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/status/models.html#Status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#status.models.Status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Status(id, user_id, status_id, dt, text, public)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="status.models.saveStatus">
+<tt class="descclassname">status.models.</tt><tt class="descname">saveStatus</tt><big>(</big><em>equest</em>, <em>status</em>, <em>msg</em><big>)</big> &rarr; None<a class="reference internal" href="_modules/status/models.html#saveStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#status.models.saveStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>save new comment.
+request = request object
+status = reference
+msg = Message text</p>
+</dd></dl>
+
+<span class="target" id="module-status.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">status.models.</tt><tt class="descname">Status</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/status/models.html#Status"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Status(id, user_id, status_id, dt, text, public)</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">status.models.</tt><tt class="descname">saveStatus</tt><big>(</big><em>equest</em>, <em>status</em>, <em>msg</em><big>)</big> &rarr; None<a class="reference internal" href="_modules/status/models.html#saveStatus"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>save new comment.
+request = request object
+status = reference
+msg = Message text</p>
+</dd></dl>
+
+<span class="target" id="module-status.tests"></span><span class="target" id="module-status.views"></span><span class="target" id="module-status.admin"></span><span class="target" id="module-subscribe.views"></span><span class="target" id="module-subscribe.admin"></span><span class="target" id="module-subscribe.tests"></span><span class="target" id="module-subscribe.models"></span><dl class="class">
+<dt id="subscribe.models.Subscribe">
+<em class="property">class </em><tt class="descclassname">subscribe.models.</tt><tt class="descname">Subscribe</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/subscribe/models.html#Subscribe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#subscribe.models.Subscribe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subscribe(id, user_id, subscription_id, dt, manual)</p>
+</dd></dl>
+
+<span class="target" id="module-subscribe.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">subscribe.models.</tt><tt class="descname">Subscribe</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/subscribe/models.html#Subscribe"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Subscribe(id, user_id, subscription_id, dt, manual)</p>
+</dd></dl>
+
+<span class="target" id="module-subscribe.tests"></span><span class="target" id="module-subscribe.views"></span><span class="target" id="module-subscribe.admin"></span><span class="target" id="module-train.views"></span><span class="target" id="module-train.admin"></span><span class="target" id="module-train.tests"></span><span class="target" id="module-train.models"></span><dl class="class">
+<dt id="train.models.Engine">
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">Engine</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/train/models.html#Engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#train.models.Engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Engine(id, type_id, name, year, active, number, description)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="train.models.EngineType">
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">EngineType</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/train/models.html#EngineType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#train.models.EngineType" title="Permalink to this definition">¶</a></dt>
+<dd><p>EngineType(id, name, number, parent_category, main_category, amount, description)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="train.models.EngineTypeForTrain">
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">EngineTypeForTrain</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/train/models.html#EngineTypeForTrain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#train.models.EngineTypeForTrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>EngineTypeForTrain(id, train_id, enginetype_id)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="train.models.PrimaryTrain">
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">PrimaryTrain</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/train/models.html#PrimaryTrain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#train.models.PrimaryTrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>PrimaryTrain(id, number, name, start_id, end_id, start_time, end_time, end_time_days, start_date, end_date, up, comment, description, type_id, classes, frequency, facilities, last_update)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="train.models.Train">
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">Train</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/train/models.html#Train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#train.models.Train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train(id, number, name, start_id, end_id, start_time, end_time, end_time_days, start_date, end_date, up, comment, description, type_id, classes, frequency, facilities, last_update, active)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="train.models.TrainType">
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">TrainType</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/train/models.html#TrainType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#train.models.TrainType" title="Permalink to this definition">¶</a></dt>
+<dd><p>TrainType(id, name, type, category, description)</p>
+</dd></dl>
+
+<span class="target" id="module-train.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">Engine</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/train/models.html#Engine"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Engine(id, type_id, name, year, active, number, description)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">EngineType</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/train/models.html#EngineType"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>EngineType(id, name, number, parent_category, main_category, amount, description)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">EngineTypeForTrain</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/train/models.html#EngineTypeForTrain"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>EngineTypeForTrain(id, train_id, enginetype_id)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">PrimaryTrain</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/train/models.html#PrimaryTrain"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>PrimaryTrain(id, number, name, start_id, end_id, start_time, end_time, end_time_days, start_date, end_date, up, comment, description, type_id, classes, frequency, facilities, last_update)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">Train</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/train/models.html#Train"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Train(id, number, name, start_id, end_id, start_time, end_time, end_time_days, start_date, end_date, up, comment, description, type_id, classes, frequency, facilities, last_update, active)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">TrainType</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/train/models.html#TrainType"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>TrainType(id, name, type, category, description)</p>
+</dd></dl>
+
+<span class="target" id="module-train.tests"></span><span class="target" id="module-train.views"></span><span class="target" id="module-train.admin"></span><span class="target" id="module-update.views"></span><span class="target" id="module-update.update01"></span><span class="target" id="module-update.update02"></span><span class="target" id="module-update.models"></span><dl class="class">
+<dt id="update.models.Conflict">
+<em class="property">class </em><tt class="descclassname">update.models.</tt><tt class="descname">Conflict</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/update/models.html#Conflict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.Conflict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conflict(id, trace, cat, value, msg, time, reviewed, resolved)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="update.models.Delete">
+<em class="property">class </em><tt class="descclassname">update.models.</tt><tt class="descname">Delete</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/update/models.html#Delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.Delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete(id, trace, cat, value, msg, time, reviewed)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="update.models.Insert">
+<em class="property">class </em><tt class="descclassname">update.models.</tt><tt class="descname">Insert</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/update/models.html#Insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.Insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert(id, trace, cat, value, msg, time, reviewed)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="update.models.Update">
+<em class="property">class </em><tt class="descclassname">update.models.</tt><tt class="descname">Update</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/update/models.html#Update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.Update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update(id, trace, cat1, cat2, value, old, new, time, reviewed)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.models.addConflict">
+<tt class="descclassname">update.models.</tt><tt class="descname">addConflict</tt><big>(</big><em>cat</em>, <em>value</em>, <em>msg</em><big>)</big><a class="reference internal" href="_modules/update/models.html#addConflict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.addConflict" title="Permalink to this definition">¶</a></dt>
+<dd><p>mention items with conflicts in conflict list</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.models.addDelete">
+<tt class="descclassname">update.models.</tt><tt class="descname">addDelete</tt><big>(</big><em>cat</em>, <em>value</em>, <em>msg</em><big>)</big><a class="reference internal" href="_modules/update/models.html#addDelete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.addDelete" title="Permalink to this definition">¶</a></dt>
+<dd><p>mention items with conflicts in conflict list</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.models.addInsert">
+<tt class="descclassname">update.models.</tt><tt class="descname">addInsert</tt><big>(</big><em>cat</em>, <em>value</em>, <em>msg</em><big>)</big><a class="reference internal" href="_modules/update/models.html#addInsert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.addInsert" title="Permalink to this definition">¶</a></dt>
+<dd><p>mention items with conflicts in conflict list</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.models.addUpdate">
+<tt class="descclassname">update.models.</tt><tt class="descname">addUpdate</tt><big>(</big><em>cat1</em>, <em>cat2</em>, <em>value</em>, <em>old</em>, <em>new</em><big>)</big><a class="reference internal" href="_modules/update/models.html#addUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.addUpdate" title="Permalink to this definition">¶</a></dt>
+<dd><p>mention updated item in update list</p>
+</dd></dl>
+
+<span class="target" id="module-update.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">update.models.</tt><tt class="descname">Conflict</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/update/models.html#Conflict"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Conflict(id, trace, cat, value, msg, time, reviewed, resolved)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">update.models.</tt><tt class="descname">Delete</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/update/models.html#Delete"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Delete(id, trace, cat, value, msg, time, reviewed)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">update.models.</tt><tt class="descname">Insert</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/update/models.html#Insert"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Insert(id, trace, cat, value, msg, time, reviewed)</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">update.models.</tt><tt class="descname">Update</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/update/models.html#Update"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Update(id, trace, cat1, cat2, value, old, new, time, reviewed)</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">update.models.</tt><tt class="descname">addConflict</tt><big>(</big><em>cat</em>, <em>value</em>, <em>msg</em><big>)</big><a class="reference internal" href="_modules/update/models.html#addConflict"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>mention items with conflicts in conflict list</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">update.models.</tt><tt class="descname">addDelete</tt><big>(</big><em>cat</em>, <em>value</em>, <em>msg</em><big>)</big><a class="reference internal" href="_modules/update/models.html#addDelete"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>mention items with conflicts in conflict list</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">update.models.</tt><tt class="descname">addInsert</tt><big>(</big><em>cat</em>, <em>value</em>, <em>msg</em><big>)</big><a class="reference internal" href="_modules/update/models.html#addInsert"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>mention items with conflicts in conflict list</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">update.models.</tt><tt class="descname">addUpdate</tt><big>(</big><em>cat1</em>, <em>cat2</em>, <em>value</em>, <em>old</em>, <em>new</em><big>)</big><a class="reference internal" href="_modules/update/models.html#addUpdate"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>mention updated item in update list</p>
+</dd></dl>
+
+<span class="target" id="module-update.update03"></span><span class="target" id="module-update.tests"></span><span class="target" id="module-update.update04"></span><span class="target" id="module-update.admin"></span><span class="target" id="module-update.update00"></span><span class="target" id="module-userinfo.views"></span><span class="target" id="module-userinfo.admin"></span><span class="target" id="module-userinfo.tests"></span><span class="target" id="module-userinfo.models"></span><dl class="class">
+<dt id="userinfo.models.UserInfo">
+<em class="property">class </em><tt class="descclassname">userinfo.models.</tt><tt class="descname">UserInfo</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/userinfo/models.html#UserInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#userinfo.models.UserInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>UserInfo(id, user_id, name, status_is_public)</p>
+</dd></dl>
+
+<span class="target" id="module-userinfo.models"></span><dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">userinfo.models.</tt><tt class="descname">UserInfo</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/userinfo/models.html#UserInfo"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>UserInfo(id, user_id, name, status_is_public)</p>
+</dd></dl>
+
+<span class="target" id="module-userinfo.tests"></span><span class="target" id="module-userinfo.views"></span><span class="target" id="module-userinfo.admin"></span></div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><em class="xref std std-ref">app</em></li>
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to MTA documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/hello.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">MTA 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Ruwan Jayasinghe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

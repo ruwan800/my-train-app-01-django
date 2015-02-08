@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Documentation of Message &mdash; MTA 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MTA 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MTA 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="documentation-of-message">
+<h1>Documentation of Message<a class="headerlink" href="#documentation-of-message" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="module-message.forms">
+<span id="forms"></span><h2>forms<a class="headerlink" href="#module-message.forms" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-message.models">
+<span id="models"></span><h2>models<a class="headerlink" href="#module-message.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="message.models.Message">
+<em class="property">class </em><tt class="descclassname">message.models.</tt><tt class="descname">Message</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/message/models.html#Message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#message.models.Message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message(id, code, sender_id, receiver_id, thread, dt, text, received, visited)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="message.models.getThread">
+<tt class="descclassname">message.models.</tt><tt class="descname">getThread</tt><big>(</big><em>request</em>, <em>target</em><big>)</big> &rarr; messages<a class="reference internal" href="../_modules/message/models.html#getThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#message.models.getThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Views a conversation.
+request = request object
+target = Target user
+messages = List of messages sorted by date</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="message.models.saveMessage">
+<tt class="descclassname">message.models.</tt><tt class="descname">saveMessage</tt><big>(</big><em>request</em>, <em>message</em>, <em>target</em><big>)</big><a class="reference internal" href="../_modules/message/models.html#saveMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#message.models.saveMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>saveComment(msg, target, request) -&gt; None
+save new comment.
+target = Target receiver
+request = request object
+message = Message text</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-message.views">
+<span id="views"></span><h2>views<a class="headerlink" href="#module-message.views" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="../genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="../py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="../search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Documentation of Message</a><ul>
+<li><a class="reference internal" href="#module-message.forms">forms</a></li>
+<li><a class="reference internal" href="#module-message.models">models</a></li>
+<li><a class="reference internal" href="#module-message.views">views</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/_source/message.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MTA 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Ruwan Jayasinghe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

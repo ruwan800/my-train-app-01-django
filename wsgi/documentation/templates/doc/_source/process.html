@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Documentation of Process &mdash; MTA 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MTA 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MTA 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="documentation-of-process">
+<h1>Documentation of Process<a class="headerlink" href="#documentation-of-process" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="module-process.executable">
+<span id="executable"></span><h2>executable<a class="headerlink" href="#module-process.executable" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="process.executable.startProcess">
+<tt class="descclassname">process.executable.</tt><tt class="descname">startProcess</tt><big>(</big><em>text</em><big>)</big><a class="reference internal" href="../_modules/process/executable.html#startProcess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.executable.startProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts thread to execute series of functions mentioned in each <a class="reference internal" href="#process.models.Stage" title="process.models.Stage"><tt class="xref py py-class docutils literal"><span class="pre">Stage</span></tt></a> belongs to the <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a>
+identified by given <em>text</em>. State of the executing <a class="reference internal" href="#process.models.Stage" title="process.models.Stage"><tt class="xref py py-class docutils literal"><span class="pre">Stage</span></tt></a> and progress information are recorded in
+<a class="reference internal" href="#process.models.Progress" title="process.models.Progress"><tt class="xref py py-class docutils literal"><span class="pre">Progress</span></tt></a>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-process.models">
+<span id="models"></span><h2>models<a class="headerlink" href="#module-process.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="process.models.Process">
+<em class="property">class </em><tt class="descclassname">process.models.</tt><tt class="descname">Process</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/process/models.html#Process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.Process" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Process responsible for executing series of functions kept on each <a class="reference internal" href="#process.models.Stage" title="process.models.Stage"><tt class="xref py py-class docutils literal"><span class="pre">Stage</span></tt></a>. Each <a class="reference internal" href="#process.models.Stage" title="process.models.Stage"><tt class="xref py py-class docutils literal"><span class="pre">Stage</span></tt></a>&#8216;s function is executed
+using <a class="reference internal" href="#process.models.Stage.execute" title="process.models.Stage.execute"><tt class="xref py py-func docutils literal"><span class="pre">Stage.execute()</span></tt></a>. Information related to execution is preserved in <a class="reference internal" href="#process.models.Progress" title="process.models.Progress"><tt class="xref py py-class docutils literal"><span class="pre">Progress</span></tt></a>. Breakpoints can be setup by 
+modifying <a class="reference internal" href="#process.models.Progress" title="process.models.Progress"><tt class="xref py py-class docutils literal"><span class="pre">Progress</span></tt></a>. Each Process have it&#8217;s own <a class="reference internal" href="#process.models.Progress" title="process.models.Progress"><tt class="xref py py-class docutils literal"><span class="pre">Progress</span></tt></a> instance.</p>
+<ul class="simple">
+<li><em>name</em></li>
+<li><em>name</em></li>
+<li><em>description</em></li>
+<li><em>last_run</em></li>
+</ul>
+<dl class="method">
+<dt id="process.models.Process.getProgress">
+<tt class="descname">getProgress</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/process/models.html#Process.getProgress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.Process.getProgress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the <a class="reference internal" href="#process.models.Progress" title="process.models.Progress"><tt class="xref py py-class docutils literal"><span class="pre">Progress</span></tt></a> object of the <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="process.models.Process.getStages">
+<tt class="descname">getStages</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/process/models.html#Process.getStages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.Process.getStages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all <a class="reference internal" href="#process.models.Stage" title="process.models.Stage"><tt class="xref py py-class docutils literal"><span class="pre">Stage</span></tt></a> items belongs to the <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a> ordered by
+<a class="reference internal" href="#process.models.Stage" title="process.models.Stage"><tt class="xref py py-class docutils literal"><span class="pre">Stage</span></tt></a> index.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="process.models.Progress">
+<em class="property">class </em><tt class="descclassname">process.models.</tt><tt class="descname">Progress</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/process/models.html#Progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.Progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Progress keeps information about currently executing function, progress information and break-point information.</p>
+<ul>
+<li><p class="first"><em>process</em></p>
+</li>
+<li><p class="first"><em>stage</em></p>
+</li>
+<li><p class="first"><em>progress</em> -current progress of the stage</p>
+</li>
+<li><dl class="first docutils">
+<dt><em>complete</em></dt>
+<dd><p class="first last">Sets number of steps in the stage. this will set automatically if the stage method implemented
+with <a class="reference internal" href="#process.models.setProgressBoundary" title="process.models.setProgressBoundary"><tt class="xref py py-func docutils literal"><span class="pre">setProgressBoundary()</span></tt></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>break_stage</em> </dt>
+<dd><p class="first last">If the stage is not empty the process will execute that stage as the last stage 
+before terminate.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>break_point</em></dt>
+<dd><p class="first last">This can be set manually along with break_stage. The <a class="reference internal" href="#process.models.Stage" title="process.models.Stage"><tt class="xref py py-class docutils literal"><span class="pre">Stage</span></tt></a> will terminated after executing
+step mentioned in the break_point.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="method">
+<dt id="process.models.Progress.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/process/models.html#Progress.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.Progress.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the progress of the <a class="reference internal" href="#process.models.Progress" title="process.models.Progress"><tt class="xref py py-class docutils literal"><span class="pre">Progress</span></tt></a> and reset <em>complete</em> value to 1.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="process.models.Progress.reset">
+<tt class="descname">reset</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/process/models.html#Progress.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.Progress.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set stage of this <a class="reference internal" href="#process.models.Progress" title="process.models.Progress"><tt class="xref py py-class docutils literal"><span class="pre">Progress</span></tt></a> to the initial <a class="reference internal" href="#process.models.Stage" title="process.models.Stage"><tt class="xref py py-class docutils literal"><span class="pre">Stage</span></tt></a> and
+clears the progress of the <a class="reference internal" href="#process.models.Progress" title="process.models.Progress"><tt class="xref py py-class docutils literal"><span class="pre">Progress</span></tt></a> and reset <em>complete</em> value to 1 
+as well.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="process.models.Progress.setStage">
+<tt class="descname">setStage</tt><big>(</big><em>stage</em><big>)</big><a class="reference internal" href="../_modules/process/models.html#Progress.setStage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.Progress.setStage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the <em>stage</em> of the <a class="reference internal" href="#process.models.Progress" title="process.models.Progress"><tt class="xref py py-class docutils literal"><span class="pre">Progress</span></tt></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="process.models.Stage">
+<em class="property">class </em><tt class="descclassname">process.models.</tt><tt class="descname">Stage</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/process/models.html#Stage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.Stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds information of all stages belongs to each <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a>.</p>
+<ul class="simple">
+<li><em>process</em></li>
+<li><em>index</em> - Index of the stage of the process.</li>
+<li><em>stage_message</em></li>
+<li><em>stage_function_name</em> - Name of the function that wii be executed in the current stage.</li>
+<li><em>stage_function_module</em> - Module name of the stage function belongs.</li>
+<li><em>stage_function_file</em> - File name of the stage function.</li>
+</ul>
+<dl class="method">
+<dt id="process.models.Stage.execute">
+<tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/process/models.html#Stage.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.Stage.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the function identified using &#8216;stage_function_name&#8217; value. until it completes or reach the
+breakpoint</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="process.models.breakNow">
+<tt class="descclassname">process.models.</tt><tt class="descname">breakNow</tt><big>(</big><em>text</em><big>)</big><a class="reference internal" href="../_modules/process/models.html#breakNow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.breakNow" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is deprecated. use <a class="reference internal" href="#process.models.incrementProgress" title="process.models.incrementProgress"><tt class="xref py py-func docutils literal"><span class="pre">incrementProgress()</span></tt></a> instead.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="process.models.getCurrentProgress">
+<tt class="descclassname">process.models.</tt><tt class="descname">getCurrentProgress</tt><big>(</big><em>text</em><big>)</big><a class="reference internal" href="../_modules/process/models.html#getCurrentProgress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.getCurrentProgress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns current step of the current <a class="reference internal" href="#process.models.Stage" title="process.models.Stage"><tt class="xref py py-class docutils literal"><span class="pre">Stage</span></tt></a> of the <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a> identified using <em>text</em>.
+This could be used to identify lower boundary of stepping loop.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="process.models.getProcess">
+<tt class="descclassname">process.models.</tt><tt class="descname">getProcess</tt><big>(</big><em>text</em><big>)</big><a class="reference internal" href="../_modules/process/models.html#getProcess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.getProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a> identified by <em>text</em> and returns <strong>None</strong> if failed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="process.models.getProcessProgress">
+<tt class="descclassname">process.models.</tt><tt class="descname">getProcessProgress</tt><big>(</big><em>text</em><big>)</big><a class="reference internal" href="../_modules/process/models.html#getProcessProgress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.getProcessProgress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns information related to the progress of the <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a>.
+If process is already completed custom message will be sent. Otherwise
+returns dictionary consists of following keys.</p>
+<ul class="simple">
+<li>process_name</li>
+<li>process_description</li>
+<li>stage_index</li>
+<li>stage</li>
+<li>progress</li>
+<li>progress_boundary</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="process.models.incrementProgress">
+<tt class="descclassname">process.models.</tt><tt class="descname">incrementProgress</tt><big>(</big><em>text</em><big>)</big><a class="reference internal" href="../_modules/process/models.html#incrementProgress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.incrementProgress" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function increments the value of completed steps in the current <a class="reference internal" href="#process.models.Stage" title="process.models.Stage"><tt class="xref py py-class docutils literal"><span class="pre">Stage</span></tt></a> 
+of <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a> identified by <em>text</em>. This function should be implemented in steps 
+that takes considerably long time to complete. That will help to track down the progress 
+of the current <a class="reference internal" href="#process.models.Stage" title="process.models.Stage"><tt class="xref py py-class docutils literal"><span class="pre">Stage</span></tt></a>. This function will raise an exception if incrementing value 
+passed the breakpoint defined within <a class="reference internal" href="#process.models.Progress" title="process.models.Progress"><tt class="xref py py-class docutils literal"><span class="pre">Progress</span></tt></a>. This method should not use twice 
+within single step to avoid incrementing step count twice. However it will not affects
+execution of the function. But it will results erroneous step count and affects the breakpoint</p>
+<p><a class="reference internal" href="#process.models.setProgressBoundary" title="process.models.setProgressBoundary"><tt class="xref py py-func docutils literal"><span class="pre">setProgressBoundary()</span></tt></a> and <a class="reference internal" href="#process.models.getCurrentProgress" title="process.models.getCurrentProgress"><tt class="xref py py-func docutils literal"><span class="pre">getCurrentProgress()</span></tt></a> should also be implemented along 
+with this function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="process.models.setProgressBoundary">
+<tt class="descclassname">process.models.</tt><tt class="descname">setProgressBoundary</tt><big>(</big><em>text</em>, <em>num</em><big>)</big><a class="reference internal" href="../_modules/process/models.html#setProgressBoundary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.models.setProgressBoundary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set upper boundary as <em>num</em> of the current <a class="reference internal" href="#process.models.Stage" title="process.models.Stage"><tt class="xref py py-class docutils literal"><span class="pre">Stage</span></tt></a> of the <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a> identified by <em>text</em>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-process.views">
+<span id="views"></span><h2>views<a class="headerlink" href="#module-process.views" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="process.views.getAllProcesses">
+<tt class="descclassname">process.views.</tt><tt class="descname">getAllProcesses</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../_modules/process/views.html#getAllProcesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.views.getAllProcesses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a> item information.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="process.views.getProcessProgress">
+<tt class="descclassname">process.views.</tt><tt class="descname">getProcessProgress</tt><big>(</big><em>request</em>, <em>process</em><big>)</big><a class="reference internal" href="../_modules/process/views.html#getProcessProgress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.views.getProcessProgress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get progress information related to <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a> identified by <em>process</em></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="process.views.setBreakPoint">
+<tt class="descclassname">process.views.</tt><tt class="descname">setBreakPoint</tt><big>(</big><em>request</em>, <em>process</em>, <em>stage</em>, <em>step</em><big>)</big><a class="reference internal" href="../_modules/process/views.html#setBreakPoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.views.setBreakPoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set breakpoint for the <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a> identified from <em>process</em>.
+<em>stage</em> sets as &#8216;break_stage&#8217; of <a class="reference internal" href="#process.models.Progress" title="process.models.Progress"><tt class="xref py py-class docutils literal"><span class="pre">Progress</span></tt></a>.
+<em>step</em> set as &#8216;break_point&#8217; of <a class="reference internal" href="#process.models.Progress" title="process.models.Progress"><tt class="xref py py-class docutils literal"><span class="pre">Progress</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="process.views.startProcess">
+<tt class="descclassname">process.views.</tt><tt class="descname">startProcess</tt><big>(</big><em>request</em>, <em>process</em><big>)</big><a class="reference internal" href="../_modules/process/views.html#startProcess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#process.views.startProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a <a class="reference internal" href="#process.models.Process" title="process.models.Process"><tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt></a> identified from <em>process</em></p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="../genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="../py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="../search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Documentation of Process</a><ul>
+<li><a class="reference internal" href="#module-process.executable">executable</a></li>
+<li><a class="reference internal" href="#module-process.models">models</a></li>
+<li><a class="reference internal" href="#module-process.views">views</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/_source/process.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MTA 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Ruwan Jayasinghe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

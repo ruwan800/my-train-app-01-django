@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Documentation of Update &mdash; MTA 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MTA 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MTA 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="documentation-of-update">
+<h1>Documentation of Update<a class="headerlink" href="#documentation-of-update" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="module-update.models">
+<span id="models"></span><h2>models<a class="headerlink" href="#module-update.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="update.models.Conflict">
+<em class="property">class </em><tt class="descclassname">update.models.</tt><tt class="descname">Conflict</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/update/models.html#Conflict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.Conflict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conflict(id, trace, cat, value, msg, time, reviewed, resolved)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="update.models.Delete">
+<em class="property">class </em><tt class="descclassname">update.models.</tt><tt class="descname">Delete</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/update/models.html#Delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.Delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete(id, trace, cat, value, msg, time, reviewed)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="update.models.Insert">
+<em class="property">class </em><tt class="descclassname">update.models.</tt><tt class="descname">Insert</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/update/models.html#Insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.Insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert(id, trace, cat, value, msg, time, reviewed)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="update.models.Update">
+<em class="property">class </em><tt class="descclassname">update.models.</tt><tt class="descname">Update</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/update/models.html#Update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.Update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update(id, trace, cat1, cat2, value, old, new, time, reviewed)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.models.addConflict">
+<tt class="descclassname">update.models.</tt><tt class="descname">addConflict</tt><big>(</big><em>cat</em>, <em>value</em>, <em>msg</em><big>)</big><a class="reference internal" href="../_modules/update/models.html#addConflict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.addConflict" title="Permalink to this definition">¶</a></dt>
+<dd><p>mention items with conflicts in conflict list.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.models.addDelete">
+<tt class="descclassname">update.models.</tt><tt class="descname">addDelete</tt><big>(</big><em>cat</em>, <em>value</em>, <em>msg</em><big>)</big><a class="reference internal" href="../_modules/update/models.html#addDelete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.addDelete" title="Permalink to this definition">¶</a></dt>
+<dd><p>mention deleted items.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.models.addInsert">
+<tt class="descclassname">update.models.</tt><tt class="descname">addInsert</tt><big>(</big><em>cat</em>, <em>value</em>, <em>msg</em><big>)</big><a class="reference internal" href="../_modules/update/models.html#addInsert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.addInsert" title="Permalink to this definition">¶</a></dt>
+<dd><p>mention inserted items.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.models.addUpdate">
+<tt class="descclassname">update.models.</tt><tt class="descname">addUpdate</tt><big>(</big><em>cat1</em>, <em>cat2</em>, <em>value</em>, <em>old</em>, <em>new</em><big>)</big><a class="reference internal" href="../_modules/update/models.html#addUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.models.addUpdate" title="Permalink to this definition">¶</a></dt>
+<dd><p>mention updated item in update list.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-update.update00">
+<span id="update00"></span><h2>update00<a class="headerlink" href="#module-update.update00" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="update.update00.updateInitial">
+<tt class="descclassname">update.update00.</tt><tt class="descname">updateInitial</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/update/update00.html#updateInitial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update00.updateInitial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preparing for the update process based on server data.
+This will do emptying of auto generated <strong>schedule_downloads</strong>, 
+<strong>schedule_formatted_data</strong> pickles. It will update primary tables
+with secondary table information if primary tables are empty.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-update.update01">
+<span id="update01"></span><h2>update01<a class="headerlink" href="#module-update.update01" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="update.update01.updateStations">
+<tt class="descclassname">update.update01.</tt><tt class="descname">updateStations</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/update/update01.html#updateStations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update01.updateStations" title="Permalink to this definition">¶</a></dt>
+<dd><ol class="arabic simple">
+<li>Getting station list from web-service,</li>
+<li>Getting station list from local file <strong>data/all_stations.data</strong>.</li>
+<li>Compare stations from both streams and ignore unidentified stations
+in web-service result.</li>
+<li>Update line information.</li>
+</ol>
+</dd></dl>
+
+</div>
+<div class="section" id="module-update.update02">
+<span id="update02"></span><h2>update02<a class="headerlink" href="#module-update.update02" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="update.update02.generateCriteriaFile">
+<tt class="descclassname">update.update02.</tt><tt class="descname">generateCriteriaFile</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/update/update02.html#generateCriteriaFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update02.generateCriteriaFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function generates more optimized set of start and ending 
+station list that will used to download schedule data. This function 
+use <strong>main_stations.data</strong> and <strong>main_stations_r.data</strong> text files to 
+generate the output. The output is a CSV text file contains start
+station, end station and up value to represent direction of train 
+travel.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.update02.generateLinePaths">
+<tt class="descclassname">update.update02.</tt><tt class="descname">generateLinePaths</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/update/update02.html#generateLinePaths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update02.generateLinePaths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate line paths using <em>start</em> and <em>end</em> of each <a class="reference internal" href="train.html#train.models.Train" title="train.models.Train"><tt class="xref py py-class docutils literal"><span class="pre">Train</span></tt></a>.
+This function use <strong>main_stations.data</strong> and <strong>main_stations_r.data</strong> 
+text files to generate line paths. All the path information is saved in
+<a class="reference internal" href="station.html#station.models.LinePath" title="station.models.LinePath"><tt class="xref py py-class docutils literal"><span class="pre">LinePath</span></tt></a>. line paths are saved as a string. each path number
+is enclosed with two &#8216;-&#8216; signs from both sides. For an example a line 
+path represent paths 1,2,3,12 will be like &#8220;<em>-1&#8211;2&#8211;3&#8211;12-</em>&#8221;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.update02.readpage">
+<tt class="descclassname">update.update02.</tt><tt class="descname">readpage</tt><big>(</big><em>info</em><big>)</big><a class="reference internal" href="../_modules/update/update02.html#readpage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update02.readpage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each occurrence of this function is called in a separate thread since it 
+downloads schedule information and it takes time.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.update02.retrieveSchedulePages">
+<tt class="descclassname">update.update02.</tt><tt class="descname">retrieveSchedulePages</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/update/update02.html#retrieveSchedulePages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update02.retrieveSchedulePages" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a pool of threads to retrieve schedule information
+from web-service using <strong>schedule_criteria</strong> file. All information received 
+in each result will be save in <strong>schedule_downloads.pickle</strong> as dictionary 
+value under a key generated with &#8220;<em>&lt;start&gt;_&lt;end&gt;_&lt;up&gt;</em>&#8221; format.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-update.update03">
+<span id="update03"></span><h2>update03<a class="headerlink" href="#module-update.update03" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="update.update03.scheduleDataFormat">
+<tt class="descclassname">update.update03.</tt><tt class="descname">scheduleDataFormat</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/update/update03.html#scheduleDataFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update03.scheduleDataFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats data in <strong>schedule_downloads</strong> pickle and save in 
+<strong>schedule_formatted_data</strong> pickle. Each identified schedule
+element will be saved as a list item. Each item consists 
+following information</p>
+<ul>
+<li><p class="first"><em>trainName</em> - Name of the train.</p>
+</li>
+<li><p class="first"><em>trainNo</em> - Number of the train.</p>
+</li>
+<li><p class="first"><em>startStationName</em> - Requested travel stating station.</p>
+</li>
+<li><p class="first"><em>arrivalTime</em> - Train arrival time at the travel stating station.</p>
+</li>
+<li><p class="first"><em>depatureTime</em> - Train departure time from the travel stating station.</p>
+</li>
+<li><p class="first"><em>endStationName</em> - Finishing station of the requested travel schedule.</p>
+</li>
+<li><p class="first"><em>arrivalTimeEndStation</em> - Arrival time to the finishing station of the requested travel schedule.</p>
+</li>
+<li><p class="first"><em>finalStationName</em> - Ending station of the train.</p>
+</li>
+<li><p class="first"><em>arrivalTimeFinalStation</em> - Arrival time to the ending station of the train.</p>
+</li>
+<li><p class="first"><em>trainType</em> - Type of the train <em>eg:EXPRESS TRAIN</em>.</p>
+</li>
+<li><p class="first"><em>classList</em> - List of dictionaries which contain <strong>classID</strong>, <strong>className</strong> keys.</p>
+</li>
+<li><p class="first"><em>trainID</em> - Id of the train(<em>Not used</em>).</p>
+</li>
+<li><dl class="first docutils">
+<dt><em>trainFrequncy</em> - Availability of the train within the days of the week.</dt>
+<dd><ul class="first last simple">
+<li><strong>DAILY</strong></li>
+<li><strong>MONDAY TO FRIDAY</strong></li>
+<li><strong>MONDAY TO FRIDAY ( EXCEPT HOLIDAYS)</strong></li>
+<li><strong>MONDAY TO FRIDAY &amp; SUNDAY</strong></li>
+<li><strong>MONDAY TO SATURDAY</strong></li>
+<li><strong>NOT ON SUNDAY &amp; HOLIDAY</strong></li>
+<li><strong>OTHER</strong></li>
+<li><strong>NSO</strong></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.update03.updateSchedule">
+<tt class="descclassname">update.update03.</tt><tt class="descname">updateSchedule</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/update/update03.html#updateSchedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update03.updateSchedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function update <a class="reference internal" href="schedule.html#schedule.models.Schedule" title="schedule.models.Schedule"><tt class="xref py py-class docutils literal"><span class="pre">Schedule</span></tt></a> using data in 
+<strong>schedule_formatted_data</strong> pickle. All the information not in or
+different in the <a class="reference internal" href="schedule.html#schedule.models.PrimarySchedule" title="schedule.models.PrimarySchedule"><tt class="xref py py-class docutils literal"><span class="pre">PrimarySchedule</span></tt></a> will be updated. All the 
+updates in made to the <a class="reference internal" href="schedule.html#schedule.models.PrimarySchedule" title="schedule.models.PrimarySchedule"><tt class="xref py py-class docutils literal"><span class="pre">PrimarySchedule</span></tt></a> will also updated in
+<a class="reference internal" href="schedule.html#schedule.models.Schedule" title="schedule.models.Schedule"><tt class="xref py py-class docutils literal"><span class="pre">Schedule</span></tt></a> as well.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.update03.updateTrains">
+<tt class="descclassname">update.update03.</tt><tt class="descname">updateTrains</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/update/update03.html#updateTrains"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update03.updateTrains" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>WARNING:This function generates memory overhead</strong>.</p>
+<p>This function update <a class="reference internal" href="train.html#train.models.Train" title="train.models.Train"><tt class="xref py py-class docutils literal"><span class="pre">Train</span></tt></a> using data in 
+<strong>schedule_formatted_data</strong> pickle. All the information not in or
+different in the <a class="reference internal" href="train.html#train.models.PrimaryTrain" title="train.models.PrimaryTrain"><tt class="xref py py-class docutils literal"><span class="pre">PrimaryTrain</span></tt></a> will be updated. All the 
+updates in made to the <a class="reference internal" href="train.html#train.models.PrimaryTrain" title="train.models.PrimaryTrain"><tt class="xref py py-class docutils literal"><span class="pre">PrimaryTrain</span></tt></a> will also updated in
+<a class="reference internal" href="train.html#train.models.Train" title="train.models.Train"><tt class="xref py py-class docutils literal"><span class="pre">Train</span></tt></a> as well.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-update.update04">
+<span id="update04"></span><h2>update04<a class="headerlink" href="#module-update.update04" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="update.update04.departureNoneHackPrepare">
+<tt class="descclassname">update.update04.</tt><tt class="descname">departureNoneHackPrepare</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/update/update04.html#departureNoneHackPrepare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update04.departureNoneHackPrepare" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function has been created to fix <em>departure</em> value being <strong>None</strong> 
+in some values in <a class="reference internal" href="schedule.html#schedule.models.Schedule" title="schedule.models.Schedule"><tt class="xref py py-class docutils literal"><span class="pre">Schedule</span></tt></a>. This issue was occurred due to 
+a problem of the selecting method of starting-finishing points for 
+download schedule information in <a class="reference internal" href="#update.update02.generateCriteriaFile" title="update.update02.generateCriteriaFile"><tt class="xref py py-func docutils literal"><span class="pre">generateCriteriaFile()</span></tt></a>. However
+this function creates yet another criteria in <strong>departure_hack_retrive_list</strong>
+pickle. based on <a class="reference internal" href="schedule.html#schedule.models.Schedule" title="schedule.models.Schedule"><tt class="xref py py-class docutils literal"><span class="pre">Schedule</span></tt></a> values which has departure values
+set to <strong>None</strong>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.update04.readpage">
+<tt class="descclassname">update.update04.</tt><tt class="descname">readpage</tt><big>(</big><em>info</em><big>)</big><a class="reference internal" href="../_modules/update/update04.html#readpage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update04.readpage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each occurrence of this function is called in a separate thread since it 
+downloads schedule information and it takes time.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.update04.retrieveSchedulePages">
+<tt class="descclassname">update.update04.</tt><tt class="descname">retrieveSchedulePages</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/update/update04.html#retrieveSchedulePages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update04.retrieveSchedulePages" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a pool of threads to retrieve schedule information
+from web-service using <strong>departure_hack_retrive_list</strong> pickle. All 
+information received in each result will be save in 
+<strong>departure_hack_downloaded_data</strong> pickle as dictionary value under a 
+key generated with &#8220;<em>&lt;start&gt;_&lt;end&gt;</em>&#8221; format.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update.update04.scheduleDataFormat2">
+<tt class="descclassname">update.update04.</tt><tt class="descname">scheduleDataFormat2</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/update/update04.html#scheduleDataFormat2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#update.update04.scheduleDataFormat2" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function update empty departure values in <a class="reference internal" href="schedule.html#schedule.models.Schedule" title="schedule.models.Schedule"><tt class="xref py py-class docutils literal"><span class="pre">Schedule</span></tt></a> with 
+new values using <strong>departure_hack_downloaded_data</strong> pickle.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-update.views">
+<span id="views"></span><h2>views<a class="headerlink" href="#module-update.views" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="../genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="../py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="../search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Documentation of Update</a><ul>
+<li><a class="reference internal" href="#module-update.models">models</a></li>
+<li><a class="reference internal" href="#module-update.update00">update00</a></li>
+<li><a class="reference internal" href="#module-update.update01">update01</a></li>
+<li><a class="reference internal" href="#module-update.update02">update02</a></li>
+<li><a class="reference internal" href="#module-update.update03">update03</a></li>
+<li><a class="reference internal" href="#module-update.update04">update04</a></li>
+<li><a class="reference internal" href="#module-update.views">views</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/_source/update.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MTA 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Ruwan Jayasinghe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>status.models &mdash; MTA 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="MTA 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for status.models</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">notification.models</span> <span class="kn">import</span> <span class="n">saveTarget</span>
+<span class="kn">from</span> <span class="nn">reference.models</span> <span class="kn">import</span> <span class="n">Reference</span><span class="p">,</span> <span class="n">getReferenceObject</span>
+<span class="kn">from</span> <span class="nn">advanced.user</span> <span class="kn">import</span> <span class="n">getUser</span><span class="p">,</span> <span class="n">getReferenceObject</span> <span class="k">as</span> <span class="n">GRO</span>
+<span class="kn">from</span> <span class="nn">group.models</span> <span class="kn">import</span> <span class="n">Group</span>
+
+<div class="viewcode-block" id="Status"><a class="viewcode-back" href="../../_source/status.html#status.models.Status">[docs]</a><span class="k">class</span> <span class="nc">Status</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Reference</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&#39;s_user&#39;</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Reference</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&#39;s_status&#39;</span><span class="p">)</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">public</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;status&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
+</div>
+<div class="viewcode-block" id="saveStatus"><a class="viewcode-back" href="../../_source/status.html#status.models.saveStatus">[docs]</a><span class="k">def</span> <span class="nf">saveStatus</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        saveStatus(equest, status, msg) -&gt; None</span>
+<span class="sd">        save new comment.</span>
+<span class="sd">        request = request object</span>
+<span class="sd">        status = reference</span>
+<span class="sd">        msg = Message text</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">profile</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">GRO</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="n">ref</span> <span class="o">=</span> <span class="n">getReferenceObject</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+    <span class="n">public</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">status_is_public</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">Status</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="n">public</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">ref</span><span class="p">)</span>
+    <span class="n">Q</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">friends</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;friends&quot;</span><span class="p">)</span>
+    <span class="n">saveTarget</span><span class="p">(</span><span class="n">Status</span><span class="p">,</span><span class="n">Q</span><span class="o">.</span><span class="n">pk</span><span class="p">,[[</span><span class="n">friends</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">code</span><span class="p">]])</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Ruwan Jayasinghe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

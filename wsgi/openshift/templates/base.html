@@ -1,0 +1,36 @@
+{% extends "base_template.html" %}
+
+{% block title %}Railway Timetable{% endblock %}
+
+{% block header %}
+<div id="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 logo">
+                Railway Timetable.
+            </div>
+            <div class="col-xs-12 col-sm-2 edit">
+                <a class="btn btn-info" href="/edit">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    &nbsp;Edit
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="col-xs-12 col-sm-8 info"></div>
+    <div class="col-xs-12 col-sm-4 feed"></div>
+{% endblock %}
+
+
+{% block footer %}
+    <!--
+    <div class="col-xs-12 col-sm-6">
+        <span>Editable Timetable Project</span>
+    </div>
+    <div class="col-xs-12 col-sm-6"></div>
+    -->
+{% endblock %}

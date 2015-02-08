@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>update.update02 &mdash; MTA 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="MTA 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for update.update02</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">advanced.dir</span> <span class="kn">import</span> <span class="n">getFile</span>
+<span class="kn">from</span> <span class="nn">station.models</span> <span class="kn">import</span> <span class="n">Station</span><span class="p">,</span> <span class="n">getStationsInBetween</span><span class="p">,</span> <span class="n">LinePath</span>
+<span class="kn">from</span> <span class="nn">update.models</span> <span class="kn">import</span>  <span class="n">addConflict</span><span class="p">,</span> <span class="n">addInsert</span>
+<span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span><span class="p">,</span> <span class="n">Request</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">update.models</span> <span class="kn">import</span> <span class="n">UPDATE_STRING</span>
+<span class="kn">from</span> <span class="nn">process.models</span> <span class="kn">import</span> <span class="n">setProgressBoundary</span><span class="p">,</span> <span class="n">incrementProgress</span><span class="p">,</span> <span class="n">getCurrentProgress</span>
+<span class="kn">from</span> <span class="nn">advanced.pickle</span> <span class="kn">import</span> <span class="n">readPickle</span><span class="p">,</span> <span class="n">writePickle</span>
+
+
+<div class="viewcode-block" id="generateLinePaths"><a class="viewcode-back" href="../../_source/update.html#update.update02.generateLinePaths">[docs]</a><span class="k">def</span> <span class="nf">generateLinePaths</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate line paths using *start* and *end* of each :class:`.Train`.</span>
+<span class="sd">    This function use **main_stations.data** and **main_stations_r.data** </span>
+<span class="sd">    text files to generate line paths. All the path information is saved in</span>
+<span class="sd">    :class:`.LinePath`. line paths are saved as a string. each path number</span>
+<span class="sd">    is enclosed with two &#39;-&#39; signs from both sides. For an example a line </span>
+<span class="sd">    path represent paths 1,2,3,12 will be like &quot;*-1--2--3--12-*&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">#TODO implement this method using starting and ending points of each line</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">getFile</span><span class="p">(</span><span class="s">&quot;data&quot;</span><span class="p">,</span> <span class="s">&quot;main_stations.data&quot;</span><span class="p">),</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">getFile</span><span class="p">(</span><span class="s">&quot;data&quot;</span><span class="p">,</span> <span class="s">&quot;main_stations_r.data&quot;</span><span class="p">),</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">lines_r</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+    
+
+    <span class="c">#generate LinePaths</span>
+    <span class="n">lineSets</span> <span class="o">=</span> <span class="p">[]</span>    
+    <span class="n">up</span> <span class="o">=</span> <span class="bp">True</span>
+    
+    <span class="n">setProgressBoundary</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">lines_r</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">Zlines</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lines</span><span class="p">,</span><span class="n">lines_r</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">Zlines</span><span class="p">:</span>
+            <span class="n">incrementProgress</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;STR:: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span><span class="c">#####</span>
+            <span class="n">x</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">finish</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">Q1</span> <span class="o">=</span> <span class="n">Station</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">start</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">Q1</span><span class="p">:</span>
+                <span class="n">addConflict</span><span class="p">(</span><span class="s">&quot;schedule&quot;</span><span class="p">,</span><span class="n">start</span><span class="p">,</span> <span class="s">&quot;failed to find station object by name &#39;{}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
+                <span class="k">continue</span>
+            <span class="n">Q2</span> <span class="o">=</span> <span class="n">Station</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">finish</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">Q2</span><span class="p">:</span>
+                <span class="n">addConflict</span><span class="p">(</span><span class="s">&quot;schedule&quot;</span><span class="p">,</span><span class="n">finish</span><span class="p">,</span> <span class="s">&quot;failed to find station object by name &#39;{}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">finish</span><span class="p">))</span>
+                <span class="k">continue</span>
+            <span class="n">sl</span> <span class="o">=</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getLines</span><span class="p">()</span>
+            <span class="n">fl</span> <span class="o">=</span> <span class="n">Q2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getLines</span><span class="p">()</span>
+            <span class="n">lineSet</span> <span class="o">=</span> <span class="p">[[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sl</span><span class="p">]</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sl</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">fl</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+                        <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="c">#print(&quot;Starting Line: {} Finishing Line: {}&quot;.format(str([x.number for x in sl]),str([x.number for x in fl])))</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c">####</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+                <span class="c">#print(&quot;----------------------------------&quot;+str(i)+&quot;---------------------------------&quot;)#####</span>
+                <span class="n">lineSetB</span> <span class="o">=</span> <span class="n">lineSet</span>
+                <span class="n">i</span> <span class="o">+=</span><span class="mi">1</span> <span class="c">####</span>
+                <span class="c">#print(&quot;L1::LINES: &quot;+str([[z.number for z in y] for y in lineSet]))#####</span>
+                <span class="n">lineSet</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">LSB</span> <span class="ow">in</span> <span class="n">lineSetB</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">found</span><span class="p">:</span>
+                        <span class="k">break</span>
+                    <span class="n">junctions</span> <span class="o">=</span> <span class="n">LSB</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">getJunctions</span><span class="p">()</span>
+                    <span class="c">#print(&quot;L1:JUNCS: &quot;+str([z.name for z in junctions]))#####</span>
+                    <span class="k">for</span> <span class="n">ju</span> <span class="ow">in</span> <span class="n">junctions</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">found</span><span class="p">:</span>
+                            <span class="k">break</span>
+                        <span class="n">julns</span> <span class="o">=</span> <span class="n">ju</span><span class="o">.</span><span class="n">getLines</span><span class="p">()</span>
+                        <span class="c">#print(&quot;LX:LINES from &quot;+str(ju.name)+&quot;: &quot;+str([z.number for z in julns]))####</span>
+                        <span class="k">for</span> <span class="n">li</span> <span class="ow">in</span> <span class="n">julns</span><span class="p">:</span>
+                            <span class="c">#print(&quot;LAST LINE: {} Curr LINE: {}&quot;.format(LSB[-1].number,li.number))####</span>
+                            <span class="k">if</span> <span class="n">li</span> <span class="o">!=</span> <span class="n">LSB</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                                <span class="c">#print(&quot;COMP:: Curr LINE: {} Final LINE: {}&quot;.format(li.number,str([x.number for x in fl])))####</span>
+                                <span class="n">trueSet</span> <span class="o">=</span> <span class="n">LSB</span><span class="o">+</span><span class="p">[</span><span class="n">li</span><span class="p">]</span>
+                                <span class="k">if</span> <span class="n">li</span> <span class="ow">in</span> <span class="n">fl</span><span class="p">:</span>
+                                    <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
+                                    <span class="c">#print(&quot;FOUND:: {}&quot;.format(str([z.number for z in trueSet])))####</span>
+                                    <span class="n">exists</span> <span class="o">=</span> <span class="bp">False</span>
+                                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lineSets</span><span class="p">):</span>
+                                        <span class="k">for</span> <span class="n">LSTS</span> <span class="ow">in</span> <span class="n">lineSets</span><span class="p">:</span>
+                                            <span class="k">if</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;-{}-&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">number</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trueSet</span><span class="p">])</span> <span class="ow">in</span> <span class="n">LSTS</span><span class="p">:</span>
+                                                <span class="n">exists</span> <span class="o">=</span> <span class="bp">True</span>
+                                                <span class="k">break</span>
+                                    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">:</span>
+                                        <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;-{}-&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">number</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trueSet</span><span class="p">])</span>
+                                        <span class="n">lineSets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                                        <span class="c">#check exists in db and save if doesn&#39;t</span>
+                                        <span class="n">Q1</span> <span class="o">=</span> <span class="n">LinePath</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+                                        <span class="k">if</span> <span class="ow">not</span> <span class="n">Q1</span><span class="p">:</span>
+                                            <span class="n">Q2</span> <span class="o">=</span> <span class="n">LinePath</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">in_use</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">up</span> <span class="o">=</span> <span class="n">up</span><span class="p">)</span>
+                                            <span class="n">Q2</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                                            <span class="n">addInsert</span><span class="p">(</span><span class="s">&quot;linepath&quot;</span><span class="p">,</span><span class="n">text</span><span class="p">,</span> <span class="s">&quot;new path added&quot;</span><span class="p">)</span>
+                                    <span class="k">break</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="c">#print(&quot;ADD:: {}&quot;.format(str([x.number for x in trueSet])))####</span>
+                                    <span class="n">lineSet</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trueSet</span><span class="p">)</span>
+        <span class="n">up</span> <span class="o">=</span> <span class="bp">False</span>
+
+</div>
+<div class="viewcode-block" id="generateCriteriaFile"><a class="viewcode-back" href="../../_source/update.html#update.update02.generateCriteriaFile">[docs]</a><span class="k">def</span> <span class="nf">generateCriteriaFile</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function generates more optimized set of start and ending </span>
+<span class="sd">    station list that will used to download schedule data. This function </span>
+<span class="sd">    use **main_stations.data** and **main_stations_r.data** text files to </span>
+<span class="sd">    generate the output. The output is a CSV text file contains start</span>
+<span class="sd">    station, end station and up value to represent direction of train </span>
+<span class="sd">    travel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">searchCriteria</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">getFile</span><span class="p">(</span><span class="s">&quot;data&quot;</span><span class="p">,</span> <span class="s">&quot;main_stations.data&quot;</span><span class="p">),</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">getFile</span><span class="p">(</span><span class="s">&quot;data&quot;</span><span class="p">,</span> <span class="s">&quot;main_stations_r.data&quot;</span><span class="p">),</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">lines_r</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+    <span class="n">up</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">setProgressBoundary</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">lines_r</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">lineset</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lines</span><span class="p">,</span><span class="n">lines_r</span><span class="p">]:</span>
+        <span class="c">#assign weights to stations based on occurence</span>
+        <span class="n">stations</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lineset</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">finish</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">start</span> <span class="ow">in</span> <span class="n">stations</span><span class="p">:</span>
+                <span class="n">stations</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stations</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">finish</span> <span class="ow">in</span> <span class="n">stations</span><span class="p">:</span>
+                <span class="n">stations</span><span class="p">[</span><span class="n">finish</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stations</span><span class="p">[</span><span class="n">finish</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lineset</span><span class="p">:</span>
+            <span class="n">incrementProgress</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">)</span>
+            <span class="n">x</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">finish</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">Q1</span> <span class="o">=</span> <span class="n">Station</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">start</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">Q1</span><span class="p">:</span>
+                <span class="n">addConflict</span><span class="p">(</span><span class="s">&quot;schedule&quot;</span><span class="p">,</span><span class="n">start</span><span class="p">,</span> <span class="s">&quot;failed to find station object by name &#39;{}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
+                <span class="k">continue</span>
+            <span class="n">Q2</span> <span class="o">=</span> <span class="n">Station</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">finish</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">Q2</span><span class="p">:</span>
+                <span class="n">addConflict</span><span class="p">(</span><span class="s">&quot;schedule&quot;</span><span class="p">,</span><span class="n">finish</span><span class="p">,</span> <span class="s">&quot;failed to find station object by name &#39;{}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">finish</span><span class="p">))</span>
+                <span class="k">continue</span>
+            <span class="n">Lstart</span> <span class="o">=</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">Lfinish</span> <span class="o">=</span> <span class="n">Q2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">start</span><span class="o">+</span><span class="s">&quot; - &quot;</span><span class="o">+</span><span class="n">finish</span> <span class="ow">in</span> <span class="n">searchCriteria</span><span class="p">:</span>
+                <span class="n">searchCriteria</span><span class="p">[</span><span class="n">start</span><span class="o">+</span><span class="s">&quot; - &quot;</span><span class="o">+</span><span class="n">finish</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;start&quot;</span><span class="p">:</span><span class="n">start</span><span class="p">,</span><span class="s">&quot;finish&quot;</span><span class="p">:</span><span class="n">finish</span><span class="p">,</span><span class="s">&quot;up&quot;</span><span class="p">:</span><span class="n">up</span><span class="p">}</span>
+            <span class="n">betweens</span> <span class="o">=</span> <span class="n">getStationsInBetween</span><span class="p">(</span><span class="n">Lstart</span><span class="p">,</span><span class="n">Lfinish</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">betweens</span><span class="p">:</span>
+                <span class="n">stn</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">name</span>
+                <span class="k">if</span> <span class="n">stations</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">stations</span><span class="p">[</span><span class="n">finish</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">stn</span><span class="o">+</span><span class="s">&quot; - &quot;</span><span class="o">+</span><span class="n">finish</span> <span class="ow">in</span> <span class="n">searchCriteria</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">stn</span> <span class="o">==</span> <span class="n">finish</span><span class="p">:</span>
+                        <span class="n">searchCriteria</span><span class="p">[</span><span class="n">stn</span><span class="o">+</span><span class="s">&quot; - &quot;</span><span class="o">+</span><span class="n">finish</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;start&quot;</span><span class="p">:</span><span class="n">stn</span><span class="p">,</span><span class="s">&quot;finish&quot;</span><span class="p">:</span><span class="n">finish</span><span class="p">,</span><span class="s">&quot;up&quot;</span><span class="p">:</span><span class="n">up</span><span class="p">}</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">start</span><span class="o">+</span><span class="s">&quot; - &quot;</span><span class="o">+</span><span class="n">stn</span> <span class="ow">in</span> <span class="n">searchCriteria</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">start</span> <span class="o">==</span> <span class="n">stn</span><span class="p">:</span>
+                        <span class="n">searchCriteria</span><span class="p">[</span><span class="n">start</span><span class="o">+</span><span class="s">&quot; - &quot;</span><span class="o">+</span><span class="n">stn</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;start&quot;</span><span class="p">:</span><span class="n">start</span><span class="p">,</span><span class="s">&quot;finish&quot;</span><span class="p">:</span><span class="n">stn</span><span class="p">,</span><span class="s">&quot;up&quot;</span><span class="p">:</span><span class="n">up</span><span class="p">}</span>
+        <span class="n">up</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">getFile</span><span class="p">(</span><span class="s">&quot;gen&quot;</span><span class="p">,</span><span class="s">&quot;schedule_criteria&quot;</span><span class="p">),</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">criteria</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">searchCriteria</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">criteria</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">cr</span> <span class="ow">in</span> <span class="n">criteria</span><span class="p">:</span>
+        <span class="n">sc</span> <span class="o">=</span> <span class="n">searchCriteria</span><span class="p">[</span><span class="n">cr</span><span class="p">]</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;{:&lt;20},{:&lt;20},{:&lt;4}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sc</span><span class="p">[</span><span class="s">&quot;start&quot;</span><span class="p">],</span> <span class="n">sc</span><span class="p">[</span><span class="s">&quot;finish&quot;</span><span class="p">],</span> <span class="n">sc</span><span class="p">[</span><span class="s">&quot;up&quot;</span><span class="p">])</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="readpage"><a class="viewcode-back" href="../../_source/update.html#update.update02.readpage">[docs]</a><span class="k">def</span> <span class="nf">readpage</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Each occurrence of this function is called in a separate thread since it </span>
+<span class="sd">    downloads schedule information and it takes time.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;RSP:: {} - {} - {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">info</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span><span class="c">####</span>
+    <span class="n">Zurl</span> <span class="o">=</span> <span class="s">&quot;http://m.icta.lk/services/railwayservicev2/train/searchTrain?startStationID={}&amp;endStationID={}&amp;searchDate=2014-01-21&amp;startTime=00:00:00&amp;endTime=23:59:59&amp;lang=en&quot;</span>
+    <span class="c">#http://m.icta.lk/services/railwayservicev2/train/searchTrain?startStationID=184&amp;endStationID=61&amp;searchDate=2014-01-21&amp;startTime=00:00:00&amp;endTime=23:59:59&amp;lang=en</span>
+    <span class="n">hdr</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s">&#39;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11&#39;</span><span class="p">,</span>
+           <span class="s">&#39;Accept&#39;</span><span class="p">:</span> <span class="s">&#39;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#39;</span><span class="p">,</span>
+           <span class="s">&#39;Accept-Charset&#39;</span><span class="p">:</span> <span class="s">&#39;ISO-8859-1,utf-8;q=0.7,*;q=0.3&#39;</span><span class="p">,</span>
+           <span class="s">&#39;Accept-Encoding&#39;</span><span class="p">:</span> <span class="s">&#39;none&#39;</span><span class="p">,</span>
+           <span class="s">&#39;Accept-Language&#39;</span><span class="p">:</span> <span class="s">&#39;en-US,en;q=0.8&#39;</span><span class="p">,</span>
+           <span class="s">&#39;Connection&#39;</span><span class="p">:</span> <span class="s">&#39;keep-alive&#39;</span><span class="p">}</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">Station</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">Q1</span><span class="p">:</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">number</span>
+    <span class="n">Q2</span> <span class="o">=</span> <span class="n">Station</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">Q1</span><span class="p">:</span>
+        <span class="n">finish</span> <span class="o">=</span> <span class="n">Q2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">number</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">start</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">finish</span><span class="p">:</span>
+        <span class="n">addConflict</span><span class="p">(</span><span class="s">&quot;retrieve_schedule&quot;</span><span class="p">,</span> <span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; - &quot;</span><span class="o">+</span><span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s">&quot;Atleast {} or {} don&#39;t have a number.({},{})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">)</span> <span class="p">)</span>
+        <span class="n">incrementProgress</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    <span class="n">up</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">mod_url</span> <span class="o">=</span> <span class="n">Zurl</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">finish</span><span class="p">)</span>
+    <span class="n">Zreqest</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">mod_url</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">hdr</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">Zreqest</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">Zreqest</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">incrementProgress</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">)</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">readPickle</span><span class="p">(</span><span class="s">&quot;gen&quot;</span><span class="p">,</span><span class="s">&quot;schedule_downloads&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">content</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;{}_{}_{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">info</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">up</span><span class="p">)</span>
+    <span class="n">content</span><span class="p">[</span><span class="n">text</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span>
+    <span class="n">writePickle</span><span class="p">(</span><span class="s">&quot;gen&quot;</span><span class="p">,</span><span class="s">&quot;schedule_downloads&quot;</span><span class="p">,</span><span class="n">content</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="retrieveSchedulePages"><a class="viewcode-back" href="../../_source/update.html#update.update02.retrieveSchedulePages">[docs]</a><span class="k">def</span> <span class="nf">retrieveSchedulePages</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method creates a pool of threads to retrieve schedule information</span>
+<span class="sd">    from web-service using **schedule_criteria** file. All information received </span>
+<span class="sd">    in each result will be save in **schedule_downloads.pickle** as dictionary </span>
+<span class="sd">    value under a key generated with &quot;*&lt;start&gt;_&lt;end&gt;_&lt;up&gt;*&quot; format.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">thread_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">parralle_downloads</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">getFile</span><span class="p">(</span><span class="s">&quot;gen&quot;</span><span class="p">,</span><span class="s">&quot;schedule_criteria&quot;</span><span class="p">),</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">setProgressBoundary</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">getCurrentProgress</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)):</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="p">[</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)]</span>
+        <span class="c">#page download threads</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">readpage</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">info</span><span class="p">,))</span>
+        <span class="n">thread_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">thread_list</span><span class="p">),</span><span class="n">parralle_downloads</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="n">parralle_downloads</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+                <span class="n">thread_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="n">parralle_downloads</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+                <span class="n">thread_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Ruwan Jayasinghe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

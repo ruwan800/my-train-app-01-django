@@ -1,0 +1,75 @@
+
+.. My Train Application documentation master file, created by
+   sphinx-quickstart on Mon Jul  7 12:48:25 2014.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to MTA documentation!
+================================================
+
+**Applications**:
+
+.. toctree::
+  :maxdepth: 2
+
+
+`Change 
+<_source/change.html>`_
+
+`Comment 
+<_source/comment.html>`_
+
+`Favourite 
+<_source/favourite.html>`_
+
+`Friend 
+<_source/friend.html>`_
+
+`Group 
+<_source/group.html>`_
+
+`Home 
+<_source/home.html>`_
+
+`Message 
+<_source/message.html>`_
+
+`Notification 
+<_source/notification.html>`_
+
+`Process 
+<_source/process.html>`_
+
+`Reference 
+<_source/reference.html>`_
+
+`Schedule 
+<_source/schedule.html>`_
+
+`Station 
+<_source/station.html>`_
+
+`Status 
+<_source/status.html>`_
+
+`Subscribe 
+<_source/subscribe.html>`_
+
+`Train 
+<_source/train.html>`_
+
+`Update 
+<_source/update.html>`_
+
+`Userinfo 
+<_source/userinfo.html>`_
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+

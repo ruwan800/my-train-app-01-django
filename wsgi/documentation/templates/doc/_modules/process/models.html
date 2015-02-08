@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>process.models &mdash; MTA 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="MTA 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for process.models</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">advanced.autoimport</span> <span class="kn">import</span> <span class="n">importFunction</span>
+
+
+
+<div class="viewcode-block" id="Process"><a class="viewcode-back" href="../../_source/process.html#process.models.Process">[docs]</a><span class="k">class</span> <span class="nc">Process</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A Process responsible for executing series of functions kept on each :class:`Stage`. Each :class:`Stage`&#39;s function is executed</span>
+<span class="sd">    using :func:`Stage.execute`. Information related to execution is preserved in :class:`Progress`. Breakpoints can be setup by </span>
+<span class="sd">    modifying :class:`Progress`. Each Process have it&#39;s own :class:`Progress` instance.</span>
+<span class="sd">    </span>
+<span class="sd">    * *name*</span>
+<span class="sd">    * *name*</span>
+<span class="sd">    * *description*</span>
+<span class="sd">    * *last_run*</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">last_run</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;log_process&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+    
+<div class="viewcode-block" id="Process.getProgress"><a class="viewcode-back" href="../../_source/process.html#process.models.Process.getProgress">[docs]</a>    <span class="k">def</span> <span class="nf">getProgress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the :class:`Progress` object of the :class:`Process`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Progress</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">process</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="Process.getStages"><a class="viewcode-back" href="../../_source/process.html#process.models.Process.getStages">[docs]</a>    <span class="k">def</span> <span class="nf">getStages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns all :class:`Stage` items belongs to the :class:`Process` ordered by</span>
+<span class="sd">        :class:`Stage` index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Stage</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">process</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&#39;index&#39;</span><span class="p">)</span>
+        
+</div></div>
+<div class="viewcode-block" id="Stage"><a class="viewcode-back" href="../../_source/process.html#process.models.Stage">[docs]</a><span class="k">class</span> <span class="nc">Stage</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Holds information of all stages belongs to each :class:`Process`.</span>
+<span class="sd">    </span>
+<span class="sd">    * *process*</span>
+<span class="sd">    * *index* - Index of the stage of the process.</span>
+<span class="sd">    * *stage_message*</span>
+<span class="sd">    * *stage_function_name* - Name of the function that wii be executed in the current stage.</span>
+<span class="sd">    * *stage_function_module* - Module name of the stage function belongs.</span>
+<span class="sd">    * *stage_function_file* - File name of the stage function.</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">process</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Process</span><span class="p">)</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">stage_message</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">stage_function_module</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">stage_function_file</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">stage_function_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;log_stage&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="Stage.execute"><a class="viewcode-back" href="../../_source/process.html#process.models.Stage.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes the function identified using &#39;stage_function_name&#39; value. until it completes or reach the</span>
+<span class="sd">        breakpoint</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">getProgress</span><span class="p">()</span><span class="o">.</span><span class="n">break_stage</span><span class="o">.</span><span class="n">index</span>
+        <span class="k">if</span> <span class="n">bri</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="n">bri</span><span class="p">:</span>
+            <span class="n">function</span> <span class="o">=</span> <span class="n">importFunction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stage_function_module</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stage_function_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stage_function_name</span><span class="p">)</span>
+            <span class="n">function</span><span class="p">()</span>
+</div></div>
+<div class="viewcode-block" id="Progress"><a class="viewcode-back" href="../../_source/process.html#process.models.Progress">[docs]</a><span class="k">class</span> <span class="nc">Progress</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Progress keeps information about currently executing function, progress information and break-point information.</span>
+<span class="sd">    </span>
+<span class="sd">    * *process*</span>
+<span class="sd">    * *stage*</span>
+<span class="sd">    * *progress* -current progress of the stage</span>
+<span class="sd">    * *complete*</span>
+<span class="sd">        Sets number of steps in the stage. this will set automatically if the stage method implemented</span>
+<span class="sd">        with :func:`setProgressBoundary`.</span>
+<span class="sd">    * *break_stage* </span>
+<span class="sd">        If the stage is not empty the process will execute that stage as the last stage </span>
+<span class="sd">        before terminate.</span>
+<span class="sd">    * *break_point*</span>
+<span class="sd">        This can be set manually along with break_stage. The :class:`Stage` will terminated after executing</span>
+<span class="sd">        step mentioned in the break_point.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">process</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Process</span><span class="p">)</span>
+    <span class="n">stage</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Stage</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&quot;stage&quot;</span><span class="p">)</span>
+    <span class="n">progress</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">complete</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">break_stage</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Stage</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&quot;stage_break_point&quot;</span><span class="p">)</span>
+    <span class="n">break_point</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;log_progress&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="Progress.clear"><a class="viewcode-back" href="../../_source/process.html#process.models.Progress.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears the progress of the :class:`Progress` and reset *complete* value to 1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">break_stage</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stage</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">complete</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        </div>
+    <span class="k">def</span> <span class="nf">decrement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        
+<div class="viewcode-block" id="Progress.setStage"><a class="viewcode-back" href="../../_source/process.html#process.models.Progress.setStage">[docs]</a>    <span class="k">def</span> <span class="nf">setStage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">stage</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the *stage* of the :class:`Progress`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stage</span> <span class="o">=</span> <span class="n">stage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        </div>
+<div class="viewcode-block" id="Progress.reset"><a class="viewcode-back" href="../../_source/process.html#process.models.Progress.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set stage of this :class:`Progress` to the initial :class:`Stage` and</span>
+<span class="sd">        clears the progress of the :class:`Progress` and reset *complete* value to 1 </span>
+<span class="sd">        as well.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">break_stage</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">complete</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">Q1</span> <span class="o">=</span> <span class="n">Stage</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stage</span> <span class="o">=</span> <span class="n">Q1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="c">#deprecated        </span></div></div>
+<div class="viewcode-block" id="incrementProgress"><a class="viewcode-back" href="../../_source/process.html#process.models.incrementProgress">[docs]</a><span class="k">def</span> <span class="nf">incrementProgress</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function increments the value of completed steps in the current :class:`Stage` </span>
+<span class="sd">    of :class:`Process` identified by *text*. This function should be implemented in steps </span>
+<span class="sd">    that takes considerably long time to complete. That will help to track down the progress </span>
+<span class="sd">    of the current :class:`Stage`. This function will raise an exception if incrementing value </span>
+<span class="sd">    passed the breakpoint defined within :class:`Progress`. This method should not use twice </span>
+<span class="sd">    within single step to avoid incrementing step count twice. However it will not affects</span>
+<span class="sd">    execution of the function. But it will results erroneous step count and affects the breakpoint</span>
+<span class="sd">    </span>
+<span class="sd">    :func:`setProgressBoundary` and :func:`getCurrentProgress` should also be implemented along </span>
+<span class="sd">    with this function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">Process</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">Q1</span><span class="p">:</span>
+        <span class="n">progress</span> <span class="o">=</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getProgress</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">progress</span><span class="o">.</span><span class="n">progress</span><span class="p">:</span>
+            <span class="n">progress</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">progress</span><span class="o">.</span><span class="n">stage</span> <span class="ow">and</span> <span class="n">progress</span><span class="o">.</span><span class="n">break_stage</span> <span class="ow">and</span> <span class="n">progress</span><span class="o">.</span><span class="n">stage</span> <span class="o">==</span> <span class="n">progress</span><span class="o">.</span><span class="n">break_stage</span> <span class="ow">and</span> <span class="n">progress</span><span class="o">.</span><span class="n">break_point</span> <span class="o">&lt;=</span> <span class="n">progress</span><span class="o">.</span><span class="n">progress</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Reached break-point.&#39;</span><span class="p">)</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">progress</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="breakNow"><a class="viewcode-back" href="../../_source/process.html#process.models.breakNow">[docs]</a><span class="k">def</span> <span class="nf">breakNow</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method is deprecated. use :func:`incrementProgress` instead.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">Process</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">Q1</span><span class="p">:</span>
+        <span class="n">progress</span> <span class="o">=</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getProgress</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">progress</span><span class="o">.</span><span class="n">progress</span><span class="p">:</span>
+            <span class="n">progress</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">progress</span><span class="o">.</span><span class="n">stage</span> <span class="ow">and</span> <span class="n">progress</span><span class="o">.</span><span class="n">break_stage</span> <span class="ow">and</span> <span class="n">progress</span><span class="o">.</span><span class="n">stage</span> <span class="o">==</span> <span class="n">progress</span><span class="o">.</span><span class="n">break_stage</span> <span class="ow">and</span> <span class="n">progress</span><span class="o">.</span><span class="n">break_point</span> <span class="o">&lt;=</span> <span class="n">progress</span><span class="o">.</span><span class="n">progress</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">progress</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</div>
+<div class="viewcode-block" id="setProgressBoundary"><a class="viewcode-back" href="../../_source/process.html#process.models.setProgressBoundary">[docs]</a><span class="k">def</span> <span class="nf">setProgressBoundary</span><span class="p">(</span><span class="n">text</span><span class="p">,</span><span class="n">num</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set upper boundary as *num* of the current :class:`Stage` of the :class:`Process` identified by *text*.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">Process</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">Q1</span><span class="p">:</span>
+        <span class="n">progress</span> <span class="o">=</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getProgress</span><span class="p">()</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">complete</span> <span class="o">=</span> <span class="n">num</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    </div>
+<div class="viewcode-block" id="getCurrentProgress"><a class="viewcode-back" href="../../_source/process.html#process.models.getCurrentProgress">[docs]</a><span class="k">def</span> <span class="nf">getCurrentProgress</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns current step of the current :class:`Stage` of the :class:`Process` identified using *text*.</span>
+<span class="sd">    This could be used to identify lower boundary of stepping loop.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">Process</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">Q1</span><span class="p">:</span>
+        <span class="n">progress</span> <span class="o">=</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getProgress</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">progress</span><span class="o">.</span><span class="n">progress</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">progress</span><span class="o">.</span><span class="n">progress</span>
+    <span class="k">return</span> <span class="bp">None</span>
+</div>
+<div class="viewcode-block" id="getProcess"><a class="viewcode-back" href="../../_source/process.html#process.models.getProcess">[docs]</a><span class="k">def</span> <span class="nf">getProcess</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns :class:`Process` identified by *text* and returns **None** if failed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">Process</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">Q1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    </div>
+<div class="viewcode-block" id="getProcessProgress"><a class="viewcode-back" href="../../_source/process.html#process.models.getProcessProgress">[docs]</a><span class="k">def</span> <span class="nf">getProcessProgress</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns information related to the progress of the :class:`Process`.</span>
+<span class="sd">    If process is already completed custom message will be sent. Otherwise</span>
+<span class="sd">    returns dictionary consists of following keys.</span>
+<span class="sd">    </span>
+<span class="sd">    - process_name</span>
+<span class="sd">    - process_description</span>
+<span class="sd">    - stage_index</span>
+<span class="sd">    - stage</span>
+<span class="sd">    - progress</span>
+<span class="sd">    - progress_boundary</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">Process</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">Q1</span><span class="p">:</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">progress</span> <span class="o">=</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getProgress</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">progress</span><span class="o">.</span><span class="n">stage</span><span class="o">.</span><span class="n">index</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">progress</span><span class="o">.</span><span class="n">progress</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">progress</span><span class="o">.</span><span class="n">complete</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;Probably requested process may not have been started yet or it has been already closed.&quot;</span>
+        <span class="n">info</span><span class="p">[</span><span class="s">&#39;process_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">info</span><span class="p">[</span><span class="s">&#39;process_description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">description</span>
+        <span class="n">info</span><span class="p">[</span><span class="s">&#39;stage_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">stage</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">info</span><span class="p">[</span><span class="s">&#39;stage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">stage</span><span class="o">.</span><span class="n">stage_message</span>
+        <span class="n">info</span><span class="p">[</span><span class="s">&#39;progress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">progress</span>
+        <span class="n">info</span><span class="p">[</span><span class="s">&#39;progress_boundary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">complete</span>
+        <span class="k">return</span> <span class="n">info</span>
+    <span class="k">return</span> <span class="bp">None</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Ruwan Jayasinghe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

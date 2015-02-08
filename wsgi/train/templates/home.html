@@ -1,0 +1,61 @@
+{% extends "home_base.html" %}
+
+{% block home_content %}
+<div class="col-xs-12">
+    <div id="home_content">
+        <form>
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 col-md-4">
+                <span>From</span>
+            </div>
+            <div class="col-xs-12 col-sm-10 col-md-8">
+                <input type="text" name="start" value="Colombo Fort"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 col-md-4">
+                <span>To</span>
+            </div>
+            <div class="col-xs-12 col-sm-10 col-md-8">
+                <input type="text" name="end" value="Colombo Fort"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search">&nbsp;Search</span></button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block feed %}
+<div class="col-xs-12">
+    <div id="feed">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="btn btn-primary btn-block">
+                <span class="glyphicon glyphicon-warning-sign">&nbsp; Report Delay/Breakdown</span>
+                </div>
+            </div>
+        </div>
+        <form>
+        <div class="row">
+            <div class="col-xs-12">
+                <span>Message</span>
+            </div>
+            <div class="col-xs-12">
+                <textarea name="message"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok">&nbsp;Post Message</span></button>
+            </div>
+        </div>
+        </form>
+        {% block feed_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>schedule.models &mdash; MTA 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="MTA 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for schedule.models</h1><div class="highlight"><pre>
+<span class="c"># This is an auto-generated Django model module.</span>
+<span class="c"># You&#39;ll have to do the following manually to clean this up:</span>
+<span class="c">#     * Rearrange models&#39; order</span>
+<span class="c">#     * Make sure each model has one field with primary_key=True</span>
+<span class="c"># Feel free to rename the models, but don&#39;t rename db_table values or field names.</span>
+<span class="c">#</span>
+<span class="c"># Also note: You&#39;ll have to insert the output of &#39;django-admin.py sqlcustom [appname]&#39;</span>
+<span class="c"># into your database.</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">station.models</span> <span class="kn">import</span> <span class="n">Station</span>
+<span class="kn">from</span> <span class="nn">train.models</span> <span class="kn">import</span> <span class="n">Train</span>
+<span class="kn">from</span> <span class="nn">reference.models</span> <span class="kn">import</span> <span class="n">Reference</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+
+<div class="viewcode-block" id="Schedule"><a class="viewcode-back" href="../../_source/schedule.html#schedule.models.Schedule">[docs]</a><span class="k">class</span> <span class="nc">Schedule</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="c">##ref = models.ForeignKey(Reference) ##TODO</span>
+    <span class="n">station</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Station</span><span class="p">)</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Train</span><span class="p">)</span>
+    <span class="n">arrival</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TimeField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">departure</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TimeField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">arrival_days</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">departure_days</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">active</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;mta_schedule&#39;</span>
+        
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;{}:{} - {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">departure</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">station</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="PrimarySchedule"><a class="viewcode-back" href="../../_source/schedule.html#schedule.models.PrimarySchedule">[docs]</a><span class="k">class</span> <span class="nc">PrimarySchedule</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">station</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Station</span><span class="p">)</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Train</span><span class="p">)</span>
+    <span class="n">arrival</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TimeField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">departure</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TimeField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">arrival_days</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">departure_days</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">last_update_arrival</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">last_update_departure</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;mta_primary_schedule&#39;</span>
+        
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;{}:{} - {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">departure</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">station</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">getTrains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">station</span><span class="p">,</span><span class="n">time</span><span class="p">,</span><span class="n">duration</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">station</span><span class="o">=</span><span class="n">station</span><span class="p">,</span><span class="n">departure__range</span><span class="o">=</span><span class="p">[</span><span class="n">time</span><span class="p">,</span> <span class="n">time</span><span class="o">+</span><span class="n">duration</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">lastUpdatedArrivalToday</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update_arrival</span> <span class="o">==</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">lastUpdatedDepartureToday</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update_departure</span> <span class="o">==</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Ruwan Jayasinghe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

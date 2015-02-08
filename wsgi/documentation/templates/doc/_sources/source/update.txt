@@ -1,0 +1,63 @@
+
+.. My Train Application documentation master file, created by
+   sphinx-quickstart on Mon Jul  7 12:48:25 2014.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Documentation of Update
+================================================
+
+.. toctree::
+   :maxdepth: 2
+
+
+models
+------------------
+
+.. automodule:: update.models
+   :members:
+
+update00
+------------------
+
+.. automodule:: update.update00
+   :members:
+
+update01
+------------------
+
+.. automodule:: update.update01
+   :members:
+
+update02
+------------------
+
+.. automodule:: update.update02
+   :members:
+
+update03
+------------------
+
+.. automodule:: update.update03
+   :members:
+
+update04
+------------------
+
+.. automodule:: update.update04
+   :members:
+
+views
+------------------
+
+.. automodule:: update.views
+   :members:
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

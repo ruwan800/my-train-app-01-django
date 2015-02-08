@@ -1,0 +1,106 @@
+{% extends "home_base.html" %}
+
+{% block home_content %}
+<div class="col-xs-12">
+    <div id="home_content">
+
+    <br/><span>#change</span><br/>
+    <a href="s/change/edit/05b69d2527ec46fdb9ccd7dc3a3887db">change.views.edit</a><br/>
+    <a href="s/change/drop/05b69d2527ec46fdb9ccd7dc3a3887db">change.views.drop</a><br/>
+
+    <br/><span>#comment</span><br/>
+    <a href="s/comments/all">comment.views.all</a><br/>
+    <a href="s/comments/view/da57b687537a4a99955c53b1646dc6a4">comment.views.view</a><br/>
+    <a href="s/comments/write">comment.views.write</a><br/>
+
+    <br/><span>#favourites</span><br/>
+    <a href="s/favourites/station">favorite.views.stations</a><br/>
+    <a href="s/favourites/train">favorite.views.trains</a><br/>
+    <a href="s/favourites/schedule">favorite.views.schedule</a><br/>
+    <a href="s/favourites/mark/ead55db5e14c4591a08a0845705b4387">favorite.views.mark</a><br/>
+    <a href="s/favourites/unmark/ead55db5e14c4591a08a0845705b4387">favorite.views.unmark</a><br/>
+
+    <br/><span>#messages</span><br/>
+    <a href="s/messages/all">message.views.all</a><br/>
+    <a href="s/messages/thread/e2177e000be44bb1b88c1ac4a713ec5a">message.views.thread</a><br/>
+    <a href="s/messages/view/fe5fd486428d4fd695bfad255d12255b">message.views.view</a><br/>
+    <a href="s/messages/write">message.views.write</a><br/>
+
+    <br/><span>#notification</span><br/>
+    <a href="s/notifications/all">notification.views.all</a><br/>
+    <a href="s/notifications/new/">notification.views.new</a><br/>
+    <a href="s/notifications/view/6b7c3c3c66c54e51997b22c3487450d7">notification.views.view</a><br/>
+    <a href="s/notifications/viewed/6b7c3c3c66c54e51997b22c3487450d7">notification.views.viewed</a><br/>
+
+    <br/><span>#reference</span><br/>
+    <a href="s/reference/view/05b69d2527ec46fdb9ccd7dc3a3887db">reference.views.view</a><br/>
+
+    <br/><span>#schedule</span><br/>
+    <a href="s/schedule/from/polgahawela/to/badulla">schedule.views.find</a><br/>
+
+    <br/><span>#station</span><br/>
+    <a href="s/stations/by-line/(?P<ref>[a-z0-9]{32})">station.views.findByLine</a><br/>
+    <a href="s/stations/search/gan">station.views.search</a><br/>
+    <a href="s/stations/view/05b69d2527ec46fdb9ccd7dc3a3887db">station.views.view</a><br/>
+
+    <br/><span>#status</span><br/>
+    <a href="s/status/new/05b69d2527ec46fdb9ccd7dc3a3887db">status.views.checkIn</a><br/>
+    <a href="s/status/find/05b69d2527ec46fdb9ccd7dc3a3887db">status.views.checkInsAt</a><br/>
+
+    <br/><span>#subscribe</span><br/>
+    <a href="s/subscribe/subscribed">subscribe.views.subscribed</a><br/>
+    <a href="s/subscribe/suggestions">subscribe.views.suggestions</a><br/>
+    <a href="s/subscribe/add/05b69d2527ec46fdb9ccd7dc3a3887db">subscribe.views.add</a><br/>
+    <a href="s/subscribe/remove/05b69d2527ec46fdb9ccd7dc3a3887db">subscribe.views.remove</a><br/>
+
+    <br/><span>#train</span><br/>
+    <a href="s/trains/search/mari">train.views.search</a><br/>
+    <a href="s/trains/view/05b69d2527ec46fdb9ccd7dc3a3887db">train.views.view</a><br/>
+
+    <br/><span>#user</span><br/>
+    <a href="s/user/profile/(?P<ref>[a-z0-9]{32})">userinfo.views.profile</a><br/>
+    <a href="s/user/friends/(?P<ref>[a-z0-9]{32})">userinfo.views.friends</a><br/>
+    <a href="s/user/settings">userinfo.views.settings</a><br/>
+    <a href="s/user/update/(?P<field>[a-z0-9_]{3,20})/(?P<value>[a-zA-Z0-9_]*)">userinfo.views.update</a><br/>
+    <a href="s/user/activity/(?P<ref>[a-z0-9]{32})">userinfo.views.activity</a><br/>
+
+    <br/><span>#update</span><br/>
+    <a href="s/update">s/update/</a><br/>
+    <a href="s/update/progress">s/update/progress</a><br/>
+    <a href="s/update/schedule">s/update/schedule</a><br/>
+    <a href="s/update/schedule/progress">s/update/schedule/progress</a><br/>
+    <a href="s/user/activity/(?P<ref>[a-z0-9]{32})">userinfo.views.activity</a><br/>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block feed %}
+<div class="col-xs-12">
+    <div id="feed">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="btn btn-primary btn-block">
+                <span class="glyphicon glyphicon-warning-sign">&nbsp; Report Delay/Breakdown</span><br/>
+                </div>
+            </div>
+        </div>
+        <form>
+        <div class="row">
+            <div class="col-xs-12">
+                <span>Message</span>
+            </div>
+            <div class="col-xs-12">
+                <textarea name="message"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok">&nbsp;Post Message</span><br/></button>
+            </div>
+        </div>
+        </form>
+        {% block feed_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

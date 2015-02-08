@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>update.update03 &mdash; MTA 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="MTA 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for update.update03</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">advanced.pickle</span> <span class="kn">import</span> <span class="n">readPickle</span><span class="p">,</span> <span class="n">writePickle</span>
+<span class="kn">from</span> <span class="nn">process.models</span> <span class="kn">import</span> <span class="n">setProgressBoundary</span><span class="p">,</span> <span class="n">getCurrentProgress</span><span class="p">,</span> <span class="n">breakNow</span>
+<span class="kn">from</span> <span class="nn">update.models</span> <span class="kn">import</span> <span class="n">UPDATE_STRING</span><span class="p">,</span> <span class="n">addConflict</span><span class="p">,</span> <span class="n">addInsert</span><span class="p">,</span> <span class="n">addUpdate</span>
+<span class="kn">from</span> <span class="nn">train.models</span> <span class="kn">import</span> <span class="n">getTrainType</span><span class="p">,</span> <span class="n">Train</span><span class="p">,</span> <span class="n">PrimaryTrain</span><span class="p">,</span> <span class="n">getTrainByNumber</span>
+<span class="kn">from</span> <span class="nn">station.models</span> <span class="kn">import</span> <span class="n">getStation</span><span class="p">,</span> <span class="n">getStationsInBetween</span>
+<span class="kn">from</span> <span class="nn">schedule.models</span> <span class="kn">import</span> <span class="n">Schedule</span><span class="p">,</span> <span class="n">PrimarySchedule</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">date</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<div class="viewcode-block" id="scheduleDataFormat"><a class="viewcode-back" href="../../_source/update.html#update.update03.scheduleDataFormat">[docs]</a><span class="k">def</span> <span class="nf">scheduleDataFormat</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formats data in **schedule_downloads** pickle and save in </span>
+<span class="sd">    **schedule_formatted_data** pickle. Each identified schedule</span>
+<span class="sd">    element will be saved as a list item. Each item consists </span>
+<span class="sd">    following information</span>
+<span class="sd">    </span>
+<span class="sd">    - *trainName* - Name of the train.</span>
+<span class="sd">    - *trainNo* - Number of the train.</span>
+<span class="sd">    - *startStationName* - Requested travel stating station.</span>
+<span class="sd">    - *arrivalTime* - Train arrival time at the travel stating station.</span>
+<span class="sd">    - *depatureTime* - Train departure time from the travel stating station.</span>
+<span class="sd">    - *endStationName* - Finishing station of the requested travel schedule.</span>
+<span class="sd">    - *arrivalTimeEndStation* - Arrival time to the finishing station of the requested travel schedule.</span>
+<span class="sd">    - *finalStationName* - Ending station of the train.</span>
+<span class="sd">    - *arrivalTimeFinalStation* - Arrival time to the ending station of the train.</span>
+<span class="sd">    - *trainType* - Type of the train *eg:EXPRESS TRAIN*.</span>
+<span class="sd">    - *classList* - List of dictionaries which contain **classID**, **className** keys.</span>
+<span class="sd">    - *trainID* - Id of the train(*Not used*).</span>
+<span class="sd">    - *trainFrequncy* - Availability of the train within the days of the week.</span>
+<span class="sd">        + **DAILY**</span>
+<span class="sd">        + **MONDAY TO FRIDAY**</span>
+<span class="sd">        + **MONDAY TO FRIDAY ( EXCEPT HOLIDAYS)**</span>
+<span class="sd">        + **MONDAY TO FRIDAY &amp; SUNDAY**</span>
+<span class="sd">        + **MONDAY TO SATURDAY**</span>
+<span class="sd">        + **NOT ON SUNDAY &amp; HOLIDAY**</span>
+<span class="sd">        + **OTHER**</span>
+<span class="sd">        + **NSO**</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">readPickle</span><span class="p">(</span><span class="s">&quot;gen&quot;</span><span class="p">,</span><span class="s">&quot;schedule_downloads&quot;</span><span class="p">)</span>
+    <span class="n">keyset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">setProgressBoundary</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">keyset</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">getCurrentProgress</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">keyset</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">breakNow</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">):</span>
+            <span class="k">break</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">keyset</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;SDF :: &quot;</span><span class="o">+</span><span class="n">key</span><span class="p">)</span><span class="c">####</span>
+        <span class="n">keyinfo</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;_&quot;</span><span class="p">)</span>
+        <span class="n">c1</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="n">c2</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">c1</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">c2</span><span class="p">[</span><span class="s">&#39;SUCCESS&#39;</span><span class="p">]:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">c2</span><span class="p">[</span><span class="s">&quot;RESULTS&quot;</span><span class="p">][</span><span class="s">&quot;directTrains&quot;</span><span class="p">][</span><span class="s">&#39;trainsList&#39;</span><span class="p">]</span>
+            <span class="n">scheduleList</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">schedule</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+                <span class="n">schedule</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">keyinfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">schedule</span><span class="p">[</span><span class="s">&#39;finish&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">keyinfo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">schedule</span><span class="p">[</span><span class="s">&#39;up&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">keyinfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">scheduleList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">schedule</span><span class="p">)</span>
+            <span class="n">data2</span> <span class="o">=</span> <span class="n">readPickle</span><span class="p">(</span><span class="s">&quot;gen&quot;</span><span class="p">,</span><span class="s">&quot;schedule_formatted_data&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">data2</span><span class="p">:</span>
+                <span class="n">data2</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">writePickle</span><span class="p">(</span><span class="s">&quot;gen&quot;</span><span class="p">,</span><span class="s">&quot;schedule_formatted_data&quot;</span><span class="p">,</span><span class="n">data2</span><span class="o">+</span><span class="n">scheduleList</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="updateTrains"><a class="viewcode-back" href="../../_source/update.html#update.update03.updateTrains">[docs]</a><span class="k">def</span> <span class="nf">updateTrains</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    **WARNING:This function generates memory overhead**.</span>
+<span class="sd">    </span>
+<span class="sd">    This function update :class:`.Train` using data in </span>
+<span class="sd">    **schedule_formatted_data** pickle. All the information not in or</span>
+<span class="sd">    different in the :class:`.PrimaryTrain` will be updated. All the </span>
+<span class="sd">    updates in made to the :class:`.PrimaryTrain` will also updated in</span>
+<span class="sd">    :class:`.Train` as well.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">readPickle</span><span class="p">(</span><span class="s">&quot;gen&quot;</span><span class="p">,</span><span class="s">&quot;schedule_formatted_data&quot;</span><span class="p">)</span>
+    <span class="n">setProgressBoundary</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">getCurrentProgress</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+        <span class="n">sch</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">breakNow</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">):</span>
+            <span class="k">break</span>
+
+        <span class="n">freq</span> <span class="o">=</span> <span class="n">sch</span><span class="p">[</span><span class="s">&#39;trainFrequncy&#39;</span><span class="p">]</span>
+        <span class="c">#0b[holiday][sun][sat][fri][thu][wed][tue][mon]</span>
+        <span class="k">if</span> <span class="n">freq</span> <span class="o">==</span> <span class="s">&#39;DAILY&#39;</span><span class="p">:</span>
+            <span class="n">frequency</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b11111111</span>
+        <span class="k">elif</span> <span class="n">freq</span> <span class="o">==</span> <span class="s">&#39;MONDAY TO FRIDAY&#39;</span><span class="p">:</span>
+            <span class="n">frequency</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b10011111</span>
+        <span class="k">elif</span> <span class="n">freq</span> <span class="o">==</span> <span class="s">&#39;MONDAY TO FRIDAY ( EXCEPT HOLIDAYS)&#39;</span><span class="p">:</span>
+            <span class="n">frequency</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b00011111</span>
+        <span class="k">elif</span> <span class="n">freq</span> <span class="o">==</span> <span class="s">&#39;MONDAY TO FRIDAY &amp; SUNDAY&#39;</span><span class="p">:</span>
+            <span class="n">frequency</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b11011111</span>
+        <span class="k">elif</span> <span class="n">freq</span> <span class="o">==</span> <span class="s">&#39;MONDAY TO SATURDAY&#39;</span><span class="p">:</span>
+            <span class="n">frequency</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b10111111</span>
+        <span class="k">elif</span> <span class="n">freq</span> <span class="o">==</span> <span class="s">&#39;NOT ON SUNDAY &amp; HOLIDAY&#39;</span><span class="p">:</span>
+            <span class="n">frequency</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b00111111</span>
+        <span class="k">elif</span> <span class="n">freq</span> <span class="o">==</span> <span class="s">&#39;OTHER&#39;</span> <span class="ow">or</span> <span class="n">freq</span> <span class="o">==</span> <span class="s">&#39;NSO&#39;</span><span class="p">:</span>
+            <span class="n">frequency</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b00000000</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">frequency</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b11111111</span>
+            <span class="n">addConflict</span><span class="p">(</span><span class="s">&quot;system&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="s">&quot;type &#39;{}&#39; not mentioned as a frequency type in update.updatedataformat.scheduleDataFormat line 54&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">freq</span><span class="p">))</span>
+        
+        <span class="n">Zcls</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;classID&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sch</span><span class="p">[</span><span class="s">&#39;classList&#39;</span><span class="p">]]</span>
+        <span class="c">#0b[1][2][3]</span>
+        <span class="n">classes</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="mi">3</span> <span class="ow">in</span> <span class="n">Zcls</span><span class="p">:</span>
+            <span class="n">classes</span> <span class="o">+=</span> <span class="mi">0</span><span class="n">b1</span>
+        <span class="k">if</span> <span class="mi">2</span> <span class="ow">in</span> <span class="n">Zcls</span><span class="p">:</span>
+            <span class="n">classes</span> <span class="o">+=</span> <span class="mi">0</span><span class="n">b10</span>
+        <span class="k">if</span> <span class="mi">1</span> <span class="ow">in</span> <span class="n">Zcls</span><span class="p">:</span>
+            <span class="n">classes</span> <span class="o">+=</span> <span class="mi">0</span><span class="n">b100</span>
+        
+        <span class="n">start_station</span> <span class="o">=</span> <span class="n">getStation</span><span class="p">(</span><span class="n">sch</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">])</span> <span class="c">#sch[&#39;startStationName&#39;]</span>
+        <span class="n">finish_station</span> <span class="o">=</span> <span class="n">getStation</span><span class="p">(</span><span class="n">sch</span><span class="p">[</span><span class="s">&#39;finalStationName&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">start_station</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">finish_station</span><span class="p">:</span>
+            <span class="k">continue</span>
+        
+        <span class="n">number</span> <span class="o">=</span> <span class="n">sch</span><span class="p">[</span><span class="s">&#39;trainNo&#39;</span><span class="p">]</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">sch</span><span class="p">[</span><span class="s">&#39;trainName&#39;</span><span class="p">]</span>
+        <span class="n">up</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sch</span><span class="p">[</span><span class="s">&#39;up&#39;</span><span class="p">])</span>
+        <span class="n">Ztype</span> <span class="o">=</span> <span class="n">getTrainType</span><span class="p">(</span><span class="n">sch</span><span class="p">[</span><span class="s">&#39;trainType&#39;</span><span class="p">])</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">sch</span><span class="p">[</span><span class="s">&#39;depatureTime&#39;</span><span class="p">],</span><span class="s">&quot;%H:%M:%S&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">sch</span><span class="p">[</span><span class="s">&#39;arrivalTimeFinalStation&#39;</span><span class="p">],</span><span class="s">&quot;%H:%M:%S&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        
+        <span class="n">Q1</span> <span class="o">=</span> <span class="n">PrimaryTrain</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="n">number</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">Q1</span><span class="p">:</span>
+            <span class="n">Q2</span> <span class="o">=</span> <span class="n">PrimaryTrain</span><span class="p">(</span> <span class="n">number</span> <span class="o">=</span> <span class="n">number</span><span class="p">,</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span>
+                        <span class="n">start</span> <span class="o">=</span> <span class="n">start_station</span><span class="p">,</span>
+                        <span class="n">end</span> <span class="o">=</span> <span class="n">finish_station</span><span class="p">,</span>
+                        <span class="n">start_time</span> <span class="o">=</span> <span class="n">start_time</span><span class="p">,</span>
+                        <span class="n">end_time</span> <span class="o">=</span> <span class="n">end_time</span><span class="p">,</span>
+                        <span class="n">up</span> <span class="o">=</span> <span class="n">up</span><span class="p">,</span>
+                        <span class="nb">type</span> <span class="o">=</span> <span class="n">Ztype</span><span class="p">,</span>
+                        <span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span><span class="p">,</span>
+                        <span class="n">frequency</span> <span class="o">=</span> <span class="n">frequency</span><span class="p">)</span>
+            <span class="n">Q2</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">Q3</span> <span class="o">=</span> <span class="n">Train</span><span class="p">(</span> <span class="n">number</span> <span class="o">=</span> <span class="n">number</span><span class="p">,</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span>
+                        <span class="n">start</span> <span class="o">=</span> <span class="n">start_station</span><span class="p">,</span>
+                        <span class="n">end</span> <span class="o">=</span> <span class="n">finish_station</span><span class="p">,</span>
+                        <span class="n">start_time</span> <span class="o">=</span> <span class="n">start_time</span><span class="p">,</span>
+                        <span class="n">end_time</span> <span class="o">=</span> <span class="n">end_time</span><span class="p">,</span>
+                        <span class="n">up</span> <span class="o">=</span> <span class="n">up</span><span class="p">,</span>
+                        <span class="nb">type</span> <span class="o">=</span> <span class="n">Ztype</span><span class="p">,</span>
+                        <span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span><span class="p">,</span>
+                        <span class="n">frequency</span> <span class="o">=</span> <span class="n">frequency</span><span class="p">)</span>
+            <span class="n">Q3</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">addInsert</span><span class="p">(</span><span class="s">&quot;train&quot;</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="s">&quot;Added new train with number &#39;{}&#39; (name:&#39;{}&#39;)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="p">,</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;UTI :: {} - {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="p">,</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">changed</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">ss_changed</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">obj0</span> <span class="o">=</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">obj1</span> <span class="o">=</span> <span class="n">Train</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="n">number</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">obj0</span><span class="o">.</span><span class="n">number</span> <span class="o">!=</span> <span class="n">number</span><span class="p">:</span>
+                <span class="n">obj0</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+                <span class="n">obj1</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+                <span class="n">changed</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">obj0</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="n">name</span><span class="p">:</span>
+                <span class="n">obj0</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+                <span class="n">obj1</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+                <span class="n">changed</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">obj0</span><span class="o">.</span><span class="n">end</span> <span class="o">!=</span> <span class="n">finish_station</span><span class="p">:</span>
+                <span class="n">obj0</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">finish_station</span>
+                <span class="n">obj1</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">finish_station</span>
+                <span class="n">changed</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">obj0</span><span class="o">.</span><span class="n">end_time</span> <span class="o">!=</span> <span class="n">end_time</span><span class="p">:</span>
+                <span class="n">obj0</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="n">end_time</span>
+                <span class="n">obj1</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="n">end_time</span>
+                <span class="n">changed</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">obj0</span><span class="o">.</span><span class="n">up</span> <span class="o">!=</span> <span class="n">up</span><span class="p">:</span>
+                <span class="n">obj0</span><span class="o">.</span><span class="n">up</span> <span class="o">=</span> <span class="n">up</span>
+                <span class="n">obj1</span><span class="o">.</span><span class="n">up</span> <span class="o">=</span> <span class="n">up</span>
+                <span class="n">changed</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">obj0</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">Ztype</span><span class="p">:</span>
+                <span class="n">obj0</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">Ztype</span>
+                <span class="n">obj1</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">Ztype</span>
+                <span class="n">changed</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">obj0</span><span class="o">.</span><span class="n">classes</span> <span class="o">!=</span> <span class="n">classes</span><span class="p">:</span>
+                <span class="n">obj0</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span>
+                <span class="n">obj1</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span>
+                <span class="n">changed</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">obj0</span><span class="o">.</span><span class="n">frequency</span> <span class="o">!=</span> <span class="n">frequency</span><span class="p">:</span>
+                <span class="n">obj0</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">frequency</span>
+                <span class="n">obj1</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">frequency</span>
+                <span class="n">changed</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="c">#TODO we have no method to identify if start station changes if it come closer to end station in an update</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">getStationsInBetween</span><span class="p">(</span><span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">finish_station</span><span class="p">))</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">getStationsInBetween</span><span class="p">(</span><span class="n">start_station</span><span class="p">,</span> <span class="n">finish_station</span><span class="p">)):</span>
+                <span class="n">obj0</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start_station</span>
+                <span class="n">obj1</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start_station</span>
+                
+                <span class="n">obj0</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">start_time</span>
+                <span class="n">obj1</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">start_time</span>
+                
+                <span class="n">changed</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">ss_changed</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">changed</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">last_update</span> <span class="o">==</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">ss_changed</span><span class="p">:</span>
+                        <span class="n">addConflict</span><span class="p">(</span><span class="s">&quot;train&quot;</span><span class="p">,</span> <span class="n">obj0</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s">&quot;Something not write with this object: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj0</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">print</span><span class="p">(</span><span class="s">&quot;UTU :: {} - {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="p">,</span><span class="n">name</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">addUpdate</span><span class="p">(</span><span class="s">&quot;train&quot;</span><span class="p">,</span> <span class="s">&quot;somefields&quot;</span><span class="p">,</span> <span class="n">obj0</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>        
+                <span class="n">obj0</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="n">obj1</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="updateSchedule"><a class="viewcode-back" href="../../_source/update.html#update.update03.updateSchedule">[docs]</a><span class="k">def</span> <span class="nf">updateSchedule</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function update :class:`.Schedule` using data in </span>
+<span class="sd">    **schedule_formatted_data** pickle. All the information not in or</span>
+<span class="sd">    different in the :class:`.PrimarySchedule` will be updated. All the </span>
+<span class="sd">    updates in made to the :class:`.PrimarySchedule` will also updated in</span>
+<span class="sd">    :class:`.Schedule` as well.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">readPickle</span><span class="p">(</span><span class="s">&quot;gen&quot;</span><span class="p">,</span><span class="s">&quot;schedule_formatted_data&quot;</span><span class="p">)</span>
+    <span class="n">setProgressBoundary</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">getCurrentProgress</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">breakNow</span><span class="p">(</span><span class="n">UPDATE_STRING</span><span class="p">):</span>
+            <span class="k">break</span>
+        <span class="n">sch</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">train</span> <span class="o">=</span> <span class="n">getTrainByNumber</span><span class="p">(</span><span class="n">sch</span><span class="p">[</span><span class="s">&#39;trainNo&#39;</span><span class="p">])</span>
+        <span class="n">schInfo</span> <span class="o">=</span>   <span class="p">[{</span>  <span class="s">&#39;station&#39;</span> <span class="p">:</span> <span class="n">getStation</span><span class="p">(</span><span class="n">sch</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]),</span> <span class="c">#sch[&#39;startStationName&#39;]</span>
+                        <span class="s">&#39;arrival&#39;</span> <span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">sch</span><span class="p">[</span><span class="s">&#39;arrivalTime&#39;</span><span class="p">],</span><span class="s">&quot;%H:%M:%S&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
+                        <span class="s">&#39;departure&#39;</span> <span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">sch</span><span class="p">[</span><span class="s">&#39;depatureTime&#39;</span><span class="p">],</span><span class="s">&quot;%H:%M:%S&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="p">},</span>
+                    <span class="p">{</span>   <span class="s">&#39;station&#39;</span> <span class="p">:</span> <span class="n">getStation</span><span class="p">(</span><span class="n">sch</span><span class="p">[</span><span class="s">&#39;finish&#39;</span><span class="p">]),</span> <span class="c">#sch[&#39;endStationName&#39;]</span>
+                        <span class="s">&#39;arrival&#39;</span> <span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">sch</span><span class="p">[</span><span class="s">&#39;arrivalTimeEndStation&#39;</span><span class="p">],</span><span class="s">&quot;%H:%M:%S&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
+                        <span class="s">&#39;departure&#39;</span> <span class="p">:</span> <span class="bp">None</span> <span class="p">}</span> <span class="p">]</span>
+        
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;STATION  :: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;station&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">schInfo</span><span class="p">]))</span><span class="c">####</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;ARRIVAL  :: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;arrival&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">schInfo</span><span class="p">]))</span><span class="c">####</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;DEPARTURE:: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;departure&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">schInfo</span><span class="p">]))</span><span class="c">####</span>
+        <span class="k">for</span> <span class="n">si</span> <span class="ow">in</span> <span class="n">schInfo</span><span class="p">:</span>
+            <span class="n">changed</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">Q1</span> <span class="o">=</span> <span class="n">PrimarySchedule</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">,</span><span class="n">station</span><span class="o">=</span><span class="n">si</span><span class="p">[</span><span class="s">&#39;station&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">Q1</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">Q2</span> <span class="o">=</span> <span class="n">Schedule</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">,</span><span class="n">station</span><span class="o">=</span><span class="n">si</span><span class="p">[</span><span class="s">&#39;station&#39;</span><span class="p">])</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">Q2</span> <span class="o">=</span> <span class="n">Schedule</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">,</span><span class="n">station</span><span class="o">=</span><span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">station</span><span class="p">,</span><span class="n">arrival</span><span class="o">=</span><span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">arrival</span><span class="p">,</span> <span class="n">departure</span><span class="o">=</span><span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">departure</span><span class="p">)</span>
+                    <span class="n">Q2</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">si</span><span class="p">[</span><span class="s">&#39;arrival&#39;</span><span class="p">]:</span>
+                    <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">arrival</span> <span class="o">=</span> <span class="n">si</span><span class="p">[</span><span class="s">&#39;arrival&#39;</span><span class="p">]</span>
+                    <span class="n">Q2</span><span class="o">.</span><span class="n">arrival</span> <span class="o">=</span> <span class="n">si</span><span class="p">[</span><span class="s">&#39;arrival&#39;</span><span class="p">]</span>
+                    <span class="n">changed</span> <span class="o">=</span><span class="bp">True</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lastUpdatedArrivalToday</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">arrival</span><span class="p">:</span>
+                            <span class="n">addUpdate</span><span class="p">(</span><span class="s">&quot;schedule&quot;</span><span class="p">,</span> <span class="s">&quot;arrival&quot;</span><span class="p">,</span> <span class="s">&quot;{} - {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Q2</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">number</span><span class="p">,</span><span class="n">Q2</span><span class="o">.</span><span class="n">station</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">Q2</span><span class="o">.</span><span class="n">arrival</span><span class="p">,</span> <span class="n">si</span><span class="p">[</span><span class="s">&#39;arrival&#39;</span><span class="p">])</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">addConflict</span><span class="p">(</span><span class="s">&quot;schedule&quot;</span><span class="p">,</span> <span class="s">&quot;{} - {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Q2</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">number</span><span class="p">,</span><span class="n">Q2</span><span class="o">.</span><span class="n">station</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="s">&quot;{} is been replaced by {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Q2</span><span class="o">.</span><span class="n">arrival</span><span class="p">,</span> <span class="n">si</span><span class="p">[</span><span class="s">&#39;arrival&#39;</span><span class="p">]))</span>
+                <span class="k">if</span> <span class="n">si</span><span class="p">[</span><span class="s">&#39;departure&#39;</span><span class="p">]:</span>
+                    <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">departure</span> <span class="o">=</span> <span class="n">si</span><span class="p">[</span><span class="s">&#39;departure&#39;</span><span class="p">]</span>
+                    <span class="n">changed</span> <span class="o">=</span><span class="bp">True</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lastUpdatedDepartureToday</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">departure</span><span class="p">:</span>
+                            <span class="n">addUpdate</span><span class="p">(</span><span class="s">&quot;schedule&quot;</span><span class="p">,</span> <span class="s">&quot;departure&quot;</span><span class="p">,</span> <span class="s">&quot;{} - {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Q2</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">number</span><span class="p">,</span><span class="n">Q2</span><span class="o">.</span><span class="n">station</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">Q2</span><span class="o">.</span><span class="n">departure</span><span class="p">,</span> <span class="n">si</span><span class="p">[</span><span class="s">&#39;departure&#39;</span><span class="p">])</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">addConflict</span><span class="p">(</span><span class="s">&quot;schedule&quot;</span><span class="p">,</span> <span class="s">&quot;{} - {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Q2</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">number</span><span class="p">,</span><span class="n">Q2</span><span class="o">.</span><span class="n">station</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="s">&quot;{} is been replaced by {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Q2</span><span class="o">.</span><span class="n">departure</span><span class="p">,</span> <span class="n">si</span><span class="p">[</span><span class="s">&#39;departure&#39;</span><span class="p">]))</span>
+                <span class="k">if</span> <span class="n">changed</span><span class="p">:</span>
+                    <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                    <span class="n">Q2</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">Q3</span> <span class="o">=</span> <span class="n">PrimarySchedule</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">,</span><span class="n">station</span><span class="o">=</span><span class="n">si</span><span class="p">[</span><span class="s">&#39;station&#39;</span><span class="p">],</span><span class="n">arrival</span><span class="o">=</span><span class="n">si</span><span class="p">[</span><span class="s">&#39;arrival&#39;</span><span class="p">],</span> <span class="n">departure</span><span class="o">=</span><span class="n">si</span><span class="p">[</span><span class="s">&#39;departure&#39;</span><span class="p">]</span> <span class="p">)</span>
+                <span class="n">Q4</span> <span class="o">=</span> <span class="n">Schedule</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">,</span><span class="n">station</span><span class="o">=</span><span class="n">si</span><span class="p">[</span><span class="s">&#39;station&#39;</span><span class="p">],</span><span class="n">arrival</span><span class="o">=</span><span class="n">si</span><span class="p">[</span><span class="s">&#39;arrival&#39;</span><span class="p">],</span> <span class="n">departure</span><span class="o">=</span><span class="n">si</span><span class="p">[</span><span class="s">&#39;departure&#39;</span><span class="p">]</span> <span class="p">)</span>
+                
+                <span class="n">Q3</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="n">Q4</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="n">addInsert</span><span class="p">(</span><span class="s">&quot;schedule&quot;</span><span class="p">,</span> <span class="s">&quot;{} - {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Q3</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">number</span><span class="p">,</span><span class="n">Q3</span><span class="o">.</span><span class="n">station</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="s">&quot;{} is been replaced by {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Q3</span><span class="o">.</span><span class="n">departure</span><span class="p">,</span> <span class="n">si</span><span class="p">[</span><span class="s">&#39;departure&#39;</span><span class="p">]))</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Ruwan Jayasinghe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

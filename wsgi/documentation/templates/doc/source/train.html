@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Documentation of Train &mdash; MTA 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="MTA 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MTA 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="documentation-of-train">
+<h1>Documentation of Train<a class="headerlink" href="#documentation-of-train" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="module-train.models">
+<span id="models"></span><h2>models<a class="headerlink" href="#module-train.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="train.models.Engine">
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">Engine</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/train/models.html#Engine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#train.models.Engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Engine(id, type_id, name, year, active, number, description)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="train.models.EngineType">
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">EngineType</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/train/models.html#EngineType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#train.models.EngineType" title="Permalink to this definition">¶</a></dt>
+<dd><p>EngineType(id, name, number, parent_category, main_category, amount, description)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="train.models.EngineTypeForTrain">
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">EngineTypeForTrain</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/train/models.html#EngineTypeForTrain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#train.models.EngineTypeForTrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>EngineTypeForTrain(id, train_id, enginetype_id)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="train.models.PrimaryTrain">
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">PrimaryTrain</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/train/models.html#PrimaryTrain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#train.models.PrimaryTrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>PrimaryTrain(id, number, name, start_id, end_id, start_time, end_time, end_time_days, start_date, end_date, up, comment, description, type_id, classes, frequency, facilities, last_update)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="train.models.Train">
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">Train</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/train/models.html#Train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#train.models.Train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train(id, number, name, start_id, end_id, start_time, end_time, end_time_days, start_date, end_date, up, comment, description, type_id, classes, frequency, facilities, last_update, active)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="train.models.TrainType">
+<em class="property">class </em><tt class="descclassname">train.models.</tt><tt class="descname">TrainType</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/train/models.html#TrainType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#train.models.TrainType" title="Permalink to this definition">¶</a></dt>
+<dd><p>TrainType(id, name, type, category, description)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-train.views">
+<span id="views"></span><h2>views<a class="headerlink" href="#module-train.views" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="../genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="../py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="../search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Documentation of Train</a><ul>
+<li><a class="reference internal" href="#module-train.models">models</a></li>
+<li><a class="reference internal" href="#module-train.views">views</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/source/train.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">MTA 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Ruwan Jayasinghe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

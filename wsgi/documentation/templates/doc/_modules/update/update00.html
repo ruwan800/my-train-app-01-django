@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>update.update00 &mdash; MTA 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="MTA 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for update.update00</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">advanced.pickle</span> <span class="kn">import</span> <span class="n">writePickle</span>
+<span class="kn">from</span> <span class="nn">train.models</span> <span class="kn">import</span> <span class="n">PrimaryTrain</span><span class="p">,</span> <span class="n">Train</span>
+<span class="kn">from</span> <span class="nn">schedule.models</span> <span class="kn">import</span> <span class="n">PrimarySchedule</span><span class="p">,</span> <span class="n">Schedule</span>
+
+
+<div class="viewcode-block" id="updateInitial"><a class="viewcode-back" href="../../_source/update.html#update.update00.updateInitial">[docs]</a><span class="k">def</span> <span class="nf">updateInitial</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Preparing for the update process based on server data.</span>
+<span class="sd">    This will do emptying of auto generated **schedule_downloads**, </span>
+<span class="sd">    **schedule_formatted_data** pickles. It will update primary tables</span>
+<span class="sd">    with secondary table information if primary tables are empty.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Updating process has started.&quot;</span><span class="p">)</span>
+    <span class="c">#if primary tables are empty atlest fill them with secondary data.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">PrimaryTrain</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+        <span class="n">Q1</span> <span class="o">=</span> <span class="n">Train</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">Q1</span><span class="p">:</span>
+            <span class="n">Q2</span> <span class="o">=</span> <span class="n">PrimaryTrain</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="n">i</span><span class="o">.</span><span class="n">number</span><span class="p">,</span>
+                              <span class="n">name</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                              <span class="n">start</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">start</span><span class="p">,</span>
+                              <span class="n">end</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">end</span><span class="p">,</span>
+                              <span class="n">start_time</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span>
+                              <span class="n">end_time</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">end_time</span><span class="p">,</span>
+                              <span class="n">end_time_days</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">end_time_days</span><span class="p">,</span>
+                              <span class="n">start_date</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">start_date</span><span class="p">,</span>
+                              <span class="n">end_date</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">end_date</span><span class="p">,</span>
+                              <span class="n">up</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">up</span><span class="p">,</span>
+                              <span class="n">comment</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
+                              <span class="n">description</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                              <span class="nb">type</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+                              <span class="n">classes</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">classes</span><span class="p">,</span>
+                              <span class="n">frequency</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">frequency</span><span class="p">,</span>
+                              <span class="n">facilities</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">facilities</span><span class="p">)</span>
+            <span class="n">Q2</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">PrimarySchedule</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">():</span>
+        <span class="n">Q3</span> <span class="o">=</span> <span class="n">Schedule</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">Q3</span><span class="p">:</span>
+            <span class="n">Q4</span> <span class="o">=</span> <span class="n">Schedule</span><span class="p">(</span><span class="n">station</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">station</span><span class="p">,</span>
+                          <span class="n">train</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">train</span><span class="p">,</span>
+                          <span class="n">arrival</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">arrival</span><span class="p">,</span>
+                          <span class="n">departure</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">departure</span><span class="p">,</span>
+                          <span class="n">arrival_days</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">arrival_days</span><span class="p">,</span>
+                          <span class="n">departure_days</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">departure_days</span><span class="p">)</span>
+            <span class="n">Q4</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    
+    <span class="n">writePickle</span><span class="p">(</span><span class="s">&quot;gen&quot;</span><span class="p">,</span><span class="s">&quot;schedule_downloads&quot;</span><span class="p">,[])</span>
+    <span class="n">writePickle</span><span class="p">(</span><span class="s">&quot;gen&quot;</span><span class="p">,</span><span class="s">&quot;schedule_formatted_data&quot;</span><span class="p">,[])</span>
+    </div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Ruwan Jayasinghe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,455 @@
+
+.. My Train Application documentation master file, created by
+   sphinx-quickstart on Mon Jul  7 12:48:25 2014.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to MTA documentation!
+================================================
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+.. default-domain:: change
+
+.. automodule:: change.views
+   :members:
+
+.. automodule:: change.admin
+   :members:
+
+.. automodule:: change.tests
+   :members:
+
+.. automodule:: change.models
+   :members:
+
+.. automodule:: change.models
+   :members:
+
+.. automodule:: change.tests
+   :members:
+
+.. automodule:: change.views
+   :members:
+
+.. automodule:: change.admin
+   :members:
+
+.. automodule:: comment.views
+   :members:
+
+.. automodule:: comment.forms
+   :members:
+
+.. automodule:: comment.admin
+   :members:
+
+.. automodule:: comment.tests
+   :members:
+
+.. automodule:: comment.models
+   :members:
+
+.. automodule:: comment.models
+   :members:
+
+.. automodule:: comment.tests
+   :members:
+
+.. automodule:: comment.views
+   :members:
+
+.. automodule:: comment.forms
+   :members:
+
+.. automodule:: comment.admin
+   :members:
+
+.. automodule:: favourite.views
+   :members:
+
+.. automodule:: favourite.admin
+   :members:
+
+.. automodule:: favourite.tests
+   :members:
+
+.. automodule:: favourite.models
+   :members:
+
+.. automodule:: favourite.models
+   :members:
+
+.. automodule:: favourite.tests
+   :members:
+
+.. automodule:: favourite.views
+   :members:
+
+.. automodule:: favourite.admin
+   :members:
+
+.. automodule:: friend.views
+   :members:
+
+.. automodule:: friend.admin
+   :members:
+
+.. automodule:: friend.tests
+   :members:
+
+.. automodule:: friend.models
+   :members:
+
+.. automodule:: friend.models
+   :members:
+
+.. automodule:: friend.tests
+   :members:
+
+.. automodule:: friend.views
+   :members:
+
+.. automodule:: friend.admin
+   :members:
+
+.. automodule:: group.views
+   :members:
+
+.. automodule:: group.admin
+   :members:
+
+.. automodule:: group.tests
+   :members:
+
+.. automodule:: group.functions
+   :members:
+
+.. automodule:: group.models
+   :members:
+
+.. automodule:: group.models
+   :members:
+
+.. automodule:: group.tests
+   :members:
+
+.. automodule:: group.views
+   :members:
+
+.. automodule:: group.admin
+   :members:
+
+.. automodule:: group.functions
+   :members:
+
+.. automodule:: home.views
+   :members:
+
+.. automodule:: home.admin
+   :members:
+
+.. automodule:: home.tests
+   :members:
+
+.. automodule:: home.models
+   :members:
+
+.. automodule:: home.models
+   :members:
+
+.. automodule:: home.tests
+   :members:
+
+.. automodule:: home.views
+   :members:
+
+.. automodule:: home.admin
+   :members:
+
+.. automodule:: message.views
+   :members:
+
+.. automodule:: message.forms
+   :members:
+
+.. automodule:: message.admin
+   :members:
+
+.. automodule:: message.tests
+   :members:
+
+.. automodule:: message.models
+   :members:
+
+.. automodule:: message.models
+   :members:
+
+.. automodule:: message.tests
+   :members:
+
+.. automodule:: message.views
+   :members:
+
+.. automodule:: message.forms
+   :members:
+
+.. automodule:: message.admin
+   :members:
+
+.. automodule:: notification.views
+   :members:
+
+.. automodule:: notification.admin
+   :members:
+
+.. automodule:: notification.tests
+   :members:
+
+.. automodule:: notification.models
+   :members:
+
+.. automodule:: notification.models
+   :members:
+
+.. automodule:: notification.tests
+   :members:
+
+.. automodule:: notification.views
+   :members:
+
+.. automodule:: notification.admin
+   :members:
+
+.. automodule:: process.views
+   :members:
+
+.. automodule:: process.executable
+   :members:
+
+.. automodule:: process.models
+   :members:
+
+.. automodule:: process.tests
+   :members:
+
+.. automodule:: process.admin
+   :members:
+
+.. automodule:: reference.views
+   :members:
+
+.. automodule:: reference.admin
+   :members:
+
+.. automodule:: reference.tests
+   :members:
+
+.. automodule:: reference.models
+   :members:
+
+.. automodule:: reference.models
+   :members:
+
+.. automodule:: reference.tests
+   :members:
+
+.. automodule:: reference.views
+   :members:
+
+.. automodule:: reference.admin
+   :members:
+
+.. automodule:: schedule.views
+   :members:
+
+.. automodule:: schedule.admin
+   :members:
+
+.. automodule:: schedule.tests
+   :members:
+
+.. automodule:: schedule.models
+   :members:
+
+.. automodule:: schedule.models
+   :members:
+
+.. automodule:: schedule.tests
+   :members:
+
+.. automodule:: schedule.views
+   :members:
+
+.. automodule:: schedule.admin
+   :members:
+
+.. automodule:: station.views
+   :members:
+
+.. automodule:: station.forms
+   :members:
+
+.. automodule:: station.admin
+   :members:
+
+.. automodule:: station.tests
+   :members:
+
+.. automodule:: station.models
+   :members:
+
+.. automodule:: station.models
+   :members:
+
+.. automodule:: station.tests
+   :members:
+
+.. automodule:: station.views
+   :members:
+
+.. automodule:: station.forms
+   :members:
+
+.. automodule:: station.admin
+   :members:
+
+.. automodule:: status.views
+   :members:
+
+.. automodule:: status.admin
+   :members:
+
+.. automodule:: status.tests
+   :members:
+
+.. automodule:: status.models
+   :members:
+
+.. automodule:: status.models
+   :members:
+
+.. automodule:: status.tests
+   :members:
+
+.. automodule:: status.views
+   :members:
+
+.. automodule:: status.admin
+   :members:
+
+.. automodule:: subscribe.views
+   :members:
+
+.. automodule:: subscribe.admin
+   :members:
+
+.. automodule:: subscribe.tests
+   :members:
+
+.. automodule:: subscribe.models
+   :members:
+
+.. automodule:: subscribe.models
+   :members:
+
+.. automodule:: subscribe.tests
+   :members:
+
+.. automodule:: subscribe.views
+   :members:
+
+.. automodule:: subscribe.admin
+   :members:
+
+.. automodule:: train.views
+   :members:
+
+.. automodule:: train.admin
+   :members:
+
+.. automodule:: train.tests
+   :members:
+
+.. automodule:: train.models
+   :members:
+
+.. automodule:: train.models
+   :members:
+
+.. automodule:: train.tests
+   :members:
+
+.. automodule:: train.views
+   :members:
+
+.. automodule:: train.admin
+   :members:
+
+.. automodule:: update.views
+   :members:
+
+.. automodule:: update.update01
+   :members:
+
+.. automodule:: update.update02
+   :members:
+
+.. automodule:: update.models
+   :members:
+
+.. automodule:: update.models
+   :members:
+
+.. automodule:: update.update03
+   :members:
+
+.. automodule:: update.tests
+   :members:
+
+.. automodule:: update.update04
+   :members:
+
+.. automodule:: update.admin
+   :members:
+
+.. automodule:: update.update00
+   :members:
+
+.. automodule:: userinfo.views
+   :members:
+
+.. automodule:: userinfo.admin
+   :members:
+
+.. automodule:: userinfo.tests
+   :members:
+
+.. automodule:: userinfo.models
+   :members:
+
+.. automodule:: userinfo.models
+   :members:
+
+.. automodule:: userinfo.tests
+   :members:
+
+.. automodule:: userinfo.views
+   :members:
+
+.. automodule:: userinfo.admin
+   :members:
+
+
+Indices and tables
+==================
+
+* :ref:`app`
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+

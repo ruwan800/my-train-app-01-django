@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="post">
+{% csrf_token %}
+{{content}}
+<div class="actions">
+	{% if ref %}
+	<a href="/s/change/drop/{{ref}}">Delete this item</a>
+	{% endif %}
+	<input type="submit" value="SAVE">
+	<input type="reset" value="RESET">
+</div>
+</form>
+{% endblock %}
+

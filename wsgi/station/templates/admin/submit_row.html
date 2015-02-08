@@ -1,0 +1,10 @@
+{% extends "admin/form.html" %}
+
+{% block submit_buttons_bottom %}
+{{ form_url|add:"nothing" }}
+<div class="submit-row">
+    <p class="deletelink-box"><a href="/admin/station/tempstation/11/delete/" class="deletelink">Delete</a></p>
+    <input type="submit" value="Update Changes" class="default" name="_save">
+    <p class="cancellink-box"><a href="/admin/station/tempstation/" style="float:right;">Cancel</a></p>
+</div>
+{% endblock %}

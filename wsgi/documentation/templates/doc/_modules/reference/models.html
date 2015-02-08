@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>reference.models &mdash; MTA 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="MTA 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for reference.models</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
+<span class="kn">from</span> <span class="nn">advanced.unique</span> <span class="kn">import</span> <span class="n">uniqueKey</span>
+<span class="kn">from</span> <span class="nn">advanced.uri</span> <span class="kn">import</span> <span class="n">formatText</span>
+
+<div class="viewcode-block" id="ReferenceModel"><a class="viewcode-back" href="../../_source/reference.html#reference.models.ReferenceModel">[docs]</a><span class="k">class</span> <span class="nc">ReferenceModel</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="nb">file</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">uri</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;reference_model&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+</div>
+<div class="viewcode-block" id="Reference"><a class="viewcode-back" href="../../_source/reference.html#reference.models.Reference">[docs]</a><span class="k">class</span> <span class="nc">Reference</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">uri</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">ref_model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">ReferenceModel</span><span class="p">)</span>
+    <span class="n">ref_id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s">&#39;reference&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;{}-{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ref_model</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">ref_id</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="getObject"><a class="viewcode-back" href="../../_source/reference.html#reference.models.getObject">[docs]</a><span class="k">def</span> <span class="nf">getObject</span><span class="p">(</span><span class="n">ref</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reference.getObject(reference) -&gt; object\n</span>
+<span class="sd">    Return a required object for the given reference value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">Reference</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">ref</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    <span class="c">#import external model related to request</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="s">&quot;{}.models&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">ref_model</span><span class="o">.</span><span class="n">file</span><span class="p">))</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">ref_model</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="c">#retrive row from model</span>
+    <span class="k">return</span> <span class="n">mod</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">ref_id</span><span class="p">)</span>
+</div>
+<span class="k">def</span> <span class="nf">getObjectByName</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">Reference</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">code</span>
+        <span class="k">return</span> <span class="n">getObject</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;message&#39;</span><span class="p">,</span><span class="s">&quot;No item found named &#39;{}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+<div class="viewcode-block" id="getModel"><a class="viewcode-back" href="../../_source/reference.html#reference.models.getModel">[docs]</a><span class="k">def</span> <span class="nf">getModel</span><span class="p">(</span><span class="n">ref</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reference.getModel(reference) -&gt; model\n</span>
+<span class="sd">    Return the model of required object for the given reference value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">Reference</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">ref</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;message&#39;</span><span class="p">,</span><span class="s">&quot;No such reference exists.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">row</span><span class="o">.</span><span class="n">ref_model</span>
+    </div>
+<div class="viewcode-block" id="getReference"><a class="viewcode-back" href="../../_source/reference.html#reference.models.getReference">[docs]</a><span class="k">def</span> <span class="nf">getReference</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ref_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reference.createReference(model, ref_id) -&gt; reference\n</span>
+<span class="sd">    Create and return a reference value if the given model,id combination already</span>
+<span class="sd">    does not have a reference value\n</span>
+<span class="sd">    model = model instance\n</span>
+<span class="sd">    ref_id = id of the object\n</span>
+<span class="sd">    ref = reference value for the given model, id combination</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">ReferenceModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">Q1</span><span class="p">:</span>
+        <span class="n">Q1</span> <span class="o">=</span> <span class="n">Q1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">Q1</span> <span class="o">=</span> <span class="n">ReferenceModel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">uri</span><span class="o">=</span><span class="n">formatText</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="n">Q1</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">Q2</span> <span class="o">=</span> <span class="n">Reference</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">ref_model</span><span class="o">=</span><span class="n">Q1</span><span class="p">,</span> <span class="n">ref_id</span><span class="o">=</span><span class="n">ref_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">Q2</span><span class="p">:</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="s">&quot;{}.models&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
+        <span class="n">mod</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">obj2</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">ref_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj2</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">):</span>
+            <span class="n">Q3</span> <span class="o">=</span> <span class="n">Reference</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">uniqueKey</span><span class="p">(),</span> <span class="n">uri</span><span class="o">=</span><span class="n">formatText</span><span class="p">(</span><span class="n">obj2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">ref_model</span><span class="o">=</span><span class="n">Q1</span><span class="p">,</span> <span class="n">ref_id</span><span class="o">=</span><span class="n">ref_id</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Q3</span> <span class="o">=</span> <span class="n">Reference</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">uniqueKey</span><span class="p">(),</span> <span class="n">ref_model</span><span class="o">=</span><span class="n">Q1</span><span class="p">,</span> <span class="n">ref_id</span><span class="o">=</span><span class="n">ref_id</span><span class="p">)</span>
+        <span class="n">Q3</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Q3</span><span class="o">.</span><span class="n">code</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Q2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">code</span>
+</div>
+<span class="k">def</span> <span class="nf">getReferenceByObject</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">getReference</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">getReferenceByName</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Reference</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">Reference</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">getURIByObject</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">getReference</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Reference</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">)</span><span class="o">.</span><span class="n">uri</span>
+
+<span class="k">def</span> <span class="nf">getReferenceObject</span><span class="p">(</span><span class="n">ref</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Reference</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">ref</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">registerObject</span><span class="p">(</span><span class="n">ref</span><span class="p">):</span>
+    <span class="n">getReferenceByObject</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">MTA 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Ruwan Jayasinghe.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
