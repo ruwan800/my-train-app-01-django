@@ -44,6 +44,15 @@ def get(request):
     messages = db.get(Message, request, fieldMap)
     return renderJSON(request, messages)
 
+def add(request):
+    pass #TODO
+
+def edit(request):
+    pass #TODO
+
+def delete(request):
+    pass #TODO
+
 """
 def viewed(request,ref):
     msg = Message.objects.get(code=ref)

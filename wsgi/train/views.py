@@ -16,3 +16,12 @@ def getAll(request):
 def get(request):
     stations = Train.objects.all().order_by('name')
     return renderJSON(request, [ {'name':x.name, 'uri':x.name.lower().replace(" ","-"), 'active': True} for x in stations ])
+
+def add(request):
+    pass #TODO
+
+def edit(request):
+    pass #TODO
+
+def delete(request):
+    pass #TODO

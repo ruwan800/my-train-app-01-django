@@ -24,3 +24,12 @@ def get(request):
     fieldMap = {}
     stations = db.get(Station, request, fieldMap)
     return renderJSON(request, stations)
+
+def add(request):
+    pass #TODO
+
+def edit(request):
+    pass #TODO
+
+def delete(request):
+    pass #TODO

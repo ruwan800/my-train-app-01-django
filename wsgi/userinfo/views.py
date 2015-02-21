@@ -1,5 +1,4 @@
 from advanced.render import renderJSON
-from reference.models import getObject
 from friend.models import Friend
 from userinfo.models import UserInfo
 from advanced.error import getTrace
@@ -13,14 +12,16 @@ def profile(request,ref):
     if ref == 'self':
         user = request.user
     else:
-        user = getObject(ref)
+        raise Exception("ref:P:P:P")####
+        #user = getObject(ref)
     return renderJSON(request, user)
 
 def friends(request,ref):
     if ref == 'self':
         user = request.user
     else:
-        user = getObject(ref)
+        raise Exception("ref:P:P:P")####
+        #user = getObject(ref)
     friends = Friend.objects.filter(user=user)
     return renderJSON(request, friends)
     
@@ -28,7 +29,8 @@ def activity(request, ref):
     if ref == 'self':
         user = request.user
     else:
-        user = getObject(ref)
+        raise Exception("ref:P:P:P")####
+        #user = getObject(ref)
     return renderJSON(request, user)
 
 def settings(request):

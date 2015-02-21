@@ -17,3 +17,9 @@ def get(request):
         Q1 = Location.objects.all()
         #TODO fill with correct values
         return renderJSON(request,[{'name':k.user.username,'type':k.x,'info':k.y,'uri':str(k.time)} for k in Q1])
+    
+def edit(request):
+    pass
+
+def delete(request):
+    pass

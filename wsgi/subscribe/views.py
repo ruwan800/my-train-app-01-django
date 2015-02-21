@@ -27,3 +27,12 @@ def get(request):
     fieldMap = {}
     contacts = db.get(Subscribe, request, fieldMap)
     return renderJSON(request, contacts)
+
+def add(request):
+    pass #TODO
+
+def edit(request):
+    pass #TODO
+
+def delete(request):
+    pass #TODO
