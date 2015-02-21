@@ -3,6 +3,8 @@ from message.models import saveMessage # , getThread
 #from advanced.user import getUser
 from message.forms import MessageForm
 from django.views.decorators.csrf import csrf_exempt
+from message.models import Message
+from advanced import db
 #from reference.models import getReferenceByObject
 
 """
@@ -36,6 +38,11 @@ def write(request):
         #return renderJSON(request, str(result.read()))
     else:
         return renderJSON(request, {'success':False})
+
+def get(request):
+    fieldMap = {}
+    messages = db.get(Message, request, fieldMap)
+    return renderJSON(request, messages)
 
 """
 def viewed(request,ref):

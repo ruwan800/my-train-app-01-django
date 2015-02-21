@@ -1,7 +1,5 @@
 from django.db import models
 from importlib import import_module
-from reference.models import ReferenceModel,Reference, getObject as refGetObject,\
-    getReferenceObject
 from advanced.unique import uniqueKey
 from group.models import Group, getGroupList
 from advanced.uri import formatText
@@ -10,7 +8,7 @@ from userinfo.models import UserInfo
 class Notification(models.Model):
     id = models.AutoField(primary_key=True)
     code = models.CharField(max_length=40, unique=True)
-    ref_model = models.ForeignKey(ReferenceModel)
+    #ref_model = models.ForeignKey(ReferenceModel)
     ref_id = models.IntegerField(max_length=40)
     class Meta:
         db_table = 'notification'
@@ -48,7 +46,7 @@ class Target(models.Model):
     id = models.AutoField(primary_key=True)
     reference = models.ForeignKey(Notification)
     group = models.ForeignKey(Group)
-    target = models.ForeignKey(Reference)
+    #target = models.ForeignKey(Reference)
     class Meta:
         db_table = 'target'
 
@@ -75,19 +73,19 @@ def saveTarget(model, reference, target):
     reference = reference id
     target = list of group and target value lists [[group,target],]
     """
-    Q0 = ReferenceModel.objects.filter(name=model.__name__)
-    if Q0:
-        model = Q0[0]
-    else:
-        n = model.__name__
-        Q0 = ReferenceModel(name=n,file=n.lower(),uri=formatText(n))
-        Q0.save()
-        model = Q0
-    Q1 = Notification(code=uniqueKey(), ref_model=model, ref_id=reference)
-    Q1.save()
-    for i in target:
-        Q2 = Target(reference=Q1, group=i[0], target=getReferenceObject(i[1]))
-        Q2.save()
+#     Q0 = ReferenceModel.objects.filter(name=model.__name__)
+#     if Q0:
+#         model = Q0[0]
+#     else:
+#         n = model.__name__
+#         Q0 = ReferenceModel(name=n,file=n.lower(),uri=formatText(n))
+#         Q0.save()
+#         model = Q0
+#     Q1 = Notification(code=uniqueKey(), ref_model=model, ref_id=reference)
+#     Q1.save()
+#     for i in target:
+#         Q2 = Target(reference=Q1, group=i[0], target=getReferenceObject(i[1]))
+#         Q2.save()
 
 def getNotificationReferenceList(ref):
     """

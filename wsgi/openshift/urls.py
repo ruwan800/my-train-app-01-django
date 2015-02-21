@@ -7,11 +7,12 @@ admin.autodiscover()
 urlpatterns = []
 
 view_requests = {
-    "contact": "contact",
-    "station" : "station",
-    "thread" : "thread", 
-    "train" : "train", 
-    "nearby" : "nearby"
+    "contact": "subscribe.views",
+    "station" : "station.views",
+    "thread" : "message.thread",
+    "train" : "train.views", 
+    "nearby" : "location.nearby",
+    "message" : "message.views"
                 }
 
 view_patterns = ["add", "get", "edit", "delete"]
@@ -20,12 +21,11 @@ view_patterns = ["add", "get", "edit", "delete"]
 for vr_key in view_requests.keys():
     pattern_list = []
     for vp in view_patterns:
-        one_url = url(r'^{}$'.format(vp), '{}.views.{}'.format(view_requests[vr_key], vp))
+        one_url = url(r'^{}/{}$'.format(vr_key, vp), '{}.{}'.format(view_requests[vr_key], vp), name="{}-{}".format(vr_key, vp))
         pattern_list.append(one_url)
-    urlpatterns.append(patterns(vr_key, *pattern_list))
+    urlpatterns += patterns("", *pattern_list)
     
     
-
 
  
 
@@ -123,11 +123,11 @@ urlpatterns2 = patterns('',
     #url(r'^s/trains/all$', 'train.views.getAll'),
 
     #login
-    url(r'^s/user/login/(?P<username>[a-z0-9]*)/(?P<password>[a-z0-9]*)$', 'userinfo.views.login',name="Login"),
-    url(r'^s/user/logout/$', 'userinfo.views.logout',name="Logout"),
-    url(r'^s/user/isi/$', 'userinfo.views.islogged',name="is logged in?"),
-    url(r'^s/user/register$', 'userinfo.views.register',name="Register"),
-    url(r'^s/user/gcm_id/(?P<regid>[a-zA-Z0-9_-]*)$', 'userinfo.views.setRegistrationID'),
+    url(r'^user/login/(?P<username>[a-z0-9]*)/(?P<password>[a-z0-9]*)$', 'userinfo.views.login',name="Login"),
+    url(r'^user/logout/$', 'userinfo.views.logout',name="Logout"),
+    url(r'^user/isi/$', 'userinfo.views.islogged',name="is logged in?"),
+    url(r'^user/register$', 'userinfo.views.register',name="Register"),
+    url(r'^user/gcm_id/(?P<regid>[a-zA-Z0-9_-]*)$', 'userinfo.views.setRegistrationID'),
     
     #user
     #url(r'^s/user/profile/(?P<ref>([a-z0-9]{32}|self))$', 'userinfo.views.profile'),
@@ -138,4 +138,4 @@ urlpatterns2 = patterns('',
     
     #update
 )
-urlpatterns.append(urlpatterns2)
+urlpatterns += urlpatterns2

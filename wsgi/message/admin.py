@@ -1,10 +1,10 @@
 from django.contrib import admin
-from message.models import UserMessage, PublicMessage, TrainMessage,\
+from message.models import Message, PublicMessage, TrainMessage,\
     StationMessage
 
-class UserMessageAdmin(admin.ModelAdmin):
-    list_display = ( 'id', 'sender', 'receiver', 'dt','text', 'received', 'visited')
-admin.site.register(UserMessage, UserMessageAdmin)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ( 'id', 'thread', 'sender', 'dt','text', 'star')
+admin.site.register(Message, MessageAdmin)
 
 class StationMessageAdmin(admin.ModelAdmin):
     list_display = ( 'id', 'sender', 'receiver', 'dt', 'text', 'likes', 'dislikes', 'flags')

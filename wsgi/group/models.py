@@ -1,6 +1,5 @@
 from django.db import models
 from group import functions
-from reference.models import registerObject
 
 class Group(models.Model):
     id = models.AutoField(primary_key=True)
@@ -23,7 +22,7 @@ def createGroup(name, func, info):
     """
     Q1 = Group(name=name, func=func, info=info)
     Q1.save()
-    registerObject(Q1)
+    #registerObject(Q1)
     
 
 def getGroupList(ref):

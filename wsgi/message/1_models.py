@@ -1,33 +1,26 @@
 from django.db import models
 from notification.models import saveTarget
-from advanced.user import getUser, getUserName
+from advanced.user import getReference, getUser, getUserName
 from advanced.unique import uniqueKey
 from favourite.models import addToHistory
 from userinfo.models import UserInfo
+from reference.models import getObject, getReferenceByObject
 from group.models import Group
 from station.models import Station, getStation
 from train.models import Train, getTrain
 from advanced.cloud import send
 from group.groupset import StationUsers
 
-class Thread(models.Model):
+
+class UserMessage(models.Model):
     id = models.AutoField(primary_key=True)
-    ctype = models.CharField(max_length=20)
-    ref = models.IntegerField()
-
-    class Meta:
-        db_table = 'mta_user_thread'
-
-    def __unicode__(self):
-        return self.text
-
-class Message(models.Model):
-    id = models.AutoField(primary_key=True)
-    thread = models.ForeignKey(Thread)
-    sender = models.ForeignKey(UserInfo)
+    sender = models.ForeignKey(UserInfo, related_name='sender')
+    receiver = models.ForeignKey(UserInfo, related_name='receiver')
     dt = models.DateTimeField(auto_now_add=True)
     text = models.TextField(blank=True)
-    star = models.IntegerField(default=False)
+    received = models.BooleanField(default=False)
+    visited = models.BooleanField(default=False)
+
     class Meta:
         ordering = ['dt']
         db_table = 'mta_user_message'
@@ -106,7 +99,7 @@ def saveMessage(request, message, m_type, target):
         sender = getUser(request.user)
         receiver=UserInfo.objects.get(pk=target)
         sendUserMessage(sender, receiver, message)
-        Q = Message(sender=getUser(request.user), receiver=getUserName(target), text=message)
+        Q = UserMessage(sender=getUser(request.user), receiver=getUserName(target), text=message)
     elif  m_type== "STATION" :
         sender = getUser(request.user)
         receiver=getStation(target)

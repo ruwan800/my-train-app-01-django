@@ -1,6 +1,5 @@
 from advanced.autoimport import importModel
 from datetime import datetime, timedelta
-from reference.models import getReferenceByObject
 
 def defaultFunction(ref):
     return [ref]

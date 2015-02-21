@@ -11,7 +11,6 @@ from __future__ import unicode_literals
 from django.db import models
 from station.models import Station
 from train.models import Train
-from reference.models import Reference
 from datetime import date
 
 class Schedule(models.Model):
