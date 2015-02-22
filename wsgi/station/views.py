@@ -25,7 +25,8 @@ def viewAll(request):
 def get(request):
     fieldMap = {}
     stations = db.get(Station, request, fieldMap)
-    return renderJSON(request, stations)
+    stationReal = [{"name":x.name, "uri":x.name, "active":True} for x in stations]
+    return renderJSON(request, stationReal)
 
 @csrf_exempt
 def add(request):

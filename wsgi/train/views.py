@@ -1,6 +1,7 @@
 from advanced.render import renderJSON
 from train.models import Train
 from django.views.decorators.csrf import csrf_exempt
+from advanced import db
 
 
 def search(request, text):
@@ -16,8 +17,10 @@ def getAll(request):
 
 @csrf_exempt
 def get(request):
-    stations = Train.objects.all().order_by('name')
-    return renderJSON(request, [ {'name':x.name, 'uri':x.name.lower().replace(" ","-"), 'active': True} for x in stations ])
+    fieldMap = {}
+    trains = db.get(Train, request, fieldMap)
+    trainsReal = [{"name": x.name, "info": "{}-{}".format(x.start, x.end), "number":x.number} for x in trains ]
+    return renderJSON(request, trainsReal)
 
 @csrf_exempt
 def add(request):
