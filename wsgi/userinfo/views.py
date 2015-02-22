@@ -57,7 +57,7 @@ def register(request):
         login2(request, user)
         if user.is_active:
             print("User is valid, active and authenticated")
-            return renderJSON(request, {'success':True, 'error':"2222"})
+            return renderJSON(request, {'success':True, 'error':""})
         else:
             message = "The password is valid, but the account has been disabled!"
             return renderJSON(request, {'success':False, 'message':message})
@@ -70,7 +70,7 @@ def login(request, username, password):
         login2(request, user)
         if user.is_active:
             print("User is valid, active and authenticated")
-            return renderJSON(request, {'success':True, 'error':"2222"})
+            return renderJSON(request, {'success':True, 'error':""})
         else:
             message = "The password is valid, but the account has been disabled!"
             return renderJSON(request, {'success':False, 'message':message})

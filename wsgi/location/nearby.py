@@ -2,6 +2,7 @@ from advanced.render import renderJSON
 from location.models import Location
 from datetime import datetime
 from advanced.user import getUser
+from django.views.decorators.csrf import csrf_exempt
 
 def add(request,x,y,time):
     try:
@@ -13,13 +14,16 @@ def add(request,x,y,time):
         print(inst)
         return renderJSON(request,False)
 
+@csrf_exempt
 def get(request):
         Q1 = Location.objects.all()
         #TODO fill with correct values
         return renderJSON(request,[{'name':k.user.username,'type':k.x,'info':k.y,'uri':str(k.time)} for k in Q1])
-    
+
+@csrf_exempt
 def edit(request):
     pass
 
+@csrf_exempt
 def delete(request):
     pass

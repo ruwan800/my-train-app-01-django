@@ -39,17 +39,21 @@ def write(request):
     else:
         return renderJSON(request, {'success':False})
 
+@csrf_exempt
 def get(request):
     fieldMap = {}
     messages = db.get(Message, request, fieldMap)
     return renderJSON(request, messages)
 
+@csrf_exempt
 def add(request):
     pass #TODO
 
+@csrf_exempt
 def edit(request):
     pass #TODO
 
+@csrf_exempt
 def delete(request):
     pass #TODO
 

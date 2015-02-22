@@ -2,6 +2,7 @@ from advanced.render import renderJSON
 from subscribe.models import Subscribe
 from advanced.user import getUser
 from advanced import db
+from django.views.decorators.csrf import csrf_exempt
 
 # def subscribed(request):
 #     subscriptions = Subscribe.objects.filter(user=getUser(request.user), manual=True)
@@ -23,16 +24,20 @@ from advanced import db
 #     Q.delete()
 #     return renderJSON(request, {'success':True})
 
+@csrf_exempt
 def get(request):
     fieldMap = {}
     contacts = db.get(Subscribe, request, fieldMap)
     return renderJSON(request, contacts)
 
+@csrf_exempt
 def add(request):
     pass #TODO
 
+@csrf_exempt
 def edit(request):
     pass #TODO
 
+@csrf_exempt
 def delete(request):
     pass #TODO

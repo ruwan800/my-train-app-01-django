@@ -1,6 +1,7 @@
 from advanced.render import renderJSON
 from station.models import Station
 from advanced import db
+from django.views.decorators.csrf import csrf_exempt
 
 # def findByLine(request, ref):
 #     line = getObjectByName(ref)
@@ -20,16 +21,20 @@ def viewAll(request):
     stations = Station.objects.all().order_by('name')
     return renderJSON(request, [ {'name':x.name, 'uri':x.name.lower().replace(" ","-"), 'active': True} for x in stations ])
 
+@csrf_exempt
 def get(request):
     fieldMap = {}
     stations = db.get(Station, request, fieldMap)
     return renderJSON(request, stations)
 
+@csrf_exempt
 def add(request):
     pass #TODO
 
+@csrf_exempt
 def edit(request):
     pass #TODO
 
+@csrf_exempt
 def delete(request):
     pass #TODO
