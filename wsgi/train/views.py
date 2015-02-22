@@ -19,7 +19,7 @@ def getAll(request):
 def get(request):
     fieldMap = {}
     trains = db.get(Train, request, fieldMap)
-    trainsReal = [{"name": x.name, "info": "{}-{}".format(x.start, x.end), "number":x.number} for x in trains ]
+    trainsReal = [{"name": x["name"], "info": "{}-{}".format(x["start"], x["end"]), "number":x["number"]} for x in trains ]
     return renderJSON(request, trainsReal)
 
 @csrf_exempt
