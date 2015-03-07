@@ -9,6 +9,7 @@ from station.models import Station, getStation
 from train.models import Train, getTrain
 from advanced.cloud import send
 from group.groupset import StationUsers
+from numpy.ctypeslib import ctypes
 
 class Thread(models.Model):
     id = models.AutoField(primary_key=True)
@@ -130,7 +131,7 @@ def saveMessage(request, message, m_type, target):
     
     #saveTarget(Message,Q.pk,[[getReferenceByObject(Q1),target]])
 
-def getThread(request, target):
+def getThread(type, id):
     """
         getThread(request, target) -> messages
         Views a conversation.
@@ -138,9 +139,8 @@ def getThread(request, target):
         target = Target user
         messages = List of messages sorted by date
     """
-    #thread = str(int("0x"+getReference(request),0)*int("0x"+target,0))
-    #messages = Message.objects.filter(thread=thread).order_by('dt')[:1000]
-    #return messages
+    Q0 = Thread.objects.get(ctype=type, ref=id)
+    return Q0
 
 def sendUserMessage(sender, receiver, message):
     
