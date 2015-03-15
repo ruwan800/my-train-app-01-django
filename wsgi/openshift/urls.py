@@ -128,7 +128,7 @@ urlpatterns2 = patterns('',
     url(r'^user/isi/$', 'userinfo.views.islogged',name="is logged in?"),
     url(r'^user/register$', 'userinfo.views.register',name="Register"),
     url(r'^user/gcm_id/(?P<regid>[a-zA-Z0-9_-]*)$', 'userinfo.views.setRegistrationID'),
-    
+
     #user
     #url(r'^s/user/profile/(?P<ref>([a-z0-9]{32}|self))$', 'userinfo.views.profile'),
     #url(r'^s/user/profile/(?P<ref>([a-z0-9]{32}|self))$', 'userinfo.views.friends'),
