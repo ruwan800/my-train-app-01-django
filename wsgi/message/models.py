@@ -20,7 +20,7 @@ class Thread(models.Model):
         db_table = 'mta_user_thread'
 
     def __unicode__(self):
-        return self.text
+        return "{}-{}".format(self.ctype, self.ref)
 
 class Message(models.Model):
     id = models.AutoField(primary_key=True)
