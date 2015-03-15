@@ -49,10 +49,10 @@ def register(request):
         username = request.POST.get("USER", None)
         email = request.POST.get("EMAIL", None)
         password = request.POST.get("KEY", None)
-    try:
         user = User.objects.create_user(email, None, password)
-        user.save()
-        Q = UserInfo(name=username, user=user)
+        user.save()        
+        user = authenticate(username=email, password=password)
+        Q = UserInfo(user=user, name=username, key=password, status_is_public=True)
         Q.save()
         login2(request, user)
         if user.is_active:
@@ -61,8 +61,6 @@ def register(request):
         else:
             message = "The password is valid, but the account has been disabled!"
             return renderJSON(request, {'success':False, 'message':message})
-    except:
-        return login(request, email, password)
 
 def login(request, username, password):
     user = authenticate(username=username, password=password)
