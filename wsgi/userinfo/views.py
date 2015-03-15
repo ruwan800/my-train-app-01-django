@@ -49,11 +49,13 @@ def register(request):
         username = request.POST.get("USER", None)
         email = request.POST.get("EMAIL", None)
         password = request.POST.get("KEY", None)
-        user = User.objects.create_user(email, None, password)
-        user.save()        
         user = authenticate(username=email, password=password)
-        Q = UserInfo(user=user, name=username, key=password, status_is_public=True)
-        Q.save()
+        if user is None:
+            user = User.objects.create_user(email, None, password)
+            user.save()
+            user = authenticate(username=email, password=password)
+            Q = UserInfo(user=user, name=username, key=password, status_is_public=True)
+            Q.save()
         login2(request, user)
         if user.is_active:
             print("User is valid, active and authenticated")
@@ -74,7 +76,7 @@ def login(request, username, password):
             return renderJSON(request, {'success':False, 'message':message})
     else:
         # the authentication system was unable to verify the username and password
-        message = "The username and password were incorrect."
+        message = "The username and password does not match."
         return renderJSON(request, {'success':False, 'message':message})
 
 def islogged(request):
