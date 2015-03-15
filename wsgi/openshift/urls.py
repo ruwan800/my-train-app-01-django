@@ -122,7 +122,7 @@ urlpatterns2 = patterns('',
     #url(r'^s/trains/view/(?P<ref>[a-z0-9]{32})$', 'train.views.view'),
     #url(r'^s/trains/all$', 'train.views.getAll'),
 
-    #login
+    #login 
     url(r'^user/login/(?P<username>[a-z0-9.@]*)/(?P<password>[a-z0-9_-]*)$', 'userinfo.views.login',name="Login"),
     url(r'^user/logout/$', 'userinfo.views.logout',name="Logout"),
     url(r'^user/isi/$', 'userinfo.views.islogged',name="is logged in?"),
