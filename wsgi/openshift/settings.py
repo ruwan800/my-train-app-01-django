@@ -185,7 +185,8 @@ SERVER_EMAIL = 'ruwan800@gmail.com'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ruwan800@gmail.com'
-EMAIL_HOST_PASSWORD = 'amathakai'
+EMAIL_HOST_PASSWORD = 'mghwgnewsmhpthpz'
+
 
 
 
