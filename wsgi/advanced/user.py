@@ -8,9 +8,7 @@ from userinfo.models import UserInfo
 #     return GRO(getReference(request))
 
 def getUser(request):
-    if not request.user.username:
-        raise "No valid user available."
-    return UserInfo.objects.get(user__username=request.user.username)
+    return UserInfo.objects.get(user=request.user)
 
 
 def getUserName(request):
