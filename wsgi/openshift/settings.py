@@ -161,4 +161,31 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static')
 STATIC_URL = '/static/'
-ADMINS = (('ruwan', 'ruwan800@gmail.com'))
+ADMINS = (('ruwan', 'ruwan800@gmail.com'),)
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'ruwan800@gmail.com'
+SERVER_EMAIL = 'ruwan800@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'ruwan800@gmail.com'
+EMAIL_HOST_PASSWORD = 'amathakai'
+
+
+
