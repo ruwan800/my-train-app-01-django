@@ -57,8 +57,16 @@ def add(request):
     if not thread:
         thread = Thread(ctype=ctype, ref=Q0.id)
         thread.save()
-    Q = Subscribe(user=user, thread=thread, manual=True)
-    Q.save()
+    Q = Subscribe.objects.filter(user=user, thread=thread)
+    if not Q[0]:
+        Q = Subscribe(user=user, thread=thread, manual=True)
+        Q.save()
+    else:
+        Q=Q[0]
+    if not Q.manual:
+        Q.manual=True;
+        Q.save()
+    
     response = {"contact":r_contact, "type":ctype, "name":r_name, "info":r_info, "thread_id":Q.pk, "favourite":True}
     return renderJSON(request, response)
     
