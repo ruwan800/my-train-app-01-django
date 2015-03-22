@@ -58,7 +58,7 @@ def add(request):
         thread = Thread(ctype=ctype, ref=Q0.id)
         thread.save()
     Q = Subscribe.objects.filter(user=user, thread=thread)
-    if not Q[0]:
+    if not len(Q):
         Q = Subscribe(user=user, thread=thread, manual=True)
         Q.save()
     else:
