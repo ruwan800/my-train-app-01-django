@@ -1,72 +1,88 @@
-from advanced.render import renderJSON, renderForm
-from message.models import saveMessage # , getThread
-#from advanced.user import getUser
-from message.forms import MessageForm
+from advanced.render import renderJSON
+from advanced.user import getUser
 from django.views.decorators.csrf import csrf_exempt
-from message.models import Message
+from message.models import Message, get_thread
 from advanced import db
-#from reference.models import getReferenceByObject
 
-"""
-def allMessages(request):
-    result = Message.objects.filter(sender=getUser(request))
-    threads = []
-    messages = []
-    for x in result:
-        if x.thread not in threads:
-            messages.append({'user': x.receiver.name, 'user_ref': getReferenceByObject(x.receiver), 'thread': x.thread, 'dt': str(x.dt), 'text': x.text[:100]})
-            threads.append(x.thread)
-    return renderJSON(request, messages)
+C_TYPE = "c_type"
+USER = "user"
+R_ID = "remote_id"
+THREAD_ID = "thread_id"
+SENDER = "sender"
+MESSAGE = "message"
+STAR = "star"
+TIME = "time"
+limit = 100
 
-def thread(request,ref):
-    thread = getThread(request, ref)
-    return renderJSON(request, [{'user': x.receiver.name, 'user_ref': getReferenceByObject(x.receiver), 'dt': str(x.dt), 'text': x.text} for x in thread])
 
-def view(request,ref):
-    x = Message.objects.get(code=ref)
-    return renderJSON(request, {'user': x.receiver.name, 'user_ref': getReferenceByObject(x.receiver), 'dt': str(x.dt), 'text': x.text})
-"""
+def prepare_message(message):
+    ref = message.thread.get_reference()
+    message_new = dict()
+    message_new[C_TYPE] = message.thread.c_type
+    message_new[R_ID] = message.pk
+    message_new[THREAD_ID] = message.thread.pk
+    message_new[SENDER] = message.sender
+    message_new[MESSAGE] = message.text
+    message_new[STAR] = message.star
+    message_new[TIME] = message.dt
+    return message_new
 
-@csrf_exempt
-def write(request):
-    if request.method == 'POST':
-        msg = request.POST.get("MESSAGE", None)
-        target = request.POST.get("TARGET", None)
-        target_type = request.POST.get("TYPE", None)
-        result = saveMessage(request, msg, target_type, target)
-        return renderJSON(request, {'success':True})
-        #return renderJSON(request, str(result.read()))
-    else:
-        return renderJSON(request, {'success':False})
 
 @csrf_exempt
 def get(request):
-    fieldMap = {}
-    messages = db.get(Message, request, fieldMap)
-    return renderJSON(request, messages)
+    user = getUser(request)
+    thread = db.get_where(request, THREAD_ID)
+    time = db.get_where(request, TIME)
+    if thread:
+        thread[USER] = user
+        q = Message.objects.filter(thread)[:limit]
+    elif time:
+        thread[USER] = user
+        q = Message.objects.filter(thread)
+    else:
+        q = Message.objects.filter(USER=user)
+    output = []
+    for message in q:
+        output.append(prepare_message(message))
+    return renderJSON(request, output)
+
 
 @csrf_exempt
 def add(request):
-    pass #TODO
+    thread_str = request.POST.get(THREAD_ID, 0)
+    if not thread_str:
+        return renderJSON(request, {})
+    sender = getUser(request)
+    message = request.POST.get(MESSAGE, "")
+    star = request.POST.get(STAR, 0)
+    time = request.POST.get(TIME, None)
+    thread = get_thread(thread_str)
+
+    value = dict()
+    value[THREAD_ID] = value.thread.pk
+    value[SENDER] = value.sender
+    value[MESSAGE] = value.text
+    value[STAR] = value.star
+    value[TIME] = value.dt
+
+    q = Message(thread=thread, sender=sender, dt=time, text=message, star=star)
+    q.save()
+    return renderJSON(request, prepare_message(q))
+
 
 @csrf_exempt
 def edit(request):
-    pass #TODO
+    condition = db.get_where(request, R_ID)
+    q = Message.objects.get(condition)
+    star = request.POST.get(STAR, 0)
+    if star:
+        q.star = star
+    q.save()
+    return renderJSON(request, prepare_message(q))
 
 @csrf_exempt
 def delete(request):
-    pass #TODO
-
-"""
-def viewed(request,ref):
-    msg = Message.objects.get(code=ref)
-    msg.visited = True
-    msg.save()
-    return renderJSON(request, {'success':True})
-
-def received(request,ref):
-    msg = Message.objects.get(code=ref)
-    msg.received = True
-    msg.save()
-    return renderJSON(request, {'success':True})
-"""
+    condition = db.get_where(request, R_ID)
+    condition[USER] = getUser(request)
+    q = Message.objects.get(condition)
+    q.delete()

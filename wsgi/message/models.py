@@ -11,9 +11,11 @@ from advanced.cloud import send
 from group.groupset import StationUsers
 from numpy.ctypeslib import ctypes
 
+
 class Thread(models.Model):
+    STATUS_CHOICES = ((1, 'station'), (2, 'train'))
     id = models.AutoField(primary_key=True)
-    ctype = models.CharField(max_length=20)
+    c_type = models.ImageField(choices=STATUS_CHOICES)
     ref = models.IntegerField()
 
     class Meta:
@@ -22,6 +24,13 @@ class Thread(models.Model):
     def __unicode__(self):
         return "{}-{}".format(self.ctype, self.ref)
 
+    def get_reference(self):
+        if self.c_type == self.STATUS_CHOICES[0][1]:
+            return Station.objects.get(pk=self.ref)
+        else:
+            return Train.objects.get(pk=self.ref)
+
+
 class Message(models.Model):
     id = models.AutoField(primary_key=True)
     thread = models.ForeignKey(Thread)
@@ -29,12 +38,18 @@ class Message(models.Model):
     dt = models.DateTimeField(auto_now_add=True)
     text = models.TextField(blank=True)
     star = models.IntegerField(default=False)
+
     class Meta:
         ordering = ['dt']
         db_table = 'mta_user_message'
 
     def __unicode__(self):
         return self.text
+
+
+def get_thread(thread_id):
+    return Thread.objects.get(pk=thread_id)
+
 
 class StationMessage(models.Model):
     id = models.AutoField(primary_key=True)
@@ -55,6 +70,7 @@ class StationMessage(models.Model):
     def __unicode__(self):
         return self.text
 
+
 class TrainMessage(models.Model):
     id = models.AutoField(primary_key=True)
     sender = models.ForeignKey(UserInfo)
@@ -73,6 +89,7 @@ class TrainMessage(models.Model):
 
     def __unicode__(self):
         return self.text
+
 
 class PublicMessage(models.Model):
     id = models.AutoField(primary_key=True)

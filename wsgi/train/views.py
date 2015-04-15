@@ -12,24 +12,25 @@ def search(request, text):
 #     return renderJSON(request, str(getObject(ref)))
 
 def getAll(request):
-    result = Train.objects.all();
+    result = Train.objects.all()
     return renderJSON(request, [{"name":x.name, "info": "{} : {} - {}".format(x.start_time, x.start.name, x.end.name),"number":x.number} for x in result])
 
 @csrf_exempt
 def get(request):
-    fieldMap = {}
-    trains = db.get(Train, request, fieldMap)
-    trainsReal = [{"name": x["name"], "info": "{}-{}".format(x["start"], x["end"]), "number":x["number"]} for x in trains ]
-    return renderJSON(request, trainsReal)
+    field_map = {}
+    trains = Train.objects.all()
+    trains_real = [{"name": x.get_name(), "info": x.get_info(), "number": x.get_uri()} for x in trains]
+    return renderJSON(request, trains_real)
+
 
 @csrf_exempt
 def add(request):
-    pass #TODO
+    pass  # TODO
 
 @csrf_exempt
 def edit(request):
-    pass #TODO
+    pass  # TODO
 
 @csrf_exempt
 def delete(request):
-    pass #TODO
+    pass  # TODO

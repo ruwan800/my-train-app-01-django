@@ -8,6 +8,7 @@ class UserInfo(models.Model):
     name = models.CharField(max_length=96)
     key = models.CharField(max_length=200)
     status_is_public = models.BooleanField(default=True)
+
     class Meta:
         db_table = 'mta_user_info'
 
@@ -16,4 +17,4 @@ class UserInfo(models.Model):
 
 def saveUser():
     pass
-    
+

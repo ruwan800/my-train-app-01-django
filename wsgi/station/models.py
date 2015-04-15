@@ -39,6 +39,15 @@ class Station(models.Model, Structure):
                       }]
         return structure
 
+    def get_name(self):
+        return self.name
+
+    def get_uri(self):
+        return self.name.lower().replace(" ", "-")
+
+    def get_info(self):
+        return self.line.name
+
 class Line(models.Model, Structure):
     id = models.AutoField(primary_key=True)
     number = models.IntegerField(null=True, blank=True)

@@ -15,7 +15,7 @@ class TrainType(models.Model):
         return self.name
 
 
-#TODO plenty of internationalization hacks
+# TODO plenty of internationalization hacks
 class Train(models.Model):
     id = models.IntegerField(primary_key=True)
     number = models.IntegerField(null=True, blank=True)
@@ -36,6 +36,7 @@ class Train(models.Model):
     facilities = models.IntegerField(null=True, blank=True, default=0)
     last_update = models.DateField(auto_now=True)
     active = models.BooleanField(default=True)
+
     class Meta:
         db_table = 'mta_train'
 
@@ -45,8 +46,22 @@ class Train(models.Model):
         else:
             return "{} : {} - {}".format(self.start_time, self.start.name, self.end.name)
 
+    def get_name(self):
+        if self.name:
+            return self.name
+        else:
+            return "{} - {}".format(self.start, self.end)
 
-#TODO plenty of internationalization hacks
+    def get_uri(self):
+        return self.number
+
+    def get_info(self):
+        if self.name:
+            return "{} - {}".format(self.start, self.end)
+        else:
+            return "{} - {}".format(self.start_time, self.end_time)
+
+# TODO plenty of internationalization hacks
 class PrimaryTrain(models.Model):
     id = models.IntegerField(primary_key=True)
     number = models.IntegerField(null=True, blank=True)
@@ -66,6 +81,7 @@ class PrimaryTrain(models.Model):
     frequency = models.IntegerField(null=True, blank=True)
     facilities = models.IntegerField(null=True, blank=True, default=0)
     last_update = models.DateField(auto_now=True)
+
     class Meta:
         db_table = 'mta_primary_train'
 
@@ -74,7 +90,6 @@ class PrimaryTrain(models.Model):
             return "{}:{}".format(self.number, self.name)
         else:
             return "{} : {} - {}".format(self.start_time, self.start.name, self.end.name)
-
 
     def getData(self):
         return {'name':self.name}

@@ -7,7 +7,7 @@ admin.autodiscover()
 urlpatterns = []
 
 view_requests = {
-    "contact": "subscribe.views",
+    "contact": "contact.views",
     "station" : "station.views",
     "thread" : "message.thread",
     "train" : "train.views", 
@@ -110,11 +110,11 @@ urlpatterns2 = patterns('',
     #url(r'^s/status/new/(?P<ref>[a-z0-9]{32})$', 'status.views.checkIn'),    
     #url(r'^s/status/find/(?P<ref>[a-z0-9]{32})$', 'status.views.checkInsAt'),
     
-    #subscribe
-    #url(r'^s/subscribe/subscribed$', 'subscribe.views.subscribed'),
-    #url(r'^s/subscribe/suggestions$', 'subscribe.views.suggestions'),
-    #url(r'^s/subscribe/add/(?P<ref>[a-z0-9]{32})$', 'subscribe.views.add'),
-    #url(r'^s/subscribe/remove/(?P<ref>[a-z0-9]{32})$', 'subscribe.views.remove'),
+    #contact
+    #url(r'^s/contact/subscribed$', 'contact.views.subscribed'),
+    #url(r'^s/contact/suggestions$', 'contact.views.suggestions'),
+    #url(r'^s/contact/add/(?P<ref>[a-z0-9]{32})$', 'contact.views.add'),
+    #url(r'^s/contact/remove/(?P<ref>[a-z0-9]{32})$', 'contact.views.remove'),
     
     #train
     #url(r'^s/trains/search/(?P<text>\w{3,20})$', 'train.views.search'),

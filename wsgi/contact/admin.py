@@ -1,7 +1,7 @@
 from django.contrib import admin
-from subscribe.models import Subscribe
+from contact.models import Contact
 
 
 class SubscribeAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'thread', 'dt', 'manual')
-admin.site.register(Subscribe, SubscribeAdmin)
+admin.site.register(Contact, SubscribeAdmin)

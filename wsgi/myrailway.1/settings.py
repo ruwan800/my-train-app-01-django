@@ -59,7 +59,7 @@ INSTALLED_APPS = (
     'schedule',
     'station',
     'status',
-    'subscribe',
+    'contact',
     'train',
     'userinfo'
 )

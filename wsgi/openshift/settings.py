@@ -75,7 +75,7 @@ INSTALLED_APPS = (
     'schedule',
     'station',
     #'status',
-    'subscribe',
+    'contact',
     'train',
     #'update',
     'userinfo'
@@ -149,9 +149,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+if ON_OPENSHIFT:
+    staticfile_dir = os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'static')
+else:
+    staticfile_dir = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    staticfile_dir,
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
