@@ -15,7 +15,7 @@ from numpy.ctypeslib import ctypes
 class Thread(models.Model):
     STATUS_CHOICES = ((1, 'station'), (2, 'train'))
     id = models.AutoField(primary_key=True)
-    c_type = models.ImageField(choices=STATUS_CHOICES)
+    c_type = models.IntegerField(choices=STATUS_CHOICES)
     ref = models.IntegerField()
 
     class Meta:
