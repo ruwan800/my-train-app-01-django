@@ -50,14 +50,14 @@ class Train(models.Model):
         if self.name:
             return self.name
         else:
-            return "{} - {}".format(self.start, self.end)
+            return "{} - {}".format(self.start.name, self.end.name)
 
     def get_uri(self):
         return self.number
 
     def get_info(self):
         if self.name:
-            return "{} - {}".format(self.start, self.end)
+            return "{} - {}".format(self.start.name, self.end.name)
         else:
             return "{} - {}".format(self.start_time, self.end_time)
 
