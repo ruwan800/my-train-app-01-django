@@ -151,8 +151,10 @@ USE_TZ = True
 
 if ON_OPENSHIFT:
     staticfile_dir = os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'static')
+    STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'static')
 else:
     staticfile_dir = os.path.join(BASE_DIR, 'static')
+    STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static')
 STATICFILES_DIRS = (
     staticfile_dir,
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
@@ -162,7 +164,6 @@ STATICFILES_DIRS = (
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static')
 STATIC_URL = '/static/'
 ADMINS = (('ruwan', 'ruwan800@gmail.com'),)
 LOGGING = {
