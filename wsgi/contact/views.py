@@ -82,7 +82,7 @@ def add(request):
 def edit(request):
     condition = db.get_where(request, THREAD_ID)
     condition[USER] = getUser(request)
-    q = Contact.objects.get(condition)
+    q = Contact.objects.get(**condition)
     favourite = request.POST.get(FAVOURITE, None)
     usage = request.POST.get(USAGE, None)
     if favourite:
@@ -98,5 +98,5 @@ def edit(request):
 def delete(request):
     condition = db.get_where(request, THREAD_ID)
     condition[USER] = getUser(request)
-    q = Contact.objects.get(condition)
+    q = Contact.objects.get(**condition)
     q.delete()

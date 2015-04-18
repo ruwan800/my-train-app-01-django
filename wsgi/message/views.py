@@ -35,12 +35,12 @@ def get(request):
     time = db.get_where(request, TIME)
     if thread:
         thread[USER] = user
-        q = Message.objects.filter(thread)[:limit]
+        q = Message.objects.filter(**thread)[:limit]
     elif time:
         thread[USER] = user
-        q = Message.objects.filter(thread)
+        q = Message.objects.filter(**thread)
     else:
-        q = Message.objects.filter(USER=user)
+        q = Message.objects.filter(user=user)
     output = []
     for message in q:
         output.append(prepare_message(message))
@@ -73,7 +73,7 @@ def add(request):
 @csrf_exempt
 def edit(request):
     condition = db.get_where(request, R_ID)
-    q = Message.objects.get(condition)
+    q = Message.objects.get(**condition)
     star = request.POST.get(STAR, 0)
     if star:
         q.star = star
@@ -84,5 +84,5 @@ def edit(request):
 def delete(request):
     condition = db.get_where(request, R_ID)
     condition[USER] = getUser(request)
-    q = Message.objects.get(condition)
+    q = Message.objects.get(**condition)
     q.delete()
