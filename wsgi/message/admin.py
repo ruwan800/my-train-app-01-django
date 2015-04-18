@@ -3,9 +3,9 @@ from message.models import Message, PublicMessage, TrainMessage,\
     StationMessage, Thread
 
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ( 'id', 'thread', 'sender', 'dt','text', 'star')
+    list_display = ( 'id', 'thread', 'sender', 'dt', 'text', 'star')
 admin.site.register(Message, MessageAdmin)
 
 class ThreadAdmin(admin.ModelAdmin):
-    list_display = ( 'id', 'ctype', 'ref')
+    list_display = ( 'id', 'c_type', 'ref')
 admin.site.register(Thread, ThreadAdmin)

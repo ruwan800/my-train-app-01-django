@@ -3,5 +3,5 @@ from contact.models import Contact
 
 
 class SubscribeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'thread', 'dt', 'manual')
+    list_display = ('id', 'user', 'thread', 'dt', 'favourite', 'usage')
 admin.site.register(Contact, SubscribeAdmin)
