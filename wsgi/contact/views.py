@@ -31,7 +31,7 @@ def get_contact(subscription):
 @csrf_exempt
 def get(request):
     user = getUser(request)
-    subscriptions = Contact.objects.filter(user)
+    subscriptions = Contact.objects.filter(user=user)
     response = []
     for subscription in subscriptions:
         contact = get_contact(subscription)

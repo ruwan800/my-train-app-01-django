@@ -8,12 +8,11 @@ urlpatterns = []
 
 view_requests = {
     "contact": "contact.views",
-    "station" : "station.views",
-    "thread" : "message.thread",
-    "train" : "train.views", 
-    "nearby" : "location.nearby",
-    "message" : "message.views"
-                }
+    "station": "station.views",
+    "train": "train.views",
+    "nearby": "location.nearby",
+    "message": "message.views"
+    }
 
 view_patterns = ["add", "get", "edit", "delete"]
 
