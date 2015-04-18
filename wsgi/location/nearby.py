@@ -31,3 +31,10 @@ def get(request):
     # TODO fill with correct values
     return renderJSON(request, [{X: x, Y: y, NAME: k.user.username, TYPE: k.x, INFO: k.y, URI: str(k.time)} for k in q1])
 
+
+def edit(request):
+    pass  # TODO
+
+
+def delete(request):
+    pass  # TODO
