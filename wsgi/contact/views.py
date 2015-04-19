@@ -20,7 +20,7 @@ USAGE = "usage"
 def get_contact(subscription):
     ref = subscription.thread.get_reference()
     contact = dict()
-    contact[C_TYPE] = subscription.thread.c_type
+    contact[C_TYPE] = subscription.thread.get_c_type()
     contact[NAME] = ref.get_name()
     contact[INFO] = ref.get_info()
     contact[THREAD_ID] = subscription.thread.pk

@@ -30,6 +30,13 @@ class Thread(models.Model):
         else:
             return Train.objects.get(pk=self.ref)
 
+    def get_c_type(self):
+        if self.c_type == Thread.STATUS_CHOICES[0][0]:
+            return Thread.STATUS_CHOICES[0][1]
+        else:
+            return Thread.STATUS_CHOICES[1][1]
+
+
 
 class Message(models.Model):
     id = models.AutoField(primary_key=True)
@@ -165,9 +172,9 @@ def getThread(c_type, cid):
 
 def get_thread_type_id(c_type):
     if c_type == Thread.STATUS_CHOICES[0][1]:
-        return 0
+        return Thread.STATUS_CHOICES[0][0]
     else:
-        return 1
+        return Thread.STATUS_CHOICES[1][0]
 
 def sendUserMessage(sender, receiver, message):
     
