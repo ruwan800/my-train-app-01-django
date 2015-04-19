@@ -22,7 +22,7 @@ class Thread(models.Model):
         db_table = 'mta_user_thread'
 
     def __unicode__(self):
-        return "{}-{}".format(self.ctype, self.ref)
+        return "{}-{}".format(self.c_type, self.ref)
 
     def get_reference(self):
         if self.c_type == self.STATUS_CHOICES[0][1]:
@@ -156,7 +156,7 @@ def getThread(ctype, cid):
         target = Target user
         messages = List of messages sorted by date
     """
-    Q0 = Thread.objects.filter(ctype=ctype, ref=cid)
+    Q0 = Thread.objects.filter(c_type=ctype, ref=cid)
     if not Q0:
         return None
     return Q0[0]
