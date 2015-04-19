@@ -61,11 +61,11 @@ def add(request):
         return renderJSON(request, {})
     thread = getThread(ctype, Q0.id)
     if not thread:
-        thread = Thread(ctype=ctype, ref=Q0.id)
+        thread = Thread(C_TYPE=ctype, ref=Q0.id)
         thread.save()
     Q = Contact.objects.filter(user=user, thread=thread)
     if not len(Q):
-        Q = Contact(user=user, thread=thread, manual=True)
+        Q = Contact(user=user, thread=thread, FAVOURITE=True)
         Q.save()
     else:
         Q = Q[0]
