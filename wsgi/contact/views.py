@@ -24,7 +24,7 @@ def get_contact(subscription):
     contact[NAME] = ref.get_name()
     contact[INFO] = ref.get_info()
     contact[THREAD_ID] = subscription.thread.pk
-    contact[FAVOURITE] = subscription.manual
+    contact[FAVOURITE] = subscription.favourite
     contact[USAGE] = subscription.usage
     return contact
 
