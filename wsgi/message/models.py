@@ -164,7 +164,7 @@ def getThread(c_type, cid):
 
 
 def get_thread_type_id(c_type):
-    if c_type == Thread.STATUS_CHOICES[0][0]:
+    if c_type == Thread.STATUS_CHOICES[0][1]:
         return 0
     else:
         return 1
