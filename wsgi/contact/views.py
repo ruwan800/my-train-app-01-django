@@ -5,7 +5,7 @@ from advanced.render import renderJSON
 from contact.models import Contact
 from advanced.user import getUser
 from station.models import Station
-from message.models import getThread, Thread
+from message.models import getThread, Thread, get_thread_type_id
 from train.models import Train
 
 C_TYPE = "c_type"
@@ -61,7 +61,8 @@ def add(request):
         return renderJSON(request, {})
     thread = getThread(ctype, Q0.id)
     if not thread:
-        thread = Thread(c_type=ctype, ref=Q0.id)
+        type_id = get_thread_type_id(ctype)
+        thread = Thread(c_type=type_id, ref=Q0.id)
         thread.save()
     Q = Contact.objects.filter(user=user, thread=thread)
     if not len(Q):

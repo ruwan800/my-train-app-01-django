@@ -148,7 +148,7 @@ def saveMessage(request, message, m_type, target):
     
     #saveTarget(Message,Q.pk,[[getReferenceByObject(Q1),target]])
 
-def getThread(ctype, cid):
+def getThread(c_type, cid):
     """
         getThread(request, target) -> messages
         Views a conversation.
@@ -156,14 +156,18 @@ def getThread(ctype, cid):
         target = Target user
         messages = List of messages sorted by date
     """
-    if ctype == Thread.STATUS_CHOICES[0][0]:
-        type_int = 0
-    else:
-        type_int = 1
+    type_int = get_thread_type_id(c_type)
     q0 = Thread.objects.filter(c_type=type_int, ref=cid)
     if not q0:
         return None
     return q0[0]
+
+
+def get_thread_type_id(c_type):
+    if c_type == Thread.STATUS_CHOICES[0][0]:
+        return 0
+    else:
+        return 1
 
 def sendUserMessage(sender, receiver, message):
     
