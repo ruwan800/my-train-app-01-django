@@ -27,7 +27,7 @@ def viewAll(request):
 def get(request):
     field_map = {}
     stations = Station.objects.all()
-    station_real = [{"name": x.get_name(), "uri": x.get_uri(), "active": x.get_info()} for x in stations]
+    station_real = [{"name": x.get_name(), "uri": x.get_uri(), "active": True} for x in stations]
     return renderJSON(request, station_real)
 
 @csrf_exempt

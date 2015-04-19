@@ -43,7 +43,7 @@ class Station(models.Model, Structure):
         return self.name
 
     def get_uri(self):
-        return self.name.lower().replace(" ", "-")
+        return self.name
 
     def get_info(self):
         return self.line.name
