@@ -42,40 +42,34 @@ def get(request):
 @csrf_exempt
 def add(request):
     user = getUser(request)
-    ctype = request.POST.get(C_TYPE, None)
-    if not ctype:
+    c_type = request.POST.get(C_TYPE, None)
+    if not c_type:
         return renderJSON(request, {})
-    if ctype == "station":
+    if c_type == "station":
         uri = request.POST.get("uri", None)
-        Q0 = Station.objects.get(name=uri)
-        r_contact = Q0.name
-        r_name = Q0.name
-        r_info = Q0.name
-    if ctype == "train":
+        q0 = Station.objects.get(name=uri)
+    if c_type == "train":
         number = request.POST.get("number", None)
-        Q0 = Train.objects.get(number=number)
-        r_contact = Q0.number
-        r_name = Q0.name
-        r_info = "{}-{}".format(Q0.start, Q0.end)
-    if not Q0:
-        return renderJSON(request, {})
-    thread = getThread(ctype, Q0.id)
-    if not thread:
-        type_id = get_thread_type_id(ctype)
-        thread = Thread(c_type=type_id, ref=Q0.id)
-        thread.save()
-    Q = Contact.objects.filter(user=user, thread=thread)
-    if not len(Q):
-        Q = Contact(user=user, thread=thread, favourite=True)
-        Q.save()
+        q0 = Train.objects.get(number=number)
     else:
-        Q = Q[0]
-    if not Q.favourite:
-        Q.favourite = True
-        Q.save()
-
-    response = {C_TYPE: ctype, NAME: r_name, INFO: r_info, THREAD_ID: thread.pk,
-                FAVOURITE: True, USAGE: 1}
+        return renderJSON(request, {})
+    if not q0:
+        return renderJSON(request, {})
+    thread = getThread(c_type, q0.id)
+    if not thread:
+        type_id = get_thread_type_id(c_type)
+        thread = Thread(c_type=type_id, ref=q0.id)
+        thread.save()
+    q = Contact.objects.filter(user=user, thread=thread)
+    if not len(q):
+        q = Contact(user=user, thread=thread, favourite=True)
+        q.save()
+    else:
+        q = q[0]
+    if not q.favourite:
+        q.favourite = True
+        q.save()
+    response = get_contact(q)
     return renderJSON(request, response)
 
 
