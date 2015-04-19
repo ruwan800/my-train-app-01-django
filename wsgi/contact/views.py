@@ -44,17 +44,17 @@ def add(request):
     user = getUser(request)
     c_type = request.POST.get(C_TYPE, None)
     if not c_type:
-        return renderJSON(request, {})
+        raise Exception("c_type is empty")
     if c_type == "station":
         uri = request.POST.get("uri", None)
         q0 = Station.objects.get(name=uri)
-    if c_type == "train":
+    elif c_type == "train":
         number = request.POST.get("number", None)
         q0 = Train.objects.get(number=number)
     else:
-        return renderJSON(request, {})
+        raise Exception("c_type is incorrect")
     if not q0:
-        return renderJSON(request, {})
+        raise Exception("reference {} is not available".format(c_type))
     thread = getThread(c_type, q0.id)
     if not thread:
         type_id = get_thread_type_id(c_type)
