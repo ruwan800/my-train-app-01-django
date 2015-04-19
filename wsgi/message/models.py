@@ -13,7 +13,7 @@ from numpy.ctypeslib import ctypes
 
 
 class Thread(models.Model):
-    STATUS_CHOICES = ((1, 'station'), (2, 'train'))
+    STATUS_CHOICES = ((0, 'station'), (1, 'train'))
     id = models.AutoField(primary_key=True)
     c_type = models.IntegerField(choices=STATUS_CHOICES)
     ref = models.IntegerField()
@@ -25,7 +25,7 @@ class Thread(models.Model):
         return "{}-{}".format(self.c_type, self.ref)
 
     def get_reference(self):
-        if self.c_type == self.STATUS_CHOICES[0][1]:
+        if self.c_type == self.STATUS_CHOICES[0][0]:
             return Station.objects.get(pk=self.ref)
         else:
             return Train.objects.get(pk=self.ref)
@@ -156,10 +156,14 @@ def getThread(ctype, cid):
         target = Target user
         messages = List of messages sorted by date
     """
-    Q0 = Thread.objects.filter(c_type=ctype, ref=cid)
-    if not Q0:
+    if ctype == Thread.STATUS_CHOICES[0][0]:
+        type_int = 0
+    else:
+        type_int = 1
+    q0 = Thread.objects.filter(c_type=type_int, ref=cid)
+    if not q0:
         return None
-    return Q0[0]
+    return q0[0]
 
 def sendUserMessage(sender, receiver, message):
     
