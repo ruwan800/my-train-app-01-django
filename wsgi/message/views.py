@@ -21,7 +21,7 @@ def prepare_message(message):
     message_new[C_TYPE] = message.thread.c_type
     message_new[R_ID] = message.pk
     message_new[THREAD_ID] = message.thread.pk
-    message_new[SENDER] = message.sender
+    message_new[SENDER] = message.sender.name
     message_new[MESSAGE] = message.text
     message_new[STAR] = message.star
     message_new[TIME] = message.dt
