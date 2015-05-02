@@ -24,7 +24,7 @@ def prepare_message(message):
     message_new[SENDER] = message.sender.name
     message_new[MESSAGE] = message.text
     message_new[STAR] = message.star
-    message_new[TIME] = message.dt
+    message_new[TIME] = str(message.dt)
     return message_new
 
 
