@@ -58,12 +58,12 @@ def add(request):
     time = request.POST.get(TIME, None)
     thread = get_thread(thread_str)
 
-    value = dict()
-    value[THREAD_ID] = value.thread.pk
-    value[SENDER] = value.sender
-    value[MESSAGE] = value.text
-    value[STAR] = value.star
-    value[TIME] = value.dt
+    # value = dict()
+    # value[THREAD_ID] = thread.pk
+    # value[SENDER] = sender
+    # value[MESSAGE] = message
+    # value[STAR] = star
+    # value[TIME] = time
 
     q = Message(thread=thread, sender=sender, dt=time, text=message, star=star)
     q.save()
