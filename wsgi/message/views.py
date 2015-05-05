@@ -1,6 +1,7 @@
 from advanced.render import renderJSON
 from advanced.user import getUser
 from django.views.decorators.csrf import csrf_exempt
+from message.cloud import send_gcm_messages
 from message.models import Message, get_thread
 from advanced import db
 
@@ -67,6 +68,7 @@ def add(request):
 
     q = Message(thread=thread, sender=sender, dt=time, text=message, star=star)
     q.save()
+    send_gcm_messages(thread, sender, time)
     return renderJSON(request, prepare_message(q))
 
 
