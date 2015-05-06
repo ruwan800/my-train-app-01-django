@@ -42,7 +42,7 @@ def get(request):
         q = Message.objects.filter(**thread)
     else:
         #q = Message.objects.filter(sender=user)
-        q = Message.objects.filter(sender=user)
+        q = Message.objects.filter()
     output = []
     for message in q:
         output.append(prepare_message(message))
