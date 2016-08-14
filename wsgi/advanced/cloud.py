@@ -1,12 +1,12 @@
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode
 import json
+from django.conf import settings
 
 def send(recipients, data):
     
-    api_key = 'AIzaSyBc5aqkuOVCZV-g-FEkpJlKGJTDcGT30XI'
+    api_key = settings.GCM_API_KEY
     url = "https://android.googleapis.com/gcm/send"
-    # ids = ["APA91bEnqml7zL5JFwTowUYS4uAqxEKfNaivR__jtMQWIJn_WrE7zvmVR0BG2R749p22QsVxKpdQha0ZA_0jVNPBHus5G0Njn7tE-QqC9UqvrNS6UMXWGTmsA6FHMA591rsL0ttFL5tSA_Hj6RkiXxGPdPWKTCYeuw"]
 
     ids = [x.key for x in recipients]
 

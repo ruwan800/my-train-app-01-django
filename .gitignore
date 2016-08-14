@@ -18,3 +18,4 @@ wsgi/documentation/gen/
 wsgi/static
 #wsgi/documentation/templates/
 __pycache__/
+wsgi/openshift/secrets.py
