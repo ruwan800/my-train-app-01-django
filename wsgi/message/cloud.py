@@ -1,8 +1,9 @@
 from contact.models import Contact
 from advanced.cloud import send
+from userinfo.models import UserInfo
 
 
-def send_gcm_messages(thread, sender, time):
+def send_gcm_messages(thread, sender: UserInfo, time):
     subscriptions = Contact.objects.filter(thread=thread, favourite=True)
     recipients = [x.user for x in subscriptions]
 #    if sender in recipients:

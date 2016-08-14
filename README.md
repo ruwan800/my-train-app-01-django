@@ -83,8 +83,8 @@ When you make:
 In the console output, you must find something like this:
 
      remote: Django application credentials:
-     remote: 	user: admin
-     remote: 	SY1ScjQGb2qb
+     remote: 	user: 
+     remote: 	
 
 Or you can go to SSH console, and check the CREDENTIALS file located 
 in $OPENSHIFT_DATA_DIR.
@@ -95,8 +95,8 @@ in $OPENSHIFT_DATA_DIR.
 You should see the output:
 
      Django application credentials:
-     		 user: admin
-     		 SY1ScjQGb2qb
+     		 user: 
+     		 
 
 After, you can change the password in the Django admin console.
 

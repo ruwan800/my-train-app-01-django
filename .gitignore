@@ -8,11 +8,13 @@
 *.py.disabled
 .project
 .pydevproject
+.idea
 venv/
 virtenv/
 dist/
 build/
 data/
 wsgi/documentation/gen/
+wsgi/static
 #wsgi/documentation/templates/
 __pycache__/
